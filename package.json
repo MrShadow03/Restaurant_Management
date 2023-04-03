@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "start" : "node server.js",
+        "nodemon" : "nodemon server.js"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
