@@ -12,6 +12,7 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('sendOrderToKitchen', (msg) => {
+        
         console.log('message: ' + msg);
 
         // io.emit('orderResponseFromKitchen', msg);

@@ -1,0 +1,218 @@
+.attendence_contant{
+    padding: 2rem 3rem;
+    .attendence_header{
+        padding: 2rem .5rem 4rem;
+        h3{
+            font-size: 2.2rem;
+        }
+        p{
+            margin-top: 1rem;
+            font-size:1.4rem;
+            a{
+                color: $color_2;
+                font-weight: bold;
+            }
+            span{
+                color: $color_1;
+                i{
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+}
+
+.attendence_form{
+    padding: 2rem;
+    background-color: $color_3;
+    border-radius: .5rem;
+    h3{
+        font-size: 2rem;
+        font-weight: 500;
+    }
+    form{
+        padding: 2rem 0;
+        display: flex;
+        gap: 4rem;
+        .attendece_select{
+            width: 34rem;
+            label {
+                font-size: 1.6rem;
+                line-height: 3rem;
+                color: rgb(37, 36, 36);
+            }
+           .form_select{
+            option{
+                background-color: $color_2;
+                color: $color_3;
+                font-size: 1.6rem;
+            }
+           } 
+        }
+    }
+    .btn_area{
+        display: flex;
+        gap: 2rem;
+        button{
+            font-size: 1.8rem;
+            padding: 1.2rem 3rem;
+            background-color: $color_2;
+            color: $color_3;
+            border-radius: .2rem;
+            transition: .3s;
+            cursor: pointer;
+            &:hover{
+                background-color: $logo;
+            }
+            &:nth-child(1){
+                background-color: $logo;
+                &:hover{
+                    background-color: $color_2;
+                }
+            }
+        }
+    }
+}
+
+.attendence_table_box{
+    padding: 2rem;
+    margin-top: 2rem;
+    background-color: $color_3;
+    border-radius: .5rem;
+    .table_title{
+        padding: 1rem 0;
+        display: flex;
+        .class_name{
+            flex: 1;
+            text-align: center;
+            h4{
+                font-size: 1.8rem;
+                color: #202020;
+                margin-bottom: 1rem;
+            }
+            p{
+                font-size: 1.6rem;
+                color: #333232;
+                span{
+                    font-weight: 600;
+                }
+            }
+        }
+      .date{
+        p{
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333232;
+        }
+      }  
+    }
+    .table_area{
+        padding: 2rem 0;
+        height: 70rem;
+        overflow: scroll;
+        &::-webkit-scrollbar{width: .5rem;}
+        &::-webkit-scrollbar-track{background: #fff;}
+        &::-webkit-scrollbar-thumb{background: #fff;border-radius: 5rem;}
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            thead{
+                text-align: left;
+                tr{
+                    th{
+                        padding: 1rem;
+                        font-size: 2rem;
+                        border: 1px solid rgb(252, 242, 242);
+                        background-color: rgba(227, 239, 250, 0.3);
+                    }
+                }
+            }
+            tbody{
+                tr{  
+                    &:nth-child(odd){
+                        background: #eeeeee;
+                    }
+                    &:nth-child(even){
+                        background: rgb(224, 224, 224);
+                    }              
+                    td{
+                        padding: .5rem 1rem;
+                        border: 1px solid rgb(252, 242, 242);
+                        font-size: 1.8rem;
+                        .la-check{
+                            color: green;
+                            font-weight: bolder;
+                        }
+                        .la-times{
+                            color: red;
+                            font-weight: bolder;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.attendance-table{
+    th{
+        border: 1px solid $border-light;
+        text-align: center;
+    }
+    tbody{
+        tr{
+            td{
+                border: 1px solid $border-light;
+                text-align: center;
+                i.las{
+                    font-size: 1.6rem;
+                }
+                i.la-check{
+                    color: $success;
+                }
+                i.la-times{
+                    color: $alert;
+                }
+            }
+        }
+    }
+}
+
+// ** START A THIS PAGE RESPONSIVE HERE **//
+
+@media only screen and (max-width: 1440px){
+.attendence_table_box{
+    .table_area{
+        table{
+            width:130rem
+        }
+    }
+}
+}
+
+@media only screen and (max-width: 1024px) {
+    
+    .attendence_form{
+        form {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem 2rem;
+            .attendece_select{
+                width: 48%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    
+    .attendence_form{
+
+        form {
+            gap: 2rem;
+            .attendece_select{
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.bar-wrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 37, 75, .123);
+    flex-wrap: wrap;
+    padding: 2rem 3rem;
+    gap: 1rem;
+}
+.bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+// .bar-item{
+//     font-size: 1.4rem;
+//     color: $primary;
+//     cursor: pointer;
+//     background-color: $white;
+//     padding: 1rem 2rem;
+// }

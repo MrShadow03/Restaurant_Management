@@ -1,36 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Restaurant</title>
-</head>
-<body>
-    <h1>Restaurant</h1>
-    <button class="order" id="order">Order Now</button>
-    <ul class="orders">
-    </ul>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+@php
+    // $user = Auth::user();
+    // //see user image exists or not
+    // if (!Storage::disk('public')->exists($user->image)) {
+    //     $gender = isset($user->gender) ? strtolower($user->gender) : 'male' ;
+    //     $user_image = $gender === 'male' ? 'https://ui-avatars.com/api/?name='.$user->name.'&color=7F9CF5&background=EBF4FF&size=256&font-size=0.33&bold=true' : 'https://ui-avatars.com/api/?name='.$user->name.'&background=FCE4EC&color=F06292&bold=true&size=256&font-size=0.33';
+    // }else{
+    //     $user_image = asset('storage/'.$user->image);
+    // }
+@endphp
+@section('title')
+@endsection
+@extends('dashboard.app')
+@section('exclusive_styles')
+@endsection
+@section('main')
+    {{-- <x-dashboard.organisms.nav /> --}}
+    <div class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1>Socket.io</h1>
+                            <button id="order" class="btn btn-primary">Order</button>
+                            <ul class="orders">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+@endsection
 
-    <script>
-        $(function(){
-            $('#order').click(function(){
-                socket.emit('sendOrderToKitchen', {
-                    table: 1,
-                    item: 'Sandwitch',
-                    qty: 1
-                });
+@section('exclusive_scripts')
+<script>
+    $(function(){
+        $('#order').click(function(){
+            socket.emit('sendOrderToKitchen', {
+                table: 1,
+                item: 'Sandwitch',
+                qty: 1
             });
-            socket.on('orderResponseFromKitchen', function(data){
-                console.log(data);
-                $('.orders').append('<li>' + data.item + ' - ' + data.qty + '</li>');
-            });
-
+        });
+        socket.on('orderResponseFromKitchen', function(data){
+            console.log(data);
+            $('.orders').append('<li>' + data.item + ' - ' + data.qty + '</li>');
         });
 
-    </script>
-</body>
-</html>
+    });
+</script>
+@endsection

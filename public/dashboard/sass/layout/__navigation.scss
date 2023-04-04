@@ -1,0 +1,163 @@
+.left_nevbar {
+    width: 30rem;
+    height: 100vh;
+    // backdrop-filter: blur(10px);
+    background: #252e42;
+    background: linear-gradient(145deg, #2c1d7a 40%, #af69de 100%);
+    transition: all .25s ease-in-out;
+    overflow: hidden;
+
+    .side_bar {
+        width: 100%;
+        height: 100%;
+        white-space: nowrap;
+        top: 0;
+        display: block;
+
+      
+        .menu_bars{                
+            display: none; 
+            .menu-cross {
+                font-size: 2.5rem;
+                font-weight: 900;
+                color: #FFF;
+                cursor: pointer;
+            }               
+        }
+
+        .logo{
+            display: flex;
+            align-items: center;
+            img {
+                height: 3rem;
+            }
+            h4 {
+                font-size: 1.6rem;
+                font-weight: 500;
+                color: #FFF;
+                padding-left: 1rem;            
+            }
+        }
+        .title {
+            padding: .8rem 2rem;
+            h5 {
+                font-size: 1.6rem;
+                font-weight: 500;
+                color: #FFF;
+                letter-spacing: .1rem;
+                opacity: .5;
+            }
+        }
+        .nav_area {   
+         
+            li {
+                
+               a {
+                position: relative;
+                width: 100%;
+                display: block;
+                padding: 1rem 0;
+                font-size: 1.4rem;
+                color: #fff;
+                border-left: 5px solid rgba(0,0,0,0);
+                transition:all .1s ease-in;
+                font-weight: 400;
+                opacity: .8;
+                .sub_icon{
+                    font-size: 1rem;
+                    position: absolute;
+                    right: 2rem;
+                    bottom: 15px;
+                }
+                
+                &:hover {
+                    background-color: $primary_dark;
+                    opacity: 1;              
+                }  
+            }
+        }
+
+            .sub_menu {
+                display: none;
+                background-color: $primary_dark;
+                padding: 1rem 0;
+                li {
+                    a {
+                     width: 100%;
+                     display: block;
+                     padding: 1rem 3.4rem;
+                     font-size: 1.4rem;
+                     color: #FFF;
+                     border-left: 5px solid transparent;                    
+                     i{
+                         font-size: 1.4rem;
+                         width: 4rem;
+                     }
+                     &:hover {
+                        background-color: $primary;   
+                     }
+                    }
+                 }
+            }
+        }
+    }
+}
+
+.header {
+    width: 100%;
+    height: 7rem;
+    padding: 0 1rem;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.226);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 999;
+}
+.active_left_navbar {
+    width: 7rem;
+    border-right: .5rem solid $primary; 
+    border-image: linear-gradient( #0d42c2);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.329);
+    .title{
+        padding: .8rem 1rem !important;
+        h5{
+            
+            font-size: 1.5rem !important;
+        }
+    }
+    .side_bar{
+        .header{
+            padding: 0;
+            .logo{
+                img {
+                    height: 4.5rem;
+                    padding-right: 1rem;
+                    padding-left: .8rem;
+                }
+            }
+        }
+
+        .copy_right{
+            p{
+                display: none
+            }
+            a{
+                padding-left: .6rem;
+                font-size: .9rem;               
+            }
+            
+        }
+    }
+    .nav_area{
+        .sub_icon{
+            display: none !important;
+        }
+        .menu_icon{
+            padding-right: 2rem !important;
+        }
+    }
+}
+
+
+
+

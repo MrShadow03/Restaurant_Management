@@ -1,0 +1,83 @@
+@mixin btn-variant($type){
+    @if($type == success){
+      color: $success;
+      background-color: $success-light;
+      border-color: #28a745;
+      &:hover {
+        color: #fff;
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+    }
+    @else if($type == danger){
+      color: $danger;
+      background-color: $danger-light;
+      border-color: #dc3545;
+      &:hover {
+        color: #fff;
+        background-color: #c82333;
+        border-color: #bd2130;
+      }
+    }
+    @else if($type == warning){
+      color: #212529;
+      background-color: #ffc107;
+      border-color: #ffc107;
+      &:hover {
+        color: #212529;
+        background-color: #e0a800;
+        border-color: #d39e00;
+      }
+    }
+    @else if($type == info){
+      color: #2196f3;
+      background-color: #e3f2fd;
+      &:hover {
+        color: #fff;
+        background-color: #2196f3;
+      }
+    }
+  }
+
+  @mixin pulsing($type){ 
+    display: block;
+    border-radius: 0px;
+    animation: pulsing 1s infinite cubic-bezier(0.66, 0, 0, 1);
+    @if($type == success){
+      box-shadow: 0 0 0 0 $success;
+      &:hover {
+        color: #fff;
+        animation: none;
+      }
+    }
+    @else if($type == danger){
+      box-shadow: 0 0 0 0 $danger;
+      &:hover {
+        color: #fff;
+        animation: none;
+      }
+    }
+    @else if($type == warning){
+      box-shadow: 0 0 0 0 #ffc107;
+      &:hover {
+        color: #212529;
+        animation: none;
+      }
+    }
+    @else if($type == info){
+      box-shadow: 0 0 0 0 #2196f3;
+      &:hover {
+        color: #fff;
+        animation: none;
+      }
+    }
+  }
+  /* Comment-out to have the button continue to pulse on mouseover */
+  
+  
+  /* Animation */
+  @keyframes pulsing {
+    to {
+      box-shadow: 0 0 0 10px rgba(61, 149, 232, 0);
+    }
+  }

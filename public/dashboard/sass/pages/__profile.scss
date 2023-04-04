@@ -1,0 +1,19 @@
+.flex-left{
+    background-color: #fff;
+}
+.profile__wrapper{
+    display: flex;
+    padding: 3rem;
+    gap: 3rem;
+    .profile__left{
+        width: 45%;
+        .profile__image__wrapper{
+            .profile__image{
+                width: 20rem;
+                aspect-ratio: 1/1;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+    }
+}

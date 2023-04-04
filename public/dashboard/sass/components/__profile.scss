@@ -1,0 +1,219 @@
+#profile{
+    padding: 2rem 4rem;
+    .profile_header{
+        background-color: $color_3;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .text_link{
+            a{
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: $color_2;
+                i{
+                    font-size: 1.2rem;
+                }
+                span{
+                    font-size: 1.6rem;
+                    color: rgb(54, 51, 51);
+                    font-weight: 500;
+                }
+            }
+            p{
+                font-size: 1.4rem;
+                color: rgb(128, 125, 125);
+            }
+        }
+        .social_link{
+            a{
+                padding: 1rem;
+                font-size: 1.6rem;
+                background-color: $color_3;
+                box-shadow: 0px 0px 10px rgba(235, 235, 235, 0.651);
+                color: rgb(128, 125, 125);
+                border: 1px solid #c2c2c2;
+                transition: .4s;
+                &:hover{
+                    background-color: $color_2;
+                    color: $color_3;
+                }
+                i{
+                    font-size: 1.8rem;
+                    color: #00a8ff;
+                }
+            }
+        }
+    }
+    .profile_box{
+        display: flex;
+        gap: 2rem;
+        background-color: $color_3;
+        padding: 2rem 0;
+        .profile_image{
+            padding: 1.5rem;
+            .image_area{
+                width: 30rem;
+                padding: 2rem;
+                padding-top: 8rem;
+                background-color: #f1f8fa;
+                text-align: center;
+                border-radius: .5rem;
+                #input_profile{
+                    display: none;
+                }
+                img{
+                    width: 18rem;
+                    height: 18rem;
+                    border-radius: 50%;
+                }
+
+                .image_input_group{
+                    width: 80%;
+                    border: 1px solid #c2c2c2;
+                    margin: auto;
+                    margin-top: 3rem;                   
+                    .profile_lable{
+                        padding: 1rem 0;
+                        display: block;
+                        font-size: 1.6rem;
+                        color: rgb(128, 125, 125);
+                        width: 100%;
+                        cursor: pointer;
+                        i{
+                            font-size: 2rem;
+                            margin-right: .5rem;
+                            color: $color_2;
+                            float: right;
+                        }
+                    }
+                }
+            }
+            .registar_date{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                p{
+                    font-size: 1.4rem;
+                    color: rgb(128, 125, 125);
+                }
+                span{
+                    font-size: 1.4rem;
+                    color: rgb(128, 125, 125);
+                }
+            }
+        }
+        .profile_input{
+            width: 50rem;
+            padding: 1rem;           
+            h3{
+                font-size: 1.2rem;
+                color: rgb(128, 125, 125);
+                font-weight: 500;
+                padding-bottom: 1rem;
+            }
+            .input_area{
+                margin-bottom: 4rem;
+                .input_line{
+                    display: flex;
+                    align-items: center;
+                    border: 1px solid rgb(223, 219, 219);
+                    padding-right: .5rem;
+                    margin-bottom: 2rem;
+    
+                    input{
+                        flex: 1;
+                        border: none;
+                        border-radius: 0;
+                        margin-bottom: 0;
+                        padding: .7rem 1rem;
+                        font-size: 1.6rem;
+                        
+                    }
+                    label {
+                        font-size: 1.4rem;
+                        color: rgb(128, 125, 125);
+    
+                    }
+                   
+                }
+            }           
+            .change_btn{
+                padding: 1rem 1.5rem;
+                font-size: 1.8rem;
+                background-color: $color_2;
+                color: $color_3;
+                letter-spacing: .1rem;
+            }
+        }
+        .profile_range{
+            width: 40rem;
+            padding: 1rem;
+            .range_bar{
+                background-color: #f1f8fa;
+                padding: 1rem;
+                padding-bottom: 2rem;
+                border-radius: .5rem;
+                .range_text{
+                    display: flex;
+                    h6{
+                        font-size: 3rem;
+                        color: $color_2;
+                        white-space: nowrap;
+                        span{
+                            font-size: 1.6rem;
+                        }
+                    }
+                    .point{
+                        width: 100%;
+                        display: flex;
+                        align-items: flex-end;
+                        justify-content: space-between;
+                        padding-left: 1rem;
+                        p{
+                            font-size: 1.6rem;
+                            border-left: 1px solid #ddd;
+                            padding-left: 1rem;
+                        }
+                        i{
+                            align-self: flex-start;
+                            font-size: 2rem;
+                            color: rgb(128, 125, 125);
+                        }
+                    }
+                }
+                .range_area{
+                    width: 100%;
+                    height: 1rem;
+                    margin: auto;
+                    border: 1px solid #01284F;
+                    margin-top: 2rem;
+                    position: relative;
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        width: 80%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        background-color: $color_2;
+                    }
+                }
+            }
+
+            p{
+                font-size: 1.4rem;
+                line-height: 4rem;
+                color: rgb(128, 125, 125);
+                i{
+                    font-size: 1.8rem;
+                    color: $color_2;
+                }
+                span {
+                    color: $color_2;
+                }
+            }
+        }
+    } 
+}

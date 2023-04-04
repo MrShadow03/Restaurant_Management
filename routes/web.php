@@ -16,18 +16,12 @@ use App\Http\Controllers\ProfileController;
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
+});
+Route::get('/test', function () {
+    return view('dashboard');
 });
 
-Route::get('/broadcast', function () {
-    Broadcast::channel('test-channel', function ($user) {
-        return true;
-    });
-
-    event(new TestEvent('Hello, world!'));
-
-    return 'Message sent.';
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

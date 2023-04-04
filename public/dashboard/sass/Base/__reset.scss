@@ -1,0 +1,49 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  font-family: 'roboto', sans-serif;
+  //apply anti-aliasing to text
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'roboto', sans-serif;
+}
+
+html::-webkit-scrollbar {
+  width: .5rem;
+}
+
+html::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #c2c2c2;
+  border-radius: 5rem;
+
+}
+div::-webkit-scrollbar {
+  display: none;
+}

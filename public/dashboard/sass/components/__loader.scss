@@ -1,0 +1,30 @@
+$thickness: 6px;
+.spinner {
+  margin: 10vh auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: $thickness solid $border_light;
+  border-top: $thickness solid $info;
+  animation: rotating-spinner 1s linear infinite;
+}
+$thickness-sm: 3px;
+.spinner-sm {
+  margin: 0 2rem;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: $thickness-sm solid $border_light;
+  border-top: $thickness-sm solid $info;
+  animation: rotating-spinner 1s linear infinite;
+}
+
+@keyframes rotating-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  
+  to {
+    transform: rotate(360deg);
+  }
+}

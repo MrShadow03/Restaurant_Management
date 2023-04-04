@@ -1,0 +1,743 @@
+// .btn{
+//     padding: 1.5rem 2.5rem;
+//     font-size: 1.4rem;
+//     border-radius: .5rem;
+//     border: 1px solid $border_light;
+//     color: $primary;
+//     background-color: #fff;
+//     cursor: pointer;
+//     i{
+//         margin-right: 1rem;
+//     }
+//     &:hover{
+//         background-color: $primary;
+//         color: $white;
+//     }
+// }
+
+.btn-sm{
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: .5rem;
+  border: 1px solid $border_light;
+  color: $primary;
+  background-color: #fff;
+  opacity: .8;
+  cursor: pointer;
+  i{
+      margin-right: 1rem;
+  }
+  &:hover{
+    opacity: 1;
+    background-color: $primary;
+    color: $white;
+  }
+}
+
+.btn-sm-success{
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: .5rem;
+  border: 1px solid $success;
+  color: $success;
+  background-color: $success-light;
+  opacity: .8;
+  cursor: pointer;
+  i{
+      margin-right: 1rem;
+  }
+  &:hover{
+    opacity: 1;
+    background-color: $success;
+    color: $white;
+  }
+}
+
+.btn-sm-danger{
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: .5rem;
+  border: 1px solid $danger;
+  color: $danger;
+  background-color: $danger-light;
+  opacity: .8;
+  cursor: pointer;
+  i{
+      margin-right: 1rem;
+  }
+  &:hover{
+    opacity: 1;
+    background-color: $danger;
+    color: $white;
+  }
+}
+
+.btn-lg{
+    max-width: 20rem;
+    text-align: center;
+}
+.text_btn{
+    text-decoration: underline;
+    &:hover{
+        filter: brightness(.2);
+    }
+}
+.text-label{
+    color: $primary;
+}
+
+@mixin button($theme_dark: false) {
+
+    @if $theme_dark {
+        background-color: black;
+        color: white;
+    } @else {
+        background-color: white;
+        color: #000;
+    }
+}
+
+.button{
+    padding: 1.5rem 2.5rem;
+    font-size: 1.4rem;
+    border-radius: .5rem;
+    border: 1px solid $border_light;
+}
+
+.button-light{
+    @include button($theme_dark: false);
+}
+
+.button-dark{
+    @include button($theme_dark: true);
+}
+
+.button-30 {
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: $primary;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding:1rem 1.6rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 14px;
+    transition: all 0.15s;
+    &:hover{
+        background-color: $primary;
+        color: $white;
+    }
+  }
+  
+  .button-30:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  }
+  
+  .button-30:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+  }
+  
+  .button-30:active {
+    box-shadow: #000e1c 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+
+  .button-30--active{
+    background-color: $primary;
+    color: $white;
+  }
+
+  //Pagination button
+
+  .pagination_nav{
+    margin-top: 2rem;
+  }
+  .pagination{
+    display: flex;
+    gap: .5rem;
+    justify-content: flex-end;
+  }
+
+  .pagination-button-30 {
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+    border-width: 0;
+    box-sizing: border-box;
+    color: $primary;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding:1rem 1.6rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 14px;
+    transition: all 0.15s;
+    &:hover{
+        background-color: $primary;
+        color: $white;
+    }
+  }
+  
+  .pagination-button-30:active {
+    box-shadow: #000e1c 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+
+  .pagination-button-30--active{
+    background-color: $primary;
+    color: $white;
+  }
+
+  //button 38
+.button-38 {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-38:hover {
+  background-color: rgb(249,250,251);
+}
+
+.button-38:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-38:focus-visible {
+  box-shadow: none;
+}
+
+//alert design
+
+.alert-success{
+    background-color: #D1FAE5 !important;
+    color: #10B981 !important;
+    border: 1px solid #A7F3D0;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+}
+
+.alert-danger{
+    background-color: #FEE2E2 !important;
+    color: #EF4444;
+    border: 1px solid #FECACA;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+}
+
+.alert-warning{
+    background-color: #FEF3C7 !important;
+    color: #F59E0B;
+    border: 1px solid #FCD34D;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+}
+
+.alert-info{
+    background-color: #DBEAFE !important;
+    color: #3B82F6;
+    border: 1px solid #93C5FD;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+}
+
+.btn-table{
+    padding: .5rem 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #fff;
+    background-color: #10B981;
+    &:hover{
+        background-color: #059669;
+    }
+}
+
+.btn-table-success{
+    background-color: #D1FAE5;
+    border: 1px solid #A7F3D0;
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover{
+        background-color: #BBF7D0;
+    }
+}
+
+.btn-table-danger{
+    background-color: #ff453e;
+    color: #fff;
+    padding: .5rem 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover{
+        background-color: #d4312b;
+    }
+}
+
+.button-31{
+
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  color: #ffffff;
+  background: #06325e;
+  font-weight: 400;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  &:hover {
+    background: #01284F;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  }
+  a{
+    color: #fff;
+    padding: 1rem 2rem;
+    display: block;
+  }
+}
+
+.button-primary{
+
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  color: #ffffff;
+  background: #06325e;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 1rem 2rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  &:hover {
+    background: #01284F;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  }
+}
+
+.btn-group{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  button{
+    display: inline-block;
+  }
+}
+
+.badge{
+  padding: .5rem 1rem;
+  border-radius: .2rem;
+  font-size: 1.3rem;
+  display: inline-block;
+  font-weight: 400;
+}
+.badge-sm{
+  padding: .2rem .5rem;
+  font-size: 1.2rem;
+  display: inline-block;
+  font-weight: 400;
+  border-radius: .2rem;
+}
+.badge-success{
+  background-color: $success-light;
+  color: $success;
+}
+.badge-danger{
+  background-color: $danger-light;
+  color: $danger;
+}
+.badge-warning{
+  background-color: $warning-light;
+  color: $warning;
+}
+.badge-info{
+  background-color: $info-light;
+  color: $info;
+}
+
+//Switch
+.tgl {
+	display: none;
+  &,
+  &:after,
+  &:before,
+	& *,
+  & *:after,
+  & *:before,
+	& + .tgl-btn {
+		box-sizing: border-box;
+		&::selection {
+			background: none;
+		}
+	}
+	+ .tgl-btn {
+		outline: 0;
+		display: block;
+		width: 4rem;
+		height: 2rem;
+		position: relative;
+		cursor: pointer;
+    user-select: none;
+		&:after,
+    &:before {
+			position: relative;
+			display: block;
+			content: "";
+			width: 50%;
+			height: 100%;
+		}
+    
+		&:after {
+			left: 0;
+		}
+    
+		&:before {
+			display: none;
+		}
+	}
+  
+	&:checked + .tgl-btn:after {
+		left: 50%;
+	}
+}
+
+.tgl-ios {
+	+ .tgl-btn {
+		background: #ebecf0;
+		border-radius: 2em;
+		padding: 2px;
+		transition: all .4s ease;
+		&:after {
+			border-radius: 2em;
+			background: #fbfbfb;
+			transition:
+        left .3s cubic-bezier(
+          0.175, 0.885, 0.320, 1.275
+        ),
+        padding .3s ease, margin .3s ease;
+			box-shadow:
+        0 0 0 1px rgba(0,0,0,.1),
+        0 4px 0 rgba(0,0,0,.08);
+		}
+    
+    &:hover:after {
+      will-change: padding;
+    }
+    
+		&:active {
+			box-shadow: inset 0 0 0 2em #e8eae9;
+			&:after {
+				padding-right: .8em;
+			}
+		}
+	}
+  
+	&:checked + .tgl-btn {
+    background: #0069fe;
+    &:active {
+      box-shadow: none;
+      &:after {
+        margin-left: -.8em;
+      }
+    }
+	}
+}
+
+
+//checkbox Style
+label.custom_checkbox {
+  display: inline-block; // to make it easier to click
+  color: #fff;
+  cursor: pointer;
+  position: relative; // important
+
+  // Now we'll create the checkbox object
+
+  span {
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    transform-origin: center;
+    border: 1px solid #9E9E9E;
+    vertical-align: -6px;
+    margin-right: 10px;
+    transition: background-color 150ms 200ms, transform 350ms cubic-bezier(.78,-1.22,.17,1.89); // custom ease effect for bouncy animation
+// Now we'll create the "tick" using pseudo elements - those will be basically two lines that will be rotated to form the "tick"
+
+  &:before {
+    content: "";
+    width: 0px;
+    height: 2px;
+    border-radius: 2px; // so that the tick has nice rounded look
+    background: $info;
+    position: absolute;
+    transform: rotate(45deg);
+    top: 10px; // you'll need to experiment with placement depending on the dimensions you've chosen
+    left: 8px; // you'll need to experiment with placement depending on the dimensions you've chosen
+    transition: width 50ms ease 50ms;
+    transform-origin: 0% 0%;
+  }
+
+  &:after {
+    content: "";
+    width: 0;
+    height: 2px;
+    border-radius: 2px; // so that the tick has nice rounded look
+    background: $info;
+    position: absolute;
+    transform: rotate(305deg);
+    top: 14px; // you'll need to experiment with placement depending on the dimensions you've chosen
+    left: 9px; // you'll need to experiment with placement depending on the dimensions you've chosen
+    transition: width 50ms ease;
+    transform-origin: 0% 0%;
+  }
+}
+// Time to add some life to it
+
+&:hover {
+  span {
+      border-color: $info;
+    &:before {
+      width: 5px;
+      transition: width 100ms ease;
+    }
+    
+    &:after {
+      width: 10px;
+      transition: width 150ms ease 100ms;
+    }
+  }
+}
+}
+
+input.custom_checkbox_input[type="checkbox"] {
+  display: none; // hide the system checkbox
+
+// Let's add some effects after the checkbox is checked
+
+&:checked {
+  + label {
+    span {
+      background-color: $info;
+      transform: scale(1.25); // enlarge the box
+      // transition: background-color 100ms ease;
+      border-color: #2196f3;
+      
+      &:after {
+        width: 10px;
+        background: #fff;
+        transition: width 150ms ease 100ms; // enlarge the tick
+      }
+      
+      &:before {
+        width: 5px;
+        background: #fff;
+        transition: width 150ms ease 100ms; // enlarge the tick
+      }
+    }
+    
+    &:hover { // copy the states for onMouseOver to avoid flickering
+      span {
+        background-color: #1976D2;
+        transform: scale(1.25); // enlarge the box
+
+        &:after {
+          width: 10px;
+          background: #fff;
+          transition: width 150ms ease 100ms; // enlarge the tick
+        }
+
+        &:before {
+          width: 5px;
+          background: #fff;
+          transition: width 150ms ease 100ms; // enlarge the tick
+        }
+      }  
+    }
+  }
+}
+}
+
+//buttons
+.btn{
+  padding: .8rem 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  &:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+}
+
+.btn-xs{
+  padding: .5rem 1rem;
+  border-radius: .2rem;
+  font-size: 1.3rem;
+  display: inline-block;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-success{
+  @include btn-variant(success);
+}
+
+.btn-danger{
+  @include btn-variant(danger);
+}
+
+.btn-warning{
+  @include btn-variant(warning);
+}
+
+.btn-info{
+  @include btn-variant(info);
+}
+.btn-disabled{
+  cursor: not-allowed;
+  opacity: .5;
+}
+.info{
+  cursor: pointer;
+  &:hover{
+    filter: brightness(.8);
+  }
+}
+.icon-badge{
+  width: 4rem;
+  aspect-ratio: 1/1;
+  border-radius: 10%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: .8rem;
+  i{
+    font-size: 1.3rem;
+  }
+}
+.icon-badge-info{
+  background-color: $info-light;
+  i{
+    color: $info;
+  }
+}
+.icon-badge-success{
+  background-color: $success-light;
+  i{
+    color: $success;
+  }
+}
+.icon-badge-danger{
+  background-color: $danger-light;
+  i{
+    color: $danger;
+  }
+}
+.icon-badge-warning{
+  background-color: $warning-light;
+  i{
+    color: $warning;
+  }
+}
+.hover_info{
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+    color: $info !important;
+  }
+}
+.link_text{
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.pulsing_info{
+  @include pulsing(info);
+}
+.pulsing_success{
+  @include pulsing(success);
+}
+.pulsing_danger{
+  @include pulsing(danger);
+}
+.pulsing_warning{
+  @include pulsing(warning);
+}
+.sidebar_control_button{
+  cursor: pointer;
+  i{
+    font-size: 2rem;
+    color : $primary;
+  }
+  &:hover{
+    i{
+      color: $info;
+    }
+  }
+}

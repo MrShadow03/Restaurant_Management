@@ -1,0 +1,96 @@
+.card{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .card__icon__wrapper{
+        width: 25%;
+        aspect-ratio: 1/1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50% !important;
+        i{
+            font-size: 3rem;
+            color: #fff;
+        }
+    }
+}
+
+.card__title{
+    font-size: 1.4rem;
+    opacity: 0.6;
+    font-family: 'inter', sans-serif;
+    font-weight: 400;
+}
+.card__data{
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: $primary;
+    font-family: 'poppins', sans-serif;
+    margin-top: 2rem;
+}
+
+.grid__wrapper{
+    padding: 2rem;
+}
+.grid__title{
+    font-size: 1.4rem;
+    font-family: 'poppins', sans-serif;
+    font-weight: 500;
+    color: $primary;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $border_light;
+}
+
+.mini_banner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 3rem;
+    .mini_banner_img{
+        width: 10rem;
+    }
+}
+
+.card_banner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    .mini_banner_img{
+        height: 5rem;
+    }
+}
+
+.bg-gradient-female{
+    background: rgb(230,102,142);
+    background: linear-gradient(125deg, rgba(230,102,142,1) 35%, rgba(237,164,99,1) 100%);
+}
+.bg-gradient-male{
+    background: #5082fb;
+    background: linear-gradient(125deg, #5082fb 35%, #BBDEFB 100%);
+}
+.box-shadow {
+    box-shadow: 0 14px 28px rgba(1, 0, 22, 0.014), 0 10px 10px rgba(0, 6, 24, 0.021);
+}
+.gradient-blue{
+    background: #5082fb;
+    background: linear-gradient(145deg, #5082fb 25%, #BBDEFB 100%);
+}
+.gradient-pink{
+    background: EC407A;
+    background: linear-gradient(145deg, #EC407A 25%, #F8BBD0 100%);
+}
+.gradient-green{
+    background: #43A047;
+    background: linear-gradient(145deg, #43A047 25%, #C8E6C9 100%);
+}
+.gradient-orange{
+    background: #F4511E;
+    background: linear-gradient(145deg, #F4511E 25%, #FFCCBC 100%);
+}
+.gradient-purple{
+    background: #7E57C2;
+    background: linear-gradient(145deg, #7E57C2 25%, #D1C4E9 100%);
+}

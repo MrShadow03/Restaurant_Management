@@ -1,0 +1,101 @@
+.dataTables_wrapper {
+    label {
+        font-weight: 400;
+        font-size: 12px;
+        color: $primary;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    select{
+        padding: 5px;
+        font-size: 12px;
+        color: $primary;
+        border: none !important;
+        border-radius: 0;
+    }
+    input{
+        border: 1px solid rgba(20, 23, 61, 0.24);
+        border-radius: 3px;
+        background-color: transparent;
+        margin-left: 3px;
+        padding: 1rem 2rem;
+        font-size: 1.4rem;
+    }
+    table{
+        border: none !important;
+        margin-bottom: 3rem !important;
+        padding-top: 3rem;
+    }
+    .dataTables_info{
+        font-size: 1.2rem;
+        opacity: .8;
+        color: #01284f;
+    }
+    .paginate_button{
+        border: none !important;
+        background-color: transparent !important;
+        color: #01284f;
+        font-size: 1.2rem;
+        opacity: .8;
+        padding: 0 1rem;
+    }
+    .current{
+        background-color: #01284f !important;
+        color: #fff !important;
+        border-radius: 3px;
+    }
+    .previous{
+        border: none !important;
+        background-color: transparent !important;
+        color: #01284f;
+        font-size: 1.2rem;
+        opacity: .8;
+        padding: 0 1rem;
+    }
+    .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        color: #fff !important;
+    }
+    .dataTables_search_wrapper{
+        position: relative;
+        i{
+            margin-right: 1rem;
+            font-size: 1.6rem;
+            position: absolute;
+            top: 50%;
+            left: 1.5rem;
+            opacity: .7;
+            transform: translateY(-50%);
+        }
+        input{
+            border: 1px solid #01284f18;
+            border-radius: 3px;
+            background-color: #f2f4f7;
+            font-size: 1.2rem;
+            color: #01284f;
+            font-weight: 400;
+            padding-left: 4rem;
+            padding-block: 1rem;
+            &::placeholder{
+                color: #01284f;
+                opacity: .6;
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+
+// table.data-table{
+//     tbody tr:nth-child(odd){
+//         background: $background;
+//     }
+//     tbody tr td{
+//         font-size: 1.4rem;
+//         text-align: left;
+//         font-family: 'roboto', sans-serif;
+//         color: $black;
+//         font-weight: 400;
+//         padding: 1rem 0;
+//     }
+// }

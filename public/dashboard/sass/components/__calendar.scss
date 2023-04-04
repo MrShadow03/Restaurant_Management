@@ -1,0 +1,107 @@
+:root {
+    --fc-border-color: rgba(0, 37, 75, 0.123) !important;
+    --fc-today-bg-color: #263238 !important;
+    --fc-border-color: rgba(0, 37, 75, 0) !important;
+  }
+#calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+    font-family: 'inter', serif !important;
+}
+.fc .fc-toolbar-title {
+    font-family: 'inter', serif !important;
+    font-size: 1.8rem !important;
+    color: $primary !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.fc .fc-col-header-cell-cushion {
+	display: inline-block;
+	padding: 6px 4px !important;
+    font-family: 'inter', serif !important;
+    font-size: 1.4rem !important;
+    color: $primary !important;
+    font-weight: normal;
+    opacity: .6 !important;
+}
+.fc .fc-daygrid-day-number {
+    padding: 10px !important;
+    font-family: 'inter', serif !important;
+    font-size: 3rem !important;
+    color: $info !important;
+    font-weight: bold;
+	position: relative;
+	z-index: 4;
+}
+.fc .fc-day-other .fc-daygrid-day-top {
+    opacity: .4 !important;
+    
+}
+
+.fc-day-fri{
+    .fc-daygrid-day-number{
+        color: $danger !important;
+    }
+}
+
+.fc-h-event .fc-event-title {
+	overflow: auto !important;
+    font-size: 1.2rem !important;
+    font-family: 'hind siliguri', serif !important;
+}
+
+.fc-daygrid-block-event .fc-event-time, .fc-daygrid-block-event .fc-event-title {
+	padding-block: 3px !important;
+}
+.fc .fc-button-primary {
+	background-color: $info !important;
+    border-color: $info !important;
+    padding: .5rem 1rem !important;
+	color: var(--fc-button-text-color);
+    cursor: pointer;
+    font-size: 1.2rem !important;
+    text-transform: capitalize !important;
+    &:hover {
+        background-color: $info !important;
+        border-color: $info !important;
+        opacity: 1 !important;
+    }
+}
+.fc .fc-button-primary:disabled {
+	background-color: $info !important;
+    border-color: $info !important;
+    padding: .5rem 1rem !important;
+    font-size: 1.2rem !important;
+    text-transform: capitalize !important;
+}
+
+.fc-liquid-hack td, .fc-liquid-hack th {
+	position: relative !important;
+	background-color: #fff;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+	outline: 4px solid #f2f4f7 !important;
+}
+
+td.fc-day-today {
+    background-color: #FFFDE7 !important;
+}
+
+@media (max-width: 768px) {
+    .fc-h-event .fc-event-title {
+        font-size: 1rem !important;
+    }
+    .fc .fc-toolbar-title {
+        font-size: 1.4rem !important;
+    }
+    .fc .fc-col-header-cell-cushion {
+        font-size: 1.2rem !important;
+    }
+    .fc .fc-daygrid-day-number {
+        font-size: 1.8rem !important;
+    }
+    .fc .fc-button-primary {
+        font-size: 1rem !important;
+    }
+}

@@ -1,0 +1,141 @@
+
+@font-face {
+    font-family: JosefinSans;
+    src: url(../font/Roboto-Italic.ttf);
+}
+
+@font-face {
+    font-family: AbyssinicaSIL;
+    src: url(../font/Poppins-Italic.ttf);
+}
+.text-title{
+    font-size: 1.8rem;
+    text-align: left;
+    font-family: 'roboto', sans-serif;
+    color: $primary;
+    font-weight: 500;
+}
+.text-body-column{
+    font-size: 1.4rem;
+    text-align: left;
+    font-family: 'roboto', sans-serif;
+    color: $black;
+    font-weight: 400;
+}
+.text-title-column{
+    font-size: 1.4rem;
+    text-align: left;
+    font-family: 'roboto', sans-serif;
+    color: $primary;
+    font-weight: 500;
+}
+.text-white{
+    color: #fff !important;
+}
+.op-5{
+    opacity: .5;
+}
+.op-6{
+    opacity: .6;
+}
+.op-7{
+    opacity: .7;
+}
+.op-8{
+    opacity: .8;
+}
+.op-9{
+    opacity: .9;
+}
+.op-10{
+    opacity: 1;
+}
+
+.text-title-alt{
+    font-size: 18px;
+    line-height: 27px;
+    text-align: left;
+    font-family: 'inter', sans-serif;
+    font-weight: 600;
+}
+.text-md-alt{
+    font-size: 1.5rem;
+    line-height: 23px;
+    text-align: left;
+    font-family: 'inter', sans-serif;
+    font-weight: 500;
+}
+.text-sm-alt{
+    font-size: 1.3rem;
+    line-height: 20px;
+    text-align: left;
+    font-family: 'inter', sans-serif;
+    font-weight: 400;
+}
+// .text-divider{
+//     font-size: 10px;
+//     text-align: left;
+//     font-family: 'inter', sans-serif;
+//     font-weight: 400;
+//     color: $primary;
+//     position: relative;
+//     background-color: #fff;
+//     &::before{
+//         content: '';
+//         width: 100%;
+//         height: 1px;
+//         background-color: $primary;
+//         position: absolute;
+//         top: 50%;
+//         transform: translateY(-50%);
+//         z-index: -1;
+//     }
+// }
+
+.text-orange{
+    color: $orange !important;
+}
+.text-purple{
+    color: $purple_dark !important;
+}
+
+//font weight
+.fw-100{
+    font-weight: 100 !important;
+}
+.fw-200{
+    font-weight: 200 !important;
+}
+.fw-300{
+    font-weight: 300 !important;
+}
+.fw-400{
+    font-weight: 400 !important;
+}
+.fw-500{
+    font-weight: 500 !important;
+}
+.fw-600{
+    font-weight: 600 !important;
+}
+.fw-700{
+    font-weight: 700 !important;
+}
+.fw-800{
+    font-weight: 800 !important;
+}
+.fw-900{
+    font-weight: 900 !important;
+}
+.font-inter{
+    font-family: 'inter', sans-serif;
+}
+.font-roboto{
+    font-family: 'roboto', sans-serif;
+}
+.font-poppins{
+    font-family: 'poppins', sans-serif;
+}
+.font-open-sans{
+    font-family: 'open-sans', sans-serif;
+}
