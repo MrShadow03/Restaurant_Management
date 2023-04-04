@@ -1,9 +1,7 @@
 <?php
 
-use App\Events\TestEvent;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +13,12 @@ use App\Http\Controllers\ProfileController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', function () {
-    return redirect()->route('login');
-});
-Route::get('/test', function () {
-    return view('dashboard');
+    return view('welcome');
 });
 
-
-Route::get('/dashboard', function () {
+Route::get('/user_panel', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
