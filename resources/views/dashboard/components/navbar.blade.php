@@ -1,13 +1,11 @@
 @php
-    // $user = Auth::user();
-    // //see user image exists or not
-    // if (!Storage::disk('public')->exists($user->image)) {
-    //     $gender = isset($user->gender) ? strtolower($user->gender) : 'male' ;
-    //     $user_image = $gender === 'male' ? 'https://ui-avatars.com/api/?name='.$user->name.'&color=7F9CF5&background=EBF4FF&size=256&font-size=0.33&bold=true' : 'https://ui-avatars.com/api/?name='.$user->name.'&background=FCE4EC&color=F06292&bold=true&size=256&font-size=0.33';
-    // }else{
-    //     $user_image = asset('storage/'.$user->image);
-    // }
-    $user_image = 'https://ui-avatars.com/api/?name=John%20Doe&color=7F9CF5&background=EBF4FF&size=256&font-size=0.33&bold=true';
+    $user = Auth::user();
+    //see user image exists or not
+    if (!Storage::disk('public')->exists($user->image)) {
+        $user_image = 'https://ui-avatars.com/api/?name='.$user->name.'&color=7F9CF5&background=EBF4FF&size=256&font-size=0.33&bold=true';
+    }else{
+        $user_image = asset('storage/'.$user->image);
+    }
 @endphp
 @props(['search'])
 <div class="top_head">
@@ -26,7 +24,7 @@
                     <img src="{{ $user_image }}" alt="img">
                     <div class="img_text">
                         <p>{{Auth::user()->name ?? 'John Doe' }}</p>
-                        <p>{{ Auth::user()->username ?? 'the_doe' }}</p>
+                        <p>{{ Auth::user()->email ?? 'the_doe' }}</p>
                     </div>
                 </div>
                 <div class="profile_sub_item">
@@ -41,7 +39,7 @@
                     <i class="fa-regular fa-gear"></i>
                     <a href="#">Settings</a>
                 </div>
-                <form method="POST" action="#" class="profile_sub_item" onclick="event.preventDefault(); this.closest('form').submit();">
+                <form method="POST" action="{{ route('logout') }}" class="profile_sub_item" onclick="event.preventDefault(); this.closest('form').submit();">
                     @csrf
                     <i class="fa-regular fa-power-off"></i>
                     <a href="#" >Logout</a>

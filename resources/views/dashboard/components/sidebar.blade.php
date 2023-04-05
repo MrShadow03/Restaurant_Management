@@ -13,7 +13,7 @@
         <ul class="nav_area mt-2">
             {{-- sidebar for students --}}
             <li><a href="#"><i class="menu_icon fa-light fa-user"></i>Dashboard</a></li>
-            <li><a href="#"><i class="menu_icon fa-light fa-calendar-days"></i>Routine</a></li>
+            <li><a href="#"><i class="menu_icon fa-light fa-box-circle-check"></i></i>Inventory</a></li>
             <li><a href="#"><i class="menu_icon fa-light fa-bell"></i>Results</a></li>
             <li><a href="#"><i class="menu_icon fa-light fa-book-alt"></i>Syllabus</a></li>
             <li><a href="#"><i class="menu_icon fa-light fa-calendar"></i>Calendar</a></li>

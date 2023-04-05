@@ -1,17 +1,20 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+@php
+    $user = Auth::user();
+    //see user image exists or not
+    if (!Storage::disk('public')->exists($user->image)) {
+        $user_image = 'https://ui-avatars.com/api/?name='.$user->name.'&color=7F9CF5&background=EBF4FF&size=256&font-size=0.33&bold=true';
+    }else{
+        $user_image = asset('storage/'.$user->image);
+    }
+@endphp
+@section('title')
+<title>{{ auth()->user()->name }}'s Dashboard</title>
+@endsection
+@extends('dashboard.app')
+@section('exclusive_styles')
+@endsection
+@section('main')
+    <x-sidebar/>
+    <div class="right_content">
+        <x-navbar />
+@endsection
