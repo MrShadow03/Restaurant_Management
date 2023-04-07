@@ -1,5 +1,45 @@
-#table{
-    padding: 1rem;
+.heading{
+    margin-block: 2rem;
+    margin-inline: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .heading__title{
+        font-family: 'roboto', sans-serif;
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: $primary;
+    }
+}
+
+.modal_heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'inter', sans-serif;
+    margin: 1rem 0;
+    .modal_title{
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: $primary;
+        opacity: .8;
+    }
+    border-bottom: 1px solid $border_light;
+    button{
+        background: transparent;
+        cursor: pointer;
+        height: 4rem;
+        aspect-ratio: 1/1;
+        i{
+            font-size: 1.4rem;
+            opacity: .5;
+        }
+        &:hover{
+            background: #f6f6f6;
+            border-radius: 10%;
+        }
+
+    }
 }
 
 .contact_info{
@@ -273,6 +313,7 @@
         }
     }
 }
+
 .tooltip {
     position: relative;
     display: inline-block;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2023 at 07:30 PM
+-- Generation Time: Apr 07, 2023 at 08:37 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -36,6 +36,32 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventories`
+--
+
+CREATE TABLE `inventories` (
+  `id` bigint(20) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `available_units` float DEFAULT 0,
+  `unit_cost` float DEFAULT NULL,
+  `total_cost` float DEFAULT NULL,
+  `measurement_unit` varchar(10) DEFAULT NULL,
+  `last_added` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventories`
+--
+
+INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `unit_cost`, `total_cost`, `measurement_unit`, `last_added`, `created_at`, `updated_at`) VALUES
+(2, 'Mutton', 150, 750, 112500, 'kg', '2023-04-07 12:01:16', '2023-04-07 12:01:16', '2023-04-07 12:01:16'),
+(3, 'খাসি', 20, 1100, 22000, 'kg', '2023-04-07 12:05:11', '2023-04-07 12:05:11', '2023-04-07 12:05:11');
 
 -- --------------------------------------------------------
 
@@ -101,6 +127,9 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'default.png',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -112,8 +141,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Galib', 'reserved@admin.com', NULL, '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `role`, `status`, `image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Galib', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -125,6 +154,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `email_verified_at`,
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `inventories`
+--
+ALTER TABLE `inventories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -162,6 +197,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `inventories`
+--
+ALTER TABLE `inventories`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`

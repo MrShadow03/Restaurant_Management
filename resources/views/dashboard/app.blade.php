@@ -8,7 +8,7 @@
     @show
 </head>
     <body>
-        <div class="main">
+        <div class="main  remodal-bg">
             @section('main')
                 {{-- here you can add main content for this page --}}
             @show

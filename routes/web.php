@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,16 @@ Route::get('/user_panel', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::group(['middleware' => ['auth', 'auth.admin']], function () {
-    Route::get('/inventory', function () {
-        echo 'inventory';
-    });
+Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    //manager inventory
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
+    Route::post('/inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
+});
+
+Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', 'as' => 'manager.'], function () {
+    //manager inventory
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
+    Route::post('/inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
 });
 
 Route::middleware('auth')->group(function () {

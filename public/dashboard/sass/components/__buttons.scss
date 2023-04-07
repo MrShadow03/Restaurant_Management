@@ -15,76 +15,7 @@
 //     }
 // }
 
-.btn-sm{
-  padding: 1rem 1.5rem;
-  font-size: 1.3rem;
-  border-radius: .5rem;
-  border: 1px solid $border_light;
-  color: $primary;
-  background-color: #fff;
-  opacity: .8;
-  cursor: pointer;
-  i{
-      margin-right: 1rem;
-  }
-  &:hover{
-    opacity: 1;
-    background-color: $primary;
-    color: $white;
-  }
-}
 
-.btn-sm-success{
-  padding: 1rem 1.5rem;
-  font-size: 1.3rem;
-  border-radius: .5rem;
-  border: 1px solid $success;
-  color: $success;
-  background-color: $success-light;
-  opacity: .8;
-  cursor: pointer;
-  i{
-      margin-right: 1rem;
-  }
-  &:hover{
-    opacity: 1;
-    background-color: $success;
-    color: $white;
-  }
-}
-
-.btn-sm-danger{
-  padding: 1rem 1.5rem;
-  font-size: 1.3rem;
-  border-radius: .5rem;
-  border: 1px solid $danger;
-  color: $danger;
-  background-color: $danger-light;
-  opacity: .8;
-  cursor: pointer;
-  i{
-      margin-right: 1rem;
-  }
-  &:hover{
-    opacity: 1;
-    background-color: $danger;
-    color: $white;
-  }
-}
-
-.btn-lg{
-    max-width: 20rem;
-    text-align: center;
-}
-.text_btn{
-    text-decoration: underline;
-    &:hover{
-        filter: brightness(.2);
-    }
-}
-.text-label{
-    color: $primary;
-}
 
 @mixin button($theme_dark: false) {
 
@@ -351,8 +282,70 @@
   }
 }
 
-.button-primary{
+.btn-sm{
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  border-radius: .5rem;
+  border: 1px solid $border_light;
+  min-width: 6rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #525252;
+}
 
+.btn-sm-success{
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: .5rem;
+  border: 1px solid $success;
+  color: $success;
+  background-color: $success-light;
+  opacity: .8;
+  cursor: pointer;
+  i{
+      margin-right: 1rem;
+  }
+  &:hover{
+    opacity: 1;
+    background-color: $success;
+    color: $white;
+  }
+}
+
+.btn-sm-danger{
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: .5rem;
+  border: 1px solid $danger;
+  color: $danger;
+  background-color: $danger-light;
+  opacity: .8;
+  cursor: pointer;
+  i{
+      margin-right: 1rem;
+  }
+  &:hover{
+    opacity: 1;
+    background-color: $danger;
+    color: $white;
+  }
+}
+
+.btn-lg{
+    max-width: 20rem;
+    text-align: center;
+}
+.text_btn{
+    text-decoration: underline;
+    &:hover{
+        filter: brightness(.2);
+    }
+}
+.text-label{
+    color: $primary;
+}
+
+.button-primary{
   outline: 0;
   cursor: pointer;
   text-align: center;
@@ -616,10 +609,13 @@ input.custom_checkbox_input[type="checkbox"] {
 
 //buttons
 .btn{
-  padding: .8rem 1.5rem;
-  font-size: 1.2rem;
-  border-radius: 0.2rem;
+  min-width: 10rem;
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  border-radius: 0.3rem;
   cursor: pointer;
+  min-width: 10rem;
+  font-weight: 500;
 }
 
 .btn-primary {

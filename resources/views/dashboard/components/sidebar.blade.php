@@ -12,11 +12,12 @@
         {{-- sidebar menu starts here --}}
         <ul class="nav_area mt-2">
             {{-- sidebar for students --}}
+            @if (Auth::user()->role == 'admin')
             <li><a href="#"><i class="menu_icon fa-light fa-user"></i>Dashboard</a></li>
-            <li><a href="#"><i class="menu_icon fa-light fa-box-circle-check"></i></i>Inventory</a></li>
-            <li><a href="#"><i class="menu_icon fa-light fa-bell"></i>Results</a></li>
-            <li><a href="#"><i class="menu_icon fa-light fa-book-alt"></i>Syllabus</a></li>
-            <li><a href="#"><i class="menu_icon fa-light fa-calendar"></i>Calendar</a></li>
+            <li><a href="{{ route('admin.inventory') }}"><i class="menu_icon fa-light fa-box-circle-check"></i></i>Inventory</a></li>
+            @elseif (Auth::user()->role == 'manager')
+            <li><a href="#"><i class="menu_icon fa-light fa-user"></i>Dashboard</a></li>
+            <li><a href="{{ route('manager.inventory') }}"><i class="menu_icon fa-light fa-box-circle-check"></i></i>Inventory</a></li>
             <li><a class="toggle_btn" href="#"><i class="fa-duotone fa-gear menu_icon"></i>Settings & Permissions<i class="las sub_icon la-angle-down"></i></a>
                 <ul class="sub_menu">
                     <li><a href="#"><i class="fa-light fa-user-unlock"></i>Result Permissions</a></li>
@@ -24,6 +25,7 @@
                     <li><a href="#"><i class="fa-light fa-box-archive"></i>Archive</a></li>
                 </ul>
             </li>
+            @endif
         </ul>
     </div>
 </div>

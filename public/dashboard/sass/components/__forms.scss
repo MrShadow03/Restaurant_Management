@@ -1,17 +1,80 @@
-.form_div{
+.modal__form {
+    text-align: left;
+    font-family: 'inter', sans-serif;
+
+    .modal__input__group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem 0rem;
+        width: 100%;
+        gap: 3rem;
+
+        .modal__input__field {
+            flex: auto;
+
+            .modal__input__label {
+                font-size: 1.2rem;
+                font-weight: 500;
+                margin-right: .5rem;
+                opacity: .8;
+                color: $primary;
+            }
+
+            .input {
+                padding: 1rem 1.5rem;
+                font-size: 1.4rem !important;
+                width: 100%;
+                border: 1px solid transparent;
+                background: $background;
+                border-radius: 3px;
+                transition: .3s ease-in-out;
+                font-weight: 400;
+                color: $primary;
+                margin-top: 1rem;
+
+                &:focus {
+                    border: 1px solid $info;
+                }
+
+                &::placeholder {
+                    font-size: 1.2rem;
+                    font-weight: 400;
+
+                }
+
+                &:invalid:focus {
+                    border: 1px solid $danger;
+                }
+            }
+        }
+    }
+    .modal__button_group{
+        gap: .5rem;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid $border_light;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+}
+
+.form_div {
     width: 90%;
     margin: 0 auto;
     margin-bottom: 1rem;
     padding-block: 3rem;
 }
-.form_title{
+
+.form_title {
     font-size: 1.8rem;
     text-align: left;
     font-family: 'roboto', sans-serif;
     color: $primary;
     font-weight: 500;
 }
-.form_subtitle{
+
+.form_subtitle {
     font-size: 1.4rem;
     font-weight: 400;
     text-align: left;
@@ -19,7 +82,8 @@
     color: $primary;
     opacity: .7;
 }
-form.data_form{
+
+form.data_form {
     width: 100%;
     height: auto;
     padding: 3rem 4rem;
@@ -33,11 +97,13 @@ form.data_form{
             font-weight: 500;
             opacity: .9;
             line-height: 2.6rem;
+
             input {
                 border-bottom: 1px dotted #1c1c1c;
             }
         }
     }
+
     .btn_groups {
         padding: 2rem;
         display: flex;
@@ -47,7 +113,7 @@ form.data_form{
 
         button {
             width: 25rem;
-            font-family:'poppins' serif;
+            font-family: 'poppins' serif;
             font-size: 1.4rem;
             font-weight: 500;
             display: flex;
@@ -62,6 +128,7 @@ form.data_form{
         }
     }
 }
+
 .input_group {
     display: flex;
     justify-content: flex-start;
@@ -69,10 +136,12 @@ form.data_form{
     padding: 1rem 0rem;
     column-gap: 3rem;
     flex-wrap: wrap;
+
     .input_field {
         flex: 1;
         align-self: start;
         position: relative;
+
         label {
             font-size: 1.4rem;
             font-weight: 500;
@@ -80,8 +149,9 @@ form.data_form{
             opacity: .8;
             color: $primary;
         }
-        
-        input,select {
+
+        input,
+        select {
             font-family: 'inter', sans-serif;
             padding: 1rem 1.5rem;
             font-size: 1.4rem;
@@ -93,33 +163,39 @@ form.data_form{
             font-weight: 400;
             color: $background_dark;
             margin-top: 1rem;
+
             &:focus {
                 border: 1px solid $primary;
             }
-            option{
+
+            option {
                 font-size: 1.4rem;
                 font-weight: 400;
                 margin-right: .5rem;
                 color: rgba(0, 0, 0, 0.7);
             }
         }
-        select{
+
+        select {
             font-size: 1.4rem;
             margin-right: .5rem;
         }
-        i.input-icon{
+
+        i.input-icon {
             position: absolute;
             top: 60%;
             right: 4%;
             font-size: 16px;
             opacity: 0.3;
             color: #263544;
-            &:hover{
+
+            &:hover {
                 opacity: .8;
             }
         }
-        
+
     }
+
     .checked_field {
         label {
             font-size: 1.4rem;
@@ -127,62 +203,67 @@ form.data_form{
             margin-right: .5rem;
             opacity: .8;
         }
+
         input {
             margin-right: .5rem;
         }
     }
 }
-.required{
+
+.required {
     color: red;
     opacity: .8;
     font-size: 1.4rem;
 }
 
 // =========login form==========
-.input_error{
+.input_error {
     color: red;
     font-size: 1.2rem;
     padding-top: 1rem;
     letter-spacing: .05rem;
 }
 
-.fluid-width{
+.fluid-width {
     width: 38%;
 }
 
 
 @media only screen and (max-width: 768px) {
-    .form_div{
+    .form_div {
         font-family: 'inter', sans-serif;
         width: 100%;
         background-color: #fff;
         margin: 3rem auto;
         padding-top: 1.5rem;
         box-shadow: #2635441c 0px 7px 29px 0px;
-        h3{
+
+        h3 {
             text-align: center;
             font-size: 2.5rem;
             color: #1c1c1c;
             padding: 7rem 0 0 0;
         }
-    
-        form{
+
+        form {
             width: 70%;
             margin: auto;
             padding: 1rem 4rem;
-            .row{
+
+            .row {
                 padding-block: 1rem;
                 display: flex;
                 flex-direction: column;
-    
-                label{
+
+                label {
                     font-size: 1.4rem;
                     font-weight: 500;
                     margin-right: .5rem;
                     opacity: .8;
                     margin-bottom: 1rem;
                 }
-                .image_input{
+
+                .image_input {
                     background: $background;
                     margin-top: 1rem;
                     border-radius: 3px;
@@ -190,11 +271,13 @@ form.data_form{
                     position: relative;
                     z-index: 1;
                     padding-block: 1rem;
-                    input{
+
+                    input {
                         width: 100%;
                         z-index: 3;
                     }
-                    p{
+
+                    p {
                         position: absolute;
                         top: 50%;
                         left: 50%;
@@ -206,7 +289,8 @@ form.data_form{
                         z-index: 2;
                     }
                 }
-                .form_control{
+
+                .form_control {
                     font-family: 'inter', sans-serif;
                     padding: 1rem 1rem;
                     font-size: 1.4rem;
@@ -217,30 +301,36 @@ form.data_form{
                     border: 1px solid transparent;
                     font-weight: 500;
                     color: rgba(0, 0, 0, 0.7);
-                    &:focus{
+
+                    &:focus {
                         border: 1px solid $primary;
                     }
                 }
-                textarea{
-                    &:focus{ 
+
+                textarea {
+                    &:focus {
                         font-size: 1.6rem;
-    
+
                     }
                 }
-                ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+
+                ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable,
+                .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
                     height: 26rem;
                 }
-                .ck-label{
+
+                .ck-label {
                     display: none;
                 }
-    
-                .ck-content{
-                    p{
+
+                .ck-content {
+                    p {
                         font-size: 1.5rem;
                     }
                 }
-    
-                select,.select2{
+
+                select,
+                .select2 {
                     padding: 1rem 1rem;
                     font-size: 1.4rem;
                     background: $background;
@@ -248,69 +338,79 @@ form.data_form{
                     transition: .3s ease-in-out;
                     border: 1px solid transparent;
                     color: rgba(0, 0, 0, 0.7);
-                    &:focus{
+
+                    &:focus {
                         border: 0.3px solid #17a2b8;
                     }
                 }
-               
+
             }
-            .side{
+
+            .side {
                 display: flex;
                 flex-direction: row;
-                div{
+
+                div {
                     justify-content: center;
                     display: flex;
                     align-items: center;
                     padding-right: 2rem;
-                    input{
+
+                    input {
                         margin-left: 1rem;
                         margin-top: -0.5rem;
                     }
-                    label{
+
+                    label {
                         cursor: pointer;
                     }
                 }
             }
-    
-            .btn_div{
+
+            .btn_div {
                 text-align: center;
                 padding-top: 2rem;
-                .btn{
+
+                .btn {
                     width: 100%;
                     padding-block: 1.5rem;
                 }
             }
-    
-    
+
+
         }
-        
-        .payment_form{
+
+        .payment_form {
             padding-block: 0;
             margin: 0;
-            .input_group{
-                .input_field{
-                    label{
+
+            .input_group {
+                .input_field {
+                    label {
                         display: none !important;
                     }
                 }
             }
         }
-        .payment_form:nth-child(1){
+
+        .payment_form:nth-child(1) {
             padding-top: 2rem;
             margin: 0;
         }
     }
-    form.student_register{
+
+    form.student_register {
         width: 100%;
         height: auto;
         padding: 0rem 5%;
         border-radius: 10px;
         margin-top: 0rem;
-    
+
         .input_group {
             display: block;
             padding: 0rem 0rem;
-            .section-title{
+
+            .section-title {
                 color: #263544;
                 font-size: 1.6rem;
                 font-weight: 900;
@@ -318,23 +418,27 @@ form.data_form{
                 padding-bottom: 2rem;
                 text-transform: uppercase;
             }
+
             .input_field {
                 margin-bottom: 1.5rem;
                 flex: 1;
                 align-self: start;
+
                 label {
                     font-size: 1.4rem;
                     font-weight: 500;
                     margin-right: .5rem;
                     opacity: .6;
                 }
-                .image_input{
+
+                .image_input {
                     background: $background;
                     margin-top: 1rem;
                     border-radius: 3px;
                     border: 1px dotted rgb(0, 134, 196);
                     position: relative;
-                    p{
+
+                    p {
                         position: absolute;
                         top: 50%;
                         left: 50%;
@@ -345,7 +449,9 @@ form.data_form{
                         opacity: .6;
                     }
                 }
-                input,select {
+
+                input,
+                select {
                     font-family: 'inter', sans-serif;
                     padding: 1rem 1rem;
                     font-size: 1.4rem;
@@ -357,53 +463,60 @@ form.data_form{
                     margin-top: .5rem;
                     font-weight: 500;
                     color: rgba(0, 0, 0, 0.7);
+
                     &:focus {
                         border: 1px solid $primary;
                     }
-                    option{
+
+                    option {
                         font-size: 1.5rem;
                         font-weight: 500;
                         margin-right: .5rem;
                         color: rgba(0, 0, 0, 0.7);
                     }
                 }
-                input#discount{
+
+                input#discount {
                     margin-bottom: 2rem;
                 }
-                input#course_fee{
+
+                input#course_fee {
                     margin-top: 0;
                 }
-                select{
+
+                select {
                     font-size: 1.4rem;
                     font-weight: 500;
                     margin-right: .5rem;
                     opacity: 1;
                 }
-                
-                
+
+
             }
         }
+
         .btn_groups {
             padding: 0;
-    
+
             button {
                 width: 100%;
             }
         }
     }
-    .fluid-width{
+
+    .fluid-width {
         width: 100%;
     }
 }
 
-.file_field{
+.file_field {
     max-width: 15rem;
     aspect-ratio: 1/1;
     border: 1px dotted $border_light;
     border-radius: 5px;
     position: relative;
 
-    label.file_label{
+    label.file_label {
         background-color: $background;
         width: 100%;
         height: 100%;
@@ -418,7 +531,8 @@ form.data_form{
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        .uploaded_img{
+
+        .uploaded_img {
             width: 100%;
             height: 100%;
             position: absolute;
@@ -427,7 +541,8 @@ form.data_form{
             object-fit: cover;
             opacity: 0;
         }
-        i.icon_hover{
+
+        i.icon_hover {
             position: absolute;
             top: 45%;
             left: 50%;
@@ -437,39 +552,47 @@ form.data_form{
             color: #fff !important;
             z-index: 11;
         }
-        i.icon_lg{
+
+        i.icon_lg {
             font-size: 4rem;
             color: $primary;
             transition: all .15s ease-in-out;
         }
-        span{
+
+        span {
             font-size: 1.4rem;
             line-height: 2.2rem;
             transition: all .15s ease-in;
         }
-        &:hover{
+
+        &:hover {
             background-color: $primary;
-            i.icon_lg,span{
+
+            i.icon_lg,
+            span {
                 opacity: 0;
             }
-            i.icon_hover{
+
+            i.icon_hover {
                 opacity: 1;
             }
         }
-        &:active{
+
+        &:active {
             background-color: $background_darker;
         }
     }
-    input.file_input{
+
+    input.file_input {
         display: none;
     }
 }
 
-.form-sm{
+.form-sm {
     width: 40% !important;
 }
 
-optgroup{
+optgroup {
     font-size: 1.4rem;
     font-weight: 500;
     margin-right: .5rem;

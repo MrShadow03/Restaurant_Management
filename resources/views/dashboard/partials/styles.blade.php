@@ -4,6 +4,7 @@
 <link rel="icon" href="{{ asset('./backend/img/Main Logo.png') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/font/font-awesome/css/all.min.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/tom-select.css') }}">
+<link rel="stylesheet" href="{{ asset('dashboard/vendors/css/remodal.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/remodal-default-theme.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/tiny-slider.css') }}">

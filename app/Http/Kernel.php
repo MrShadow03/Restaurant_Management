@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\AdminCheckMiddleware;
+use App\Http\Middleware\ManagerCheckMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -56,6 +57,7 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.admin' => AdminCheckMiddleware::class,
+        'auth.manager' => ManagerCheckMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
