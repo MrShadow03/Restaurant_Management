@@ -42,6 +42,60 @@
     }
 }
 
+.table-row:nth-child(even){
+    td{
+        background-color: #f6f6f6;
+    }
+}
+.table-row{
+    td{
+        padding: 1rem 3rem !important;
+    }
+}
+.heading-column{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: $primary;
+    opacity: .8;
+    padding: 1rem 3rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.table-column__wrapper{
+    display: flex;
+    align-items: center;
+    .table-column__image{
+        padding-right: 1.5rem;
+        img{
+            width: 4rem;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: .4rem;
+        }
+    }
+}
+.table-column__title{
+    font-family: 'hind siliguri', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: $primary;
+    opacity: .8;
+}
+
+.table-column__product{
+    opacity: 1;
+    font-weight: 500;
+}
+
+.table-column__subtitle{
+    font-family: 'poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: $primary;
+    opacity: .6;
+    padding-top: .5rem;
+}
+
 .contact_info{
     padding: 1rem;
     .t_title{

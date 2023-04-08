@@ -18,9 +18,9 @@
                     <table class="w-100 data-table">
                         <thead>
                             <tr class="heading-row">
-                                <td class="heading-column text-title-column">Product</td>
-                                <th class="heading-column text-title-column">Unit Price</th>
-                                <th class="heading-column text-title-column">Last added</th>
+                                <th class="heading-column">Product</th>
+                                <th class="heading-column">Unit Price</th>
+                                <th class="heading-column">Last added</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,10 +29,10 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__image">
-                                                <img src="{{ asset('backend/img/teacher.png') }}" alt="">
+                                                <img src="{{ asset('dashboard/img/food/default.png') }}" alt="">
                                             </div>
                                             <div class="table-column__content">
-                                                <h3 class="table-column__title">{{ $product->product_name }}</h3>
+                                                <h3 class="table-column__title table-column__product">{{ $product->product_name }}</h3>
                                                 <p class="table-column__subtitle">{{ $product->available_units }} {{ $product->measurement_unit }}</p>
                                             </div>
                                         </div>
