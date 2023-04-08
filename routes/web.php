@@ -33,6 +33,10 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     //manager inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::put('/inventory/update', [InventoryController::class, 'update'])->name('inventory.update');
+    Route::put('/inventory/add', [InventoryController::class, 'add'])->name('inventory.add');
+    Route::put('/inventory/subtract', [InventoryController::class, 'subtract'])->name('inventory.subtract');
+    Route::get('/inventory/delete/{id}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 });
 
 Route::middleware('auth')->group(function () {
