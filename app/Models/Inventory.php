@@ -16,4 +16,9 @@ class Inventory extends Model
         'measurement_unit',
         'last_added'
     ];
+
+    public function recipes()
+    {
+        return $this->belongsToMany(Recipe::class, 'recipe_inventory', 'inventory_id', 'recipe_id');
+    }
 }

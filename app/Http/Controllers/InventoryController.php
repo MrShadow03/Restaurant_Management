@@ -10,7 +10,7 @@ class InventoryController extends Controller
     public function index()
     {
         return view('dashboard.pages.manager.inventory', [
-            'products' => Inventory::all(),
+            'products' => Inventory::orderBy('last_added', 'asc')->get(),
         ]);
     }
 
@@ -22,8 +22,6 @@ class InventoryController extends Controller
             'total_cost' => 'required',
             'measurement_unit' => 'required | in:kg,pcs,ltr',
         ]);
-
-
 
         $product = new Inventory();
         $product->product_name = $request->product_name;
