@@ -18,6 +18,7 @@
             @elseif (Auth::user()->role == 'manager')
             <li><a href="#"><i class="menu_icon fa-light fa-user"></i>Dashboard</a></li>
             <li><a href="{{ route('manager.inventory') }}"><i class="menu_icon fa-light fa-box-circle-check"></i></i>Inventory</a></li>
+            <li><a href="{{ route('manager.recipe') }}"><i class="menu_icon fa-light fa-burger-soda"></i></i>Food Items</a></li>
             <li><a class="toggle_btn" href="#"><i class="fa-duotone fa-gear menu_icon"></i>Settings & Permissions<i class="las sub_icon la-angle-down"></i></a>
                 <ul class="sub_menu">
                     <li><a href="#"><i class="fa-light fa-user-unlock"></i>Result Permissions</a></li>

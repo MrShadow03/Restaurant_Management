@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2023 at 08:25 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Apr 09, 2023 at 08:23 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -132,10 +132,20 @@ CREATE TABLE `recipes` (
   `description` text DEFAULT NULL,
   `image` varchar(255) NOT NULL DEFAULT 'default.png',
   `status` tinyint(1) NOT NULL DEFAULT 1,
-  `category_id` bigint(20) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `price` int(11) NOT NULL,
+  `VAT` float NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `recipes`
+--
+
+INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `VAT`, `created_at`, `updated_at`) VALUES
+(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 350, 2, '2023-04-09 11:34:15', '2023-04-09 11:34:15'),
+(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, '2023-04-09 12:22:54', '2023-04-09 12:22:54');
 
 -- --------------------------------------------------------
 
@@ -268,7 +278,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `recipe_inventory`

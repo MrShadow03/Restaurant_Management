@@ -14,6 +14,9 @@ class Recipe extends Model
         'description',
         'image',
         'category',
+        'price',
+        'VAT',
+        'status',
     ];
 
     public function inventories()

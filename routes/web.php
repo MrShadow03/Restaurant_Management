@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InventoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,13 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::put('/inventory/add', [InventoryController::class, 'add'])->name('inventory.add');
     Route::put('/inventory/subtract', [InventoryController::class, 'subtract'])->name('inventory.subtract');
     Route::get('/inventory/delete/{id}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
+
+    //manager recipe
+    Route::get('/recipe', [RecipeController::class, 'index'])->name('recipe');
+    Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
+    Route::get('/recipe/delete/{id}', [recipeController::class, 'destroy'])->name('recipe.destroy');
+
+
 });
 
 Route::middleware('auth')->group(function () {
