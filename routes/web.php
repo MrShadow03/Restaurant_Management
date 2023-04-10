@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     //manager recipe
     Route::get('/recipe', [RecipeController::class, 'index'])->name('recipe');
     Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
+    Route::patch('/recipe/update', [RecipeController::class, 'update'])->name('recipe.update');
+    Route::patch('/recipe/toggleOnMenu', [RecipeController::class, 'toggleOnMenu'])->name('recipe.toggle_on_menu');
     Route::get('/recipe/delete/{id}', [recipeController::class, 'destroy'])->name('recipe.destroy');
 
 

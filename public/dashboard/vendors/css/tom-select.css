@@ -20,7 +20,7 @@
 
 .ts-wrapper.single .ts-control,
 .ts-wrapper.single .ts-control input {
-    cursor: pointer;
+    cursor: text;
 }
 
 .ts-control {

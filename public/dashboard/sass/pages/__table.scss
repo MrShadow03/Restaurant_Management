@@ -94,6 +94,16 @@
     color: $primary;
     opacity: .6;
 }
+.table-column__status{
+    i{
+        font-size: 1.4rem;
+        margin-right: .5rem;
+    }
+    font-family: 'poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #01284faf;
+}
 
 .contact_info{
     padding: 1rem;

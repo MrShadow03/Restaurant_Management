@@ -17,7 +17,7 @@ class RecipeController extends Controller
 
     public function store(Request $request){
         $request->validate([
-                'recipe_name' => 'required',
+                'recipe_name' => 'required | unique:recipes',
                 'category' => 'nullable',
                 'price' => 'required',
                 'VAT' => 'nullable',
@@ -32,5 +32,38 @@ class RecipeController extends Controller
 
         return redirect()->route('manager.recipe')->with('success', 'Recipe added successfully');
 
+    }
+
+    public function update(Request $request){
+        $request->validate([
+                'recipe_name' => 'required',
+                'category' => 'nullable',
+                'price' => 'required',
+                'VAT' => 'nullable',
+            ]);
+
+        $recipe = Recipe::find($request->id);
+        $recipe->recipe_name = $request->recipe_name;
+        $recipe->category = $request->category;
+        $recipe->price = $request->price;
+        $recipe->VAT = $request->VAT;
+        $recipe->save();
+
+        return redirect()->route('manager.recipe')->with('success', 'Recipe updated successfully');
+    }
+
+    public function toggleOnMenu(Request $request){
+        $recipe = Recipe::find($request->id);
+        $recipe->on_menu = isset($request->on_menu) ? 1 : 0;
+        $recipe->save();
+
+        return redirect()->route('manager.recipe')->with('success', 'Recipe updated successfully');
+    }
+
+    public function destroy($id){
+        $recipe = Recipe::find($id);
+        $recipe->delete();
+
+        return redirect()->route('manager.recipe')->with('success', 'Recipe deleted successfully');
     }
 }
