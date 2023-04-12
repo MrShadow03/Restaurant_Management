@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TableController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
@@ -54,6 +55,9 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::patch('/staff/toggleStatus', [StaffController::class, 'toggleStatus'])->name('staff.toggle_status');
     Route::patch('/staff/assignTable', [StaffController::class, 'assignTable'])->name('staff.assign_table');
     Route::get('/staff/delete/{id}', [StaffController::class, 'destroy'])->name('staff.destroy');
+
+    //manager table
+    Route::get('/table', [TableController::class, 'index'])->name('table');
 
 
 });

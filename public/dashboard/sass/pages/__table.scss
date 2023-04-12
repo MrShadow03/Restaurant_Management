@@ -42,6 +42,89 @@
     }
 }
 
+.order_table_wrapper{
+    padding: 3rem;
+    display: flex;
+    gap: 2rem;
+    background-color: $white;
+    .order_table{
+        //no text selection
+        -webkit-touch-callout: none; /* iOS Safari */
+        user-select: none;
+        min-width: 30rem;
+        min-height: 14rem;
+        width: 25%;
+        padding: 1rem;
+        border: 2px solid $border_light;
+        border-radius: 10px;
+        position: relative;
+        font-family: 'inter', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .order_table_title{
+            font-family: 'poppins', sans-serif;
+            position: absolute;
+            font-size: 6rem;
+            font-weight: 600;
+            color: $primary;
+            opacity: .2;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .order_table_top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            .order_table_top_left{
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: $primary;
+                opacity: .8;
+            }
+            .order_table_top_right{
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: $primary;
+                opacity: .8;
+            }
+        }
+        .order_table_bottom{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            .order_table_bottom_left{
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: $primary;
+                opacity: .8;
+            }
+            .order_table_bottom_right{
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: $primary;
+                opacity: .8;
+            }
+        }
+    }
+}
+.status_indicator{
+    i{
+        font-size: 1.4rem;
+        margin-right: .5rem;
+    }
+    span{
+        font-family: 'inter', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #01284faf;
+    }
+}
 .table-row:nth-child(even){
     td{
         background-color: #f6f6f6;
