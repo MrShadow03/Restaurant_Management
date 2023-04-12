@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;

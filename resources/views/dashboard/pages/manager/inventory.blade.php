@@ -42,7 +42,7 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__content">
-                                                <h3 class="table-column__title">{{ $product->unit_cost }}</h3>
+                                                <h3 class="table-column__title">{{ round($product->unit_cost) }}</h3>
                                             </div>
                                         </div>
                                     </td>
@@ -80,7 +80,7 @@
     </div>
 
     {{-- product add remodal --}}
-    <div class="modal remodal" data-remodal-id="add_product">
+    <div class="modal remodal" data-remodal-id="add_product" data-remodal-options="confirmOnEnter: true">
         <div class="modal_heading">
             <h2 class="modal_title">Add New Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -134,7 +134,7 @@
     </div>
 
     {{-- product edit remodal --}}
-    <div class="modal remodal" data-remodal-id="edit_product_modal">
+    <div class="modal remodal" data-remodal-id="edit_product_modal" data-remodal-options="confirmOnEnter: true">
         <div class="modal_heading">
             <h2 class="modal_title" id="edit_product">Edit Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -171,7 +171,7 @@
         </form>
     </div>
     
-    <div class="modal remodal" data-remodal-id="add_product_modal">
+    <div class="modal remodal" data-remodal-id="add_product_modal" data-remodal-options="confirmOnEnter: true">
         <div class="modal_heading">
             <h2 class="modal_title" id="add_edit_product">Edit Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -203,7 +203,7 @@
         </form>
     </div>
     
-    <div class="modal remodal" data-remodal-id="subtract_product_model">
+    <div class="modal remodal" data-remodal-id="subtract_product_model" data-remodal-options="confirmOnEnter: true">
         <div class="modal_heading">
             <h2 class="modal_title" id="subtract_edit_product">Edit Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>

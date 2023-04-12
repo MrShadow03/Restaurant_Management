@@ -20,10 +20,10 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="input_single">
-                <label class="input_title animate_label" for="email_or_phone">Email or Phone</label>
-                <input name="email" type="text"
-                placeholder="Email or Phone"class="input animate_input" value="{{ old('email_or_phone') }}" required/>
-                <i title="example@mail.com" class="input-icon fa-solid fa-envelope"></i>
+                <label class="input_title animate_label" for="emailOrPhone">Phone</label>
+                <input name="emailOrPhone" type="text"
+                placeholder="Phone Number"class="input animate_input" value="{{ old('emailOrPhone') }}" required/>
+                <i title="e.g: 01712345678" class="input-icon fa-solid fa-phone"></i>
             </div>
             <div class="input_single">
                 <label class="input_title animate_label" for="password">Password</label>

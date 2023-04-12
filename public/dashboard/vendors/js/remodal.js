@@ -765,8 +765,20 @@
 
     // Handles the keydown event
     $(document).on('keydown.' + NAMESPACE, function(e) {
-      if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
-        current.close();
+      // if (current && current.settings.closeOnEscape && current.state === STATES.OPENED && e.keyCode === 27) {
+      //   current.close();
+      // }
+      if (current && current.state === STATES.OPENED) {
+        if (current.settings.closeOnEscape && e.keyCode === 27) {
+          current.close();
+        } else if (current.settings.confirmOnEnter && e.keyCode === 13) {
+          var $form = current.$modal.find('form'); // Find the form element inside the modal
+          if ($form.length) { // If the form element was found
+            $form.submit(); // Submit the form
+          } else {
+            current.$modal.find('[data-' + PLUGIN_NAME + '-action="confirm"]').trigger('click'); // Fall back to triggering the confirm button click event
+          }
+        }
       }
     });
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2023 at 07:00 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Apr 12, 2023 at 11:27 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -60,10 +60,10 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `unit_cost`, `total_cost`, `measurement_unit`, `last_added`, `created_at`, `updated_at`) VALUES
-(2, 'Mutton', 150, 750, 112500, 'kg', '2023-04-07 12:01:16', '2023-04-07 12:01:16', '2023-04-07 12:01:16'),
+(2, 'Mutton', 151, 746.894, 112781, 'kg', '2023-04-12 03:24:47', '2023-04-07 12:01:16', '2023-04-12 03:24:47'),
 (3, 'খাসি', 20, 1100, 22000, 'kg', '2023-04-07 12:05:11', '2023-04-07 12:05:11', '2023-04-07 12:05:11'),
 (4, 'Chicken', 15, 216, 3240, 'kg', '2023-04-10 01:14:07', '2023-04-08 00:09:40', '2023-04-10 01:14:07'),
-(5, 'Basmati Rice', 12.25, 148, 1813, 'kg', '2023-04-08 01:55:02', '2023-04-08 01:55:02', '2023-04-10 01:15:51'),
+(5, 'Basmati Rice', 12.25, 148, 1813, 'kg', '2023-04-08 01:55:02', '2023-04-08 01:55:02', '2023-04-12 03:25:42'),
 (6, 'Soyabean Oil', 8, 160, 1280, 'ltr', '2023-04-08 01:56:27', '2023-04-08 01:56:27', '2023-04-08 01:56:27'),
 (7, 'Potato', 125, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-04-08 02:22:00');
 
@@ -145,11 +145,11 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `VAT`, `on_menu`, `created_at`, `updated_at`) VALUES
-(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 350, 15, 1, '2023-04-09 11:34:15', '2023-04-10 02:47:38'),
+(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 350, 15, 1, '2023-04-09 11:34:15', '2023-04-12 02:01:56'),
 (2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, 1, '2023-04-09 12:22:54', '2023-04-10 01:13:08'),
 (4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, NULL, 1, '2023-04-10 02:16:11', '2023-04-10 02:16:11'),
 (5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, NULL, 1, '2023-04-10 02:16:51', '2023-04-10 02:31:55'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, '2023-04-10 02:17:45', '2023-04-11 00:16:50');
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, '2023-04-10 02:17:45', '2023-04-12 02:07:28');
 
 -- --------------------------------------------------------
 
@@ -203,7 +203,7 @@ CREATE TABLE `tables` (
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
@@ -220,7 +220,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `role`, `status`, `image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Galib', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL);
+(1, 'Galib', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL),
+(3, 'Abdur Rahman', NULL, '01766555219', 'staff', 1, 'default.png', NULL, '$2y$10$/KjqO3hzlItM9iB.dLTFFuDZ41fRKrn1DCz/gLqON6hocroGVkdrG', NULL, '2023-04-12 02:33:05', '2023-04-12 03:26:08'),
+(4, 'Kalid Hassan', 'khalid@gmail.com', '01712923012', 'kitchen_staff', 1, 'default.png', NULL, '$2y$10$mWYKEQFwBVuvriK3bFlWe.2HEYLxo19zLVyVGmflfJjYluuxLfiNW', NULL, '2023-04-12 02:41:50', '2023-04-12 03:22:03');
 
 --
 -- Indexes for dumped tables
@@ -346,7 +348,7 @@ ALTER TABLE `tables`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

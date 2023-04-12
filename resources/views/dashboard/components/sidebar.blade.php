@@ -3,7 +3,11 @@
         <div class="header">                    
             <div class="logo">
                 <img src="{{ asset('backend/img/logo.png') }}" alt="">
-                <p class="ml-2 op-6 text-white fw-500 fs-16">School<span class="text-white fw-200">Management</span></p>
+                <p class="ml-2 op-9 text-yellow fw-500 fs-16">
+                    <i class="fa-duotone fa-fork-knife"></i>
+                    <span class="fs-14 fw-600" style="text-transform:uppercase; letter-spacing: 1px; margin-left: 1rem;">Restaurant</span>
+                    <span class="fs-14 fw-300 text-white" style="text-transform:uppercase; letter-spacing: 1px;">INC.</span>
+                </p>
             </div>
             <div class="menu_bars">
                 <i class="menu-cross fa-solid fa-times"></i>

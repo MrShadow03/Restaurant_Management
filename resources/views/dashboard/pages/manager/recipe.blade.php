@@ -9,8 +9,10 @@
         <div class="heading">
             <h2 class="heading__title text-title">Food Items</h2>
             <div class="heading__left">
-                <a href="#add_product" class="btn-sm btn-primary"><i class="fa-light fa-burger-soda"></i>&nbsp; Add Item</a>
+                <a href="#add_product" class="btn-sm btn-primary"><i class="fa-solid fa-burger-soda"></i>&nbsp; Add Item</a>
                 <audio src="{{ asset('dashboard/audio/order_recieved2.mp3') }}" controls class="d-none" id="order_recieved_sound"></audio>
+                <audio src="{{ asset('dashboard/audio/ding.mp3') }}" controls class="d-none" id="order_recieved_sound2"></audio>
+                <audio src="{{ asset('dashboard/audio/order_recieved1.mp3') }}" controls class="d-none" id="order_recieved_sound3"></audio>
             </div>
         </div>
         <div>
