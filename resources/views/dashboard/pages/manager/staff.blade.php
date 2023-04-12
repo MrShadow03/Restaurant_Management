@@ -19,8 +19,8 @@
                     <table class="w-100 data-table">
                         <thead>
                             <tr class="heading-row">
-                                <th class="heading-column">Product</th>
-                                <th class="heading-column">Status</th>
+                                <th class="heading-column">Name</th>
+                                <th class="heading-column">Phone</th>
                                 <th class="heading-column">Include on Menu</th>
                                 <th class="heading-column"></th>
                             </tr>

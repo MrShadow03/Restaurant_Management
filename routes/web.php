@@ -46,6 +46,14 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::patch('/recipe/toggleOnMenu', [RecipeController::class, 'toggleOnMenu'])->name('recipe.toggle_on_menu');
     Route::get('/recipe/delete/{id}', [recipeController::class, 'destroy'])->name('recipe.destroy');
 
+    //manager staff
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff');
+    Route::post('/staff/store', [StaffController::class, 'store'])->name('staff.store');
+    Route::patch('/staff/update', [StaffController::class, 'update'])->name('staff.update');
+    Route::patch('/staff/toggleStatus', [StaffController::class, 'toggleStatus'])->name('staff.toggle_status');
+    Route::patch('/staff/assignTable', [StaffController::class, 'assignTable'])->name('staff.assign_table');
+    Route::get('/staff/delete/{id}', [StaffController::class, 'destroy'])->name('staff.destroy');
+
 
 });
 

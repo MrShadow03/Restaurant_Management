@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2023 at 11:38 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Apr 12, 2023 at 07:00 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -149,7 +149,7 @@ INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `c
 (2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, 1, '2023-04-09 12:22:54', '2023-04-10 01:13:08'),
 (4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, NULL, 1, '2023-04-10 02:16:11', '2023-04-10 02:16:11'),
 (5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, NULL, 1, '2023-04-10 02:16:51', '2023-04-10 02:31:55'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, NULL, 1, '2023-04-10 02:17:45', '2023-04-10 02:19:08');
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, '2023-04-10 02:17:45', '2023-04-11 00:16:50');
 
 -- --------------------------------------------------------
 
@@ -176,6 +176,20 @@ CREATE TABLE `sales` (
   `id` bigint(20) NOT NULL,
   `recipe_id` bigint(20) NOT NULL,
   `price` float NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tables`
+--
+
+CREATE TABLE `tables` (
+  `id` bigint(20) NOT NULL,
+  `table_number` int(11) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -264,6 +278,12 @@ ALTER TABLE `sales`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tables`
+--
+ALTER TABLE `tables`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -314,6 +334,12 @@ ALTER TABLE `recipe_inventory`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tables`
+--
+ALTER TABLE `tables`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
