@@ -1,3 +1,10 @@
+@php
+    function addLeadingZero($number){
+        return $number < 10 ? '0'.$number : $number;
+    }
+    //get the max table number
+    $max_table_number = $tables->max('table_number')+1;
+@endphp
 @section('title')
 <title>Admin-Teacher</title>
 @endsection
@@ -7,16 +14,17 @@
     <div class="right_content">
         <x-navbar />
         <div class="heading">
-            <h2 class="heading__title text-title">Staff Management</h2>
+            <h2 class="heading__title text-title">Table Management</h2>
             <div class="heading__left">
-                <a href="#add_product" class="btn-sm btn-primary"><i class="fa-solid fa-user"></i>&nbsp; Add Table</a>
+                <a href="#add_table" class="btn-sm btn-primary" onclick="setTableNumber({{ $max_table_number }})"><i class="fa-solid fa-chart-tree-map"></i>&nbsp; Add Table</a>
                 <audio src="{{ asset('dashboard/audio/order_recieved2.mp3') }}" controls class="d-none" id="order_recieved_sound"></audio>
             </div>
         </div>
         <div>
             <div class="order_table_wrapper">
+                @foreach ($tables as $table)
                 <div class="order_table">
-                    <div class="order_table_title">01</div>
+                    <div class="order_table_title">{{ addLeadingZero($table->table_number) }}</div>
                     <div class="order_table_top">
                         <div class="order_table_top_left">
                             <div class="status_indicator">
@@ -30,36 +38,57 @@
                     </div>
                     <div class="order_table_bottom">
                         <div class="oreder_table_bottom_left">
-                            <div class="btn-sm">Orders</div>
+                            <div class="btn-sm btn-primary">Prepare Bill</div>
                         </div>
                         <div class="oreder_table_bottom_right">
-                            <div class="btn-sm btn-primary">Bill</div>
+                            <p class="text-sm-alt text-primary">{{ $table->user->name }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="order_table">
-                    <div class="order_table_title">01</div>
-                    <div class="order_table_top">
-                        <div class="order_table_top_left">
-                            <span></span>
-                        </div>
-                        <div class="order_table_top_right">
-                            <i class="order_table_icon fa-solid fa-user-pen"></i>
-                        </div>
-                    </div>
-                    <div class="order_table_bottom">
-                        <div class="oreder_table_bottom_left">
-                            <div class="btn-sm">Orders</div>
-                        </div>
-                        <div class="oreder_table_bottom_right">
-                            <div class="btn-sm btn-primary">Bill</div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
 
+    {{-- table add remodal --}}
+    <div class="modal remodal" data-remodal-id="add_table">
+        <div class="modal_heading">
+            <h2 class="modal_title"><i class="fa-regular fa-user"></i> &nbsp; Add a new table</h2>
+            <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
+        </div>
+        <form class="modal__form" action="{{ route('manager.table.store') }}" method="POST" >
+            @csrf
+            <div class="modal__input__group">
+                <div class="modal__input__field">
+                    <label class="modal__input__label">Table Number</label>
+                    <input type="number" name="table_number" id="table_number" class="input" placeholder="e.g. 1" required>
+                </div>
+                @error('name')
+                    <p class="input-error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="modal__input__group">
+                <div class="modal__input__field">
+                    <label class="modal__input__label">Attendant</label>
+                    <select name="user_id" id="table_attendant" class="input" required>
+                        <option value="" disabled selected>Select an Attendant</option>
+                        @foreach ($attendants as $attendant)
+                            <option value="{{ $attendant->id }}">{{ $attendant->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @error('user_id')
+                    <p class="input-error">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="modal_input_group_wrapper" style="position: relative; z-index: 0;">
+                <div class="modal__input__group modal__button_group">
+                    <button data-remodal-action="cancel" class="btn-sm">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" onclick="this.form.submit()">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
 @endsection
 
 @section('exclusive_scripts')
@@ -81,11 +110,7 @@
     })(jQuery);
 
     //tom select in category
-    tomSelect = new TomSelect('#add_category', {
-        create: true,
-        maxItems: 1,
-    });
-    tomSelect2 = new TomSelect('#recipe_category', {
+    tomSelect = new TomSelect('#table_attendant', {
         create: true,
         maxItems: 1,
     });
@@ -112,6 +137,9 @@
     function updateButton(){
         //add btn-primary class to update button
         $('#edit_submit').addClass('btn-primary');
+    }
+    function setTableNumber(table_number){
+        $('#table_number').val(table_number);
     }
     
 </script>

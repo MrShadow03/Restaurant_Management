@@ -58,6 +58,11 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
 
     //manager table
     Route::get('/table', [TableController::class, 'index'])->name('table');
+    Route::post('/table/store', [TableController::class, 'store'])->name('table.store');
+    Route::patch('/table/update', [TableController::class, 'update'])->name('table.update');
+    Route::patch('/table/toggleStatus', [TableController::class, 'toggleStatus'])->name('table.toggle_status');
+    Route::patch('/table/assignAttendant', [TableController::class, 'assignAttendant'])->name('table.assign_attendant');
+    Route::get('/table/delete/{id}', [TableController::class, 'destroy'])->name('table.destroy');
 
 
 });

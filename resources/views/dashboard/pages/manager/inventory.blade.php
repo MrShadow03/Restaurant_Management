@@ -227,7 +227,6 @@
             </div>
         </form>
     </div>
-
 @endsection
 
 @section('exclusive_scripts')

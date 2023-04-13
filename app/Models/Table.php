@@ -10,8 +10,7 @@ class Table extends Model
     use HasFactory;
 
     protected $fillable = [
-        'table_name',
-        'status',
+        'table_number',
         'user_id',
     ];
 

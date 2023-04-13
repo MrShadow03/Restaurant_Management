@@ -17,9 +17,13 @@ class StaffController extends Controller
     }
 
     public function store(Request $request){
-        if(User::where('phone_number', $request->phone_number)->orWhere('email', $request->email)->exists()){
-            return redirect()->route('manager.staff')->with('error', 'Phone number or Email already exists');
+        if(User::where('phone_number', $request->phone_number)->exists()){
+            return redirect()->back()->with('error', 'Phone number already exists');
         }
+        if(isset($request->email) && (User::where('phone_number', $request->email)->exists())){
+            return redirect()->back()->with('error', 'Email already exists');
+        }
+
 
         $request->validate([
                 'name' => 'required',

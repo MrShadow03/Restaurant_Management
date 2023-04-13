@@ -47,14 +47,16 @@
     display: flex;
     gap: 2rem;
     background-color: $white;
+    flex-wrap: wrap;
+    justify-content: center;
     .order_table{
         //no text selection
         -webkit-touch-callout: none; /* iOS Safari */
         user-select: none;
         min-width: 30rem;
-        min-height: 14rem;
-        width: 25%;
-        padding: 1rem;
+        min-height: 16rem;
+        width: 23%;
+        padding: 2rem;
         border: 2px solid $border_light;
         border-radius: 10px;
         position: relative;
@@ -65,10 +67,10 @@
         .order_table_title{
             font-family: 'poppins', sans-serif;
             position: absolute;
-            font-size: 6rem;
+            font-size: 10rem;
             font-weight: 600;
             color: $primary;
-            opacity: .2;
+            opacity: .1;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -77,7 +79,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
             .order_table_top_left{
                 font-size: 1.4rem;
                 font-weight: 500;
@@ -95,7 +96,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
             .order_table_bottom_left{
                 font-size: 1.4rem;
                 font-weight: 500;
