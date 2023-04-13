@@ -6,6 +6,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\StaffTableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,10 +62,14 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::post('/table/store', [TableController::class, 'store'])->name('table.store');
     Route::patch('/table/update', [TableController::class, 'update'])->name('table.update');
     Route::patch('/table/toggleStatus', [TableController::class, 'toggleStatus'])->name('table.toggle_status');
-    Route::patch('/table/assignAttendant', [TableController::class, 'assignAttendant'])->name('table.assign_attendant');
+    Route::patch('/table/updateAttendant', [TableController::class, 'updateAttendant'])->name('table.update_attendant');
     Route::get('/table/delete/{id}', [TableController::class, 'destroy'])->name('table.destroy');
 
+});
 
+Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {
+    //staff table
+    Route::get('/table', [StaffTableController::class, 'index'])->name('table');
 });
 
 Route::middleware('auth')->group(function () {

@@ -78,7 +78,7 @@
     </div>
 
     {{-- product add remodal --}}
-    <div class="modal remodal" data-remodal-id="add_product">
+    <div class="modal remodal" data-remodal-id="add_product" data-remodal-options="confirmOnEnter: true">
         <div class="modal_heading">
             <h2 class="modal_title"><i class="fa-regular fa-user"></i> &nbsp; Add new staff</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>

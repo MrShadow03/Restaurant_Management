@@ -31,6 +31,8 @@
                     <li><a href="#"><i class="fa-light fa-box-archive"></i>Archive</a></li>
                 </ul>
             </li>
+            @elseif (Auth::user()->role == 'staff')
+            <li><a href="{{ route('staff.table') }}"><i class="menu_icon fa-light fa-chart-tree-map"></i></i>Tables</a></li>
             @endif
         </ul>
     </div>

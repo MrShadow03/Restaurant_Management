@@ -29,4 +29,17 @@ class TableController extends Controller
 
         return redirect()->route('manager.table')->with('success', 'Table added successfully');
     }
+
+    public function updateAttendant(Request $request){
+        $request->validate([
+            'table_id' => 'required|numeric|exists:tables,id',
+            'user_id' => 'required|numeric|exists:users,id|not_in:0',
+        ]);
+
+        $table = Table::find($request->table_id);
+        $table->user_id = $request->user_id;
+        $table->save();
+
+        return redirect()->route('manager.table')->with('success', 'Table attendant updated successfully');
+    }
 }

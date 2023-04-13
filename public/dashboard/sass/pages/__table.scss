@@ -46,11 +46,11 @@
     padding: 3rem;
     display: flex;
     gap: 2rem;
-    background-color: $white;
     flex-wrap: wrap;
     justify-content: center;
     .order_table{
         //no text selection
+        background-color: $white;
         -webkit-touch-callout: none; /* iOS Safari */
         user-select: none;
         min-width: 30rem;
@@ -91,6 +91,10 @@
                 color: $primary;
                 opacity: .8;
             }
+        }
+        .order_middle{
+            text-align: center;
+            z-index: 1;
         }
         .order_table_bottom{
             display: flex;
