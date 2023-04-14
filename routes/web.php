@@ -7,6 +7,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\StaffTableController;
+use App\Http\Controllers\API\StaffOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,11 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {
     //staff table
     Route::get('/table', [StaffTableController::class, 'index'])->name('table');
+
+    //staff order
+    Route::get('/api/getMenu/{table_id}', [StaffOrderController::class, 'getMenu'])->name('api.get_menu');
+    Route::post('/api/storeOrder', [StaffOrderController::class, 'storeOrder'])->name('api.store_order');
+    Route::get('/api/getOrders/{table_id}', [StaffOrderController::class, 'getOrders'])->name('api.get_orders');
 });
 
 Route::middleware('auth')->group(function () {

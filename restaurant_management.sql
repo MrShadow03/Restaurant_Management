@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2023 at 11:27 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Apr 14, 2023 at 07:29 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -92,6 +92,29 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint(20) NOT NULL,
+  `table_id` bigint(20) NOT NULL,
+  `recipe_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `table_id`, `recipe_id`, `quantity`, `user_id`, `created_at`, `updated_at`) VALUES
+(102, 2, 1, 1, 7, '2023-04-14 11:28:25', '2023-04-14 11:28:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_reset_tokens`
 --
 
@@ -149,7 +172,12 @@ INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `c
 (2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, 1, '2023-04-09 12:22:54', '2023-04-10 01:13:08'),
 (4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, NULL, 1, '2023-04-10 02:16:11', '2023-04-10 02:16:11'),
 (5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, NULL, 1, '2023-04-10 02:16:51', '2023-04-10 02:31:55'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, '2023-04-10 02:17:45', '2023-04-12 02:07:28');
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, '2023-04-10 02:17:45', '2023-04-12 02:07:28'),
+(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, NULL, 1, '2023-04-14 00:49:18', '2023-04-14 00:49:18'),
+(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 150, NULL, 1, '2023-04-14 00:49:46', '2023-04-14 00:49:46'),
+(9, 'Kacchi Full', NULL, 'default.png', 1, 'Biryani', 500, NULL, 1, '2023-04-14 00:50:35', '2023-04-14 00:50:35'),
+(10, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, NULL, 1, '2023-04-14 00:50:51', '2023-04-14 00:50:51'),
+(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, NULL, 1, '2023-04-14 00:51:13', '2023-04-14 00:51:13');
 
 -- --------------------------------------------------------
 
@@ -190,9 +218,22 @@ CREATE TABLE `tables` (
   `id` bigint(20) NOT NULL,
   `table_number` int(11) NOT NULL,
   `user_id` bigint(20) NOT NULL,
+  `status` varchar(15) DEFAULT 'free',
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tables`
+--
+
+INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
+(1, 1, 8, 'free', '2023-04-13 11:44:16', '2023-04-13 10:20:43'),
+(2, 2, 7, 'occupied', '2023-04-14 11:28:25', '2023-04-13 10:22:25'),
+(3, 3, 9, 'free', '2023-04-13 11:47:17', '2023-04-13 10:22:32'),
+(4, 4, 9, 'free', '2023-04-13 11:47:22', '2023-04-13 10:22:46'),
+(5, 5, 8, 'free', '2023-04-13 11:47:30', '2023-04-13 10:22:50'),
+(6, 6, 7, 'free', '2023-04-14 11:28:47', '2023-04-13 10:22:56');
 
 -- --------------------------------------------------------
 
@@ -221,8 +262,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `role`, `status`, `image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Galib', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL),
-(3, 'Abdur Rahman', NULL, '01766555219', 'staff', 1, 'default.png', NULL, '$2y$10$/KjqO3hzlItM9iB.dLTFFuDZ41fRKrn1DCz/gLqON6hocroGVkdrG', NULL, '2023-04-12 02:33:05', '2023-04-12 03:26:08'),
-(4, 'Kalid Hassan', 'khalid@gmail.com', '01712923012', 'kitchen_staff', 1, 'default.png', NULL, '$2y$10$mWYKEQFwBVuvriK3bFlWe.2HEYLxo19zLVyVGmflfJjYluuxLfiNW', NULL, '2023-04-12 02:41:50', '2023-04-12 03:22:03');
+(7, 'Galib Jaman', NULL, '01747371076', 'staff', 1, 'default.png', NULL, '$2y$10$Z35m2w.iYepzB0L0Kd5MNO6QwrFEs9/sfKK.DCd9NfnjDDrKDb4OW', NULL, '2023-04-13 11:07:06', '2023-04-13 11:07:06'),
+(8, 'Rafi Hasan', NULL, '01766555212', 'staff', 1, 'default.png', NULL, '$2y$10$M/mnrWyuCqDWSrhfVnsRcuNBfIU8/qmF674ozfGS8Q.nWaqCB7oIe', NULL, '2023-04-13 11:42:34', '2023-04-13 11:42:34'),
+(9, 'Abdur Rahman', 'abdr01@gmail.com', '01766555211', 'staff', 1, 'default.png', NULL, '$2y$10$KFHkrSeNjfBX..XMncmSqevmm2sLADVjl2Trl4fWnBjtjJQ74AUQa', NULL, '2023-04-13 11:47:08', '2023-04-13 11:47:08');
 
 --
 -- Indexes for dumped tables
@@ -245,6 +287,12 @@ ALTER TABLE `inventories`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -315,6 +363,12 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+
+--
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -324,7 +378,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `recipe_inventory`
@@ -342,13 +396,13 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

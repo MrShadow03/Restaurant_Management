@@ -1,3 +1,71 @@
+.menu_wrapper{
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .item_wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 0 2rem;
+        .item_left{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            .item_content{
+                text-align: left;
+                .menu_quantity_wrapper{
+                    margin-top: .5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    input{
+                        width: 4rem;
+                        height: 3rem;
+                        border: 1px solid $border_light;
+                        border-radius: 5px;
+                        text-align: center;
+                        font-size: 1.4rem;
+                        font-weight: 500;
+                        color: $primary;
+                    }
+                    button{
+                        cursor: pointer;
+                        height: 3rem;
+                        aspect-ratio: 1/1;
+                        i{
+                            font-size: 1.4rem;
+                            opacity: .5;
+                        }
+                        &:hover{
+                            background: #f6f6f6;
+                            border-radius: 10%;
+                        }
+                    }
+                }
+            }
+        }
+        .item_right{
+            margin-right: 2rem;
+        }
+    }
+    .item_wrapper:nth-child(even){
+        background-color: #f6f6f6;
+    }
+    .menu_category_title{
+        font-family: 'poppins', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: $primary;
+        opacity: .8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 1rem 0;
+        border-bottom: 1px solid $border_light;
+    }
+}
+
+
 .heading{
     margin-block: 2rem;
     margin-inline: 3rem;

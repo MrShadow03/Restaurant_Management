@@ -23,4 +23,14 @@ class Recipe extends Model
     {
         return $this->belongsToMany(Inventory::class, 'recipe_inventory', 'recipe_id', 'inventory_id')->withPivot('amount');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function getOrderCountAttribute()
+    {
+        return $this->orders()->count();
+    }
 }
