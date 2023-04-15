@@ -11,7 +11,7 @@ class TableController extends Controller
     public function index()
     {
         return view('dashboard.pages.manager.table',[
-            'tables' => Table::with('user')->get(),
+            'tables' => Table::with(['user','oldestOrder'])->get(),
             'attendants' => User::where('role', 'staff')->get(),
         ]);
     }

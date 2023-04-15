@@ -65,7 +65,9 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::patch('/table/toggleStatus', [TableController::class, 'toggleStatus'])->name('table.toggle_status');
     Route::patch('/table/updateAttendant', [TableController::class, 'updateAttendant'])->name('table.update_attendant');
     Route::get('/table/delete/{id}', [TableController::class, 'destroy'])->name('table.destroy');
-
+    
+    //manager order
+    Route::get('/api/getOrders/{table_id}', [StaffOrderController::class, 'getOrders'])->name('api.get_orders');
 });
 
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {

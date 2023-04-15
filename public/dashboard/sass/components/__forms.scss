@@ -77,6 +77,13 @@
     border-radius: 5px;
 }
 
+.item_image_sm{
+    width: 4rem !important;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
 .form_div {
     width: 90%;
     margin: 0 auto;

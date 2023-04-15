@@ -12,18 +12,18 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('sendOrderToKitchen', (msg) => {
-        
-        console.log('message: ' + msg);
-
-        // io.emit('orderResponseFromKitchen', msg);
-        //broadcast to all except the sender
         socket.broadcast.emit('orderResponseFromKitchen', msg);
     });
+
+    socket.on('updateTableStatus', (msg) => {
+        socket.broadcast.emit('updateTableStatusResponse', msg);
+    })
 
     socket.on('disconnect', (socket) => {
         console.log('user disconnected');
     });
 });
+
 
 server.listen(6001, () => {
     console.log('listening on *:6001');

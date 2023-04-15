@@ -25,10 +25,10 @@
                         <div class="order_table_top_left">
                             <div class="status_indicator" id="status_indicator{{ $table->id }}">
                                 @if ($table->status == 'free')
-                                <i class="text-yellow fa-solid fa-circle-small"></i>
+                                <i class="text-yellow fa-solid fa-circle"></i>
                                 <span>Free</span>
                                 @else
-                                <i class="text-success fa-solid fa-circle-small"></i>
+                                <i class="text-success fa-solid fa-circle"></i>
                                 <span>Occupied</span>
                                 @endif
                             </div>
@@ -43,6 +43,7 @@
                             <a href="#ordering_menu" class="btn-sm btn-primary" onclick="getMenu({{ json_encode($table) }})">Take Order</a>
                         </div>
                         <div class="oreder_table_bottom_right">
+                            <a href="#ordered_menu" id="ordered_menu_button{{ $table->id }}" class="{{ $table->status == 'free' ? 'd-none' : '' }} btn-sm btn-info" onclick="getOrders({{ json_encode($table) }})">View Orders</a>
                         </div>
                     </div>
                 </div>
@@ -50,6 +51,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal remodal" data-remodal-id="ordering_menu" id="ordering_remodal">
         <div class="modal_heading">
             <h2 class="modal_title" id="modal_title">Table-{{ $tables[0]->table_number }} Order</h2>
@@ -62,7 +64,7 @@
             @if ($loop->first)
             <h3 class="menu_category_title">{{ $category->category }}</h3>
             @endif
-            <div class="item_wrapper">
+            <div class="item_wrapper item_wrapper-stripes">
                 <div class="item_left">
                     <div class="item_image">
                         <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">
@@ -79,6 +81,37 @@
                 </div>
                 <div class="item_right">
                     <button class="btn-sm" onclick="placeOrder({{ $item->id }})" id="order_button{{ $item->id }}">Order</button>
+                </div>
+            </div>
+            @endforeach
+            @endforeach
+        </div>
+    </div>
+
+    <div class="modal remodal pb-1" data-remodal-id="ordered_menu" id="orders_remodal">
+        <div class="modal_heading">
+            <h2 class="modal_title" id="orders_modal_title">Table-{{ $tables[0]->table_number }} Order</h2>
+            <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
+            <input type="hidden" name="table_id" id="table_id" value="{{ $tables[0]->id }}">
+        </div>
+        <div class="menu_wrapper" id="orders_wrapper">
+            @foreach ($menu->unique('category') as $category)
+            @foreach ($menu->where('category', $category->category) as $item)
+            @if ($loop->first)
+            <h3 class="menu_category_title">{{ $category->category }}</h3>
+            @endif
+            <div class="item_wrapper border-bottom" style="padding: .8rem 0;">
+                <div class="item_left">
+                    <div class="item_image">
+                        <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="food">
+                    </div>
+                    <div class="item_content">
+                        <h3 class="item_title text-md-alt text">{{ $item->recipe_name }}</h3>
+                        <h3 class="item_subtitle text-sm-alt op-6">{{ $item->price }} BDT</h3>
+                    </div>
+                </div>
+                <div class="item_right">
+                    <span class="badge badge-info">x3</span>
                 </div>
             </div>
             @endforeach
@@ -194,6 +227,60 @@
             console.log(error);
         });
     }
+
+    function getOrders(table){
+        document.getElementById('orders_modal_title').innerHTML = 'Table-'+table.table_number+' Order';
+
+        axios.get(base_url+`/staff/api/getOrders/${table.id}`).
+        then(function(response){
+            //data
+            let orders = response.data.orders;
+            //clear orders wrapper
+            let orders_wrapper = document.querySelector('#orders_wrapper');
+            orders_wrapper.innerHTML = '';
+
+            html = '';
+            //get unique categories
+            var uniqueCategories = [...new Set(orders.map(item => item.category))];
+
+            console.log(uniqueCategories);
+            //create the orders
+            uniqueCategories.forEach(function(category) {
+                var items = orders.filter(function(item) {
+                    return item.category === category;
+                });
+
+                items.forEach(function(item, index) {
+                    if (index === 0) {
+                        html += '<h3 class="menu_category_title">' + category + '</h3>';
+                    }
+
+                    html += '<div class="item_wrapper border-bottom" style="padding: .8rem 0;">';
+                    html += '<div class="item_left">';
+                    html += '<div class="item_image">';
+                    html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="">`;
+                    html += '</div>';
+                    html += '<div class="item_content">';
+                    html += '<span class="item_title text-md-alt text">' + item.recipe_name + ' </span>';
+                    html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="item_right">';
+
+                    let buttonClass = item.orderCount > 0 ? 'btn-sm btn-success' : 'btn-sm';
+                    let buttonText = item.orderCount > 0 ? 'Ordered' : 'Order';
+                    html += '<span class="mr-1 text-sm-alt text-primary fw-600">x' + item.quantity + '</span>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+            });
+
+            //append the menu
+            orders_wrapper.innerHTML = html;
+        }).catch(function(error){
+            console.log(error);
+        });
+    }
     
     function incQuantity( id ){
         let quantity = document.getElementById('menu_quantity_input'+id).value;
@@ -235,10 +322,24 @@
         then(function(response){
             let data = response.data;
             let table_status = document.getElementById('status_indicator'+table_id);
+            let ordered_menu_button = document.getElementById('ordered_menu_button'+table_id);
             if(response.data.orders.length > 0){
-                table_status.innerHTML = `<i class="fa-solid fa-circle-small text-success"></i><span>Occupied</span>`;
+                table_status.innerHTML = `<i class="fa-solid fa-circle text-success"></i><span>Occupied</span>`;
+                ordered_menu_button.classList.remove('d-none');
+                //broadcast the table status
+                socket.emit('updateTableStatus', {
+                    table_id: table_id,
+                    status: 'occupied'
+                });
+
             }else{
-                table_status.innerHTML = `<i class="fa-solid fa-circle-small text-yellow"></i><span>Free</span>`;
+                table_status.innerHTML = `<i class="fa-solid fa-circle text-yellow"></i><span>Free</span>`;
+                ordered_menu_button.classList.add('d-none');
+                //broadcast the table status
+                socket.emit('updateTableStatus', {
+                    table_id: table_id,
+                    status: 'free'
+                });
             }
         }).catch(function(error){
             console.log(error);

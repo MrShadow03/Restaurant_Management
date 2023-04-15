@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Table extends Model
 {
@@ -20,5 +21,9 @@ class Table extends Model
 
     public function orders(){
         return $this->hasMany(Order::class);
+    }
+
+    public function oldestOrder(){
+        return $this->hasOne(Order::class)->orderBy('created_at', 'asc');
     }
 }

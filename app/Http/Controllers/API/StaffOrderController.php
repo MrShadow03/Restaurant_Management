@@ -82,6 +82,7 @@ class StaffOrderController extends Controller
             $item->recipe_name = $item->recipe->recipe_name;
             $item->price = $item->recipe->price;
             $item->total_price = $item->recipe->price * $item->quantity;
+            $item->category = $item->recipe->category;
             return $item;
         });
 
