@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Middleware\StaffCheckMiddleware;
 use App\Http\Middleware\ManagerCheckMiddleware;
+use App\Http\Middleware\KitchenStaffCheckMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,6 +61,7 @@ class Kernel extends HttpKernel
         'auth.admin' => AdminCheckMiddleware::class,
         'auth.manager' => ManagerCheckMiddleware::class,
         'auth.staff' => StaffCheckMiddleware::class,
+        'auth.kitchen_staff' => KitchenStaffCheckMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
