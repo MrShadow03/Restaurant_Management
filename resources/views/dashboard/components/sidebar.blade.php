@@ -33,6 +33,9 @@
             </li>
             @elseif (Auth::user()->role == 'staff')
             <li><a href="{{ route('staff.table') }}"><i class="menu_icon fa-light fa-chart-tree-map"></i></i>Tables</a></li>
+            @elseif (Auth::user()->role == 'kitchen_staff')
+            <li><a href="{{ route('kitchen_staff.recipe') }}"><i class="menu_icon fa-light fa-chart-tree-map"></i></i>Food Items</a></li>
+            <li><a href="{{ route('kitchen_staff.order') }}"><i class="menu_icon fa-light fa-burger-soda"></i></i>Orders</a></li>
             @endif
         </ul>
     </div>

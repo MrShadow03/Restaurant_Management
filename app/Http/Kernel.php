@@ -6,6 +6,7 @@ use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Middleware\StaffCheckMiddleware;
 use App\Http\Middleware\ManagerCheckMiddleware;
 use App\Http\Middleware\KitchenStaffCheckMiddleware;
+use App\Http\Middleware\RedirectToHomeMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'redirect' => RedirectToHomeMiddleware::class,
     ];
 }

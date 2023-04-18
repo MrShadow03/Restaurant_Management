@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\StaffTableController;
 use App\Http\Controllers\API\StaffOrderController;
+use App\Http\Controllers\KitchenStaffOrderController;
+use App\Http\Controllers\KitchenStaffRecipeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,15 +28,20 @@ Route::get('/', function () {
 
 Route::get('/user_panel', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'redirect'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
-    //manager inventory
+    //admin Home
+    Route::get('/home', function(){ return redirect()->route('admin.inventory'); })->name('home');
+    //admin inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
 });
 
 Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', 'as' => 'manager.'], function () {
+    //manager Home
+    Route::get('/home', function(){ return redirect()->route('manager.table'); })->name('home');
+
     //manager inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
@@ -71,13 +78,28 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
 });
 
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {
+    //staff Home
+    Route::get('/home', function(){ return redirect()->route('staff.table'); })->name('home');
+
     //staff table
     Route::get('/table', [StaffTableController::class, 'index'])->name('table');
-
+    
     //staff order
     Route::get('/api/getMenu/{table_id}', [StaffOrderController::class, 'getMenu'])->name('api.get_menu');
     Route::post('/api/storeOrder', [StaffOrderController::class, 'storeOrder'])->name('api.store_order');
     Route::get('/api/getOrders/{table_id}', [StaffOrderController::class, 'getOrders'])->name('api.get_orders');
+});
+
+Route::group(['middleware' => ['auth', 'auth.kitchen_staff'], 'prefix' => 'kitchen_staff', 'as' => 'kitchen_staff.'], function () {
+    //kitchen staff Home
+    Route::get('/home', function(){ return redirect()->route('kitchen_staff.recipe'); })->name('home');
+
+    //kitchen staff recipe
+    Route::get('/recipe', [KitchenStaffRecipeController::class, 'index'])->name('recipe');
+    Route::post('/recipe/toggle_availability', [KitchenStaffRecipeController::class, 'toggleAvailability'])->name('recipe.toggle_availability');
+
+    //kitchen staff order
+    Route::get('/order', [KitchenStaffOrderController::class, 'index'])->name('order');
 });
 
 Route::middleware('auth')->group(function () {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2023 at 07:29 PM
+-- Generation Time: Apr 18, 2023 at 05:33 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -110,7 +110,23 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `table_id`, `recipe_id`, `quantity`, `user_id`, `created_at`, `updated_at`) VALUES
-(102, 2, 1, 1, 7, '2023-04-14 11:28:25', '2023-04-14 11:28:25');
+(133, 2, 1, 1, 7, '2023-04-15 05:20:15', '2023-04-15 05:20:15'),
+(136, 6, 7, 1, 7, '2023-04-15 05:20:34', '2023-04-15 05:20:34'),
+(137, 6, 1, 1, 7, '2023-04-15 05:20:35', '2023-04-15 05:20:35'),
+(143, 1, 1, 3, 9, '2023-04-15 05:40:32', '2023-04-15 05:40:32'),
+(144, 1, 7, 1, 9, '2023-04-15 05:40:34', '2023-04-15 05:40:34'),
+(145, 1, 8, 3, 9, '2023-04-15 05:40:36', '2023-04-15 05:40:36'),
+(146, 1, 9, 2, 9, '2023-04-15 05:40:38', '2023-04-15 05:40:38'),
+(147, 1, 10, 4, 9, '2023-04-15 05:40:40', '2023-04-15 05:40:40'),
+(148, 1, 2, 1, 9, '2023-04-15 05:40:41', '2023-04-15 05:40:41'),
+(149, 1, 11, 1, 9, '2023-04-15 05:40:43', '2023-04-15 05:40:43'),
+(150, 1, 4, 1, 9, '2023-04-15 05:40:44', '2023-04-15 05:40:44'),
+(151, 1, 5, 1, 9, '2023-04-15 05:40:46', '2023-04-15 05:40:46'),
+(152, 1, 6, 1, 9, '2023-04-15 05:40:47', '2023-04-15 05:40:47'),
+(154, 4, 4, 1, 9, '2023-04-15 05:54:26', '2023-04-15 05:54:26'),
+(155, 4, 11, 1, 9, '2023-04-15 05:54:27', '2023-04-15 05:54:27'),
+(156, 4, 2, 1, 9, '2023-04-15 05:54:28', '2023-04-15 05:54:28'),
+(163, 5, 7, 1, 7, '2023-04-15 07:49:07', '2023-04-15 07:49:07');
 
 -- --------------------------------------------------------
 
@@ -159,6 +175,7 @@ CREATE TABLE `recipes` (
   `price` int(11) NOT NULL,
   `VAT` float DEFAULT 0,
   `on_menu` tinyint(1) DEFAULT 1,
+  `is_available` tinyint(1) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -167,17 +184,17 @@ CREATE TABLE `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `VAT`, `on_menu`, `created_at`, `updated_at`) VALUES
-(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 350, 15, 1, '2023-04-09 11:34:15', '2023-04-12 02:01:56'),
-(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, 1, '2023-04-09 12:22:54', '2023-04-10 01:13:08'),
-(4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, NULL, 1, '2023-04-10 02:16:11', '2023-04-10 02:16:11'),
-(5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, NULL, 1, '2023-04-10 02:16:51', '2023-04-10 02:31:55'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, '2023-04-10 02:17:45', '2023-04-12 02:07:28'),
-(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, NULL, 1, '2023-04-14 00:49:18', '2023-04-14 00:49:18'),
-(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 150, NULL, 1, '2023-04-14 00:49:46', '2023-04-14 00:49:46'),
-(9, 'Kacchi Full', NULL, 'default.png', 1, 'Biryani', 500, NULL, 1, '2023-04-14 00:50:35', '2023-04-14 00:50:35'),
-(10, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, NULL, 1, '2023-04-14 00:50:51', '2023-04-14 00:50:51'),
-(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, NULL, 1, '2023-04-14 00:51:13', '2023-04-14 00:51:13');
+INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `VAT`, `on_menu`, `is_available`, `created_at`, `updated_at`) VALUES
+(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 300, 15, 1, 1, '2023-04-09 11:34:15', '2023-04-17 10:50:18'),
+(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, 1, 1, '2023-04-09 12:22:54', '2023-04-16 12:24:36'),
+(4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, NULL, 1, 1, '2023-04-10 02:16:11', '2023-04-16 12:15:56'),
+(5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, NULL, 1, 1, '2023-04-10 02:16:51', '2023-04-16 12:20:51'),
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, 1, '2023-04-10 02:17:45', '2023-04-16 12:26:42'),
+(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, NULL, 1, 1, '2023-04-14 00:49:18', '2023-04-16 12:26:27'),
+(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 150, NULL, 1, 1, '2023-04-14 00:49:46', '2023-04-16 12:26:44'),
+(9, 'Kacchi Full', NULL, 'default.png', 1, 'Biryani', 500, NULL, 1, 1, '2023-04-14 00:50:35', '2023-04-16 12:26:46'),
+(10, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, NULL, 1, 1, '2023-04-14 00:50:51', '2023-04-16 12:26:47'),
+(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, NULL, 1, 1, '2023-04-14 00:51:13', '2023-04-16 12:26:49');
 
 -- --------------------------------------------------------
 
@@ -228,12 +245,18 @@ CREATE TABLE `tables` (
 --
 
 INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
-(1, 1, 8, 'free', '2023-04-13 11:44:16', '2023-04-13 10:20:43'),
-(2, 2, 7, 'occupied', '2023-04-14 11:28:25', '2023-04-13 10:22:25'),
-(3, 3, 9, 'free', '2023-04-13 11:47:17', '2023-04-13 10:22:32'),
-(4, 4, 9, 'free', '2023-04-13 11:47:22', '2023-04-13 10:22:46'),
-(5, 5, 8, 'free', '2023-04-13 11:47:30', '2023-04-13 10:22:50'),
-(6, 6, 7, 'free', '2023-04-14 11:28:47', '2023-04-13 10:22:56');
+(1, 1, 9, 'occupied', '2023-04-15 07:55:24', '2023-04-13 10:20:43'),
+(2, 2, 7, 'occupied', '2023-04-15 05:20:15', '2023-04-13 10:22:25'),
+(3, 3, 9, 'free', '2023-04-15 07:51:13', '2023-04-13 10:22:32'),
+(4, 4, 9, 'occupied', '2023-04-15 05:54:27', '2023-04-13 10:22:46'),
+(5, 5, 7, 'occupied', '2023-04-15 07:49:07', '2023-04-13 10:22:50'),
+(6, 6, 7, 'occupied', '2023-04-15 05:20:34', '2023-04-13 10:22:56'),
+(7, 7, 7, 'free', '2023-04-15 07:51:55', '2023-04-15 07:51:55'),
+(8, 8, 9, 'free', '2023-04-15 07:53:06', '2023-04-15 07:52:09'),
+(9, 9, 9, 'free', '2023-04-15 07:52:13', '2023-04-15 07:52:13'),
+(10, 10, 7, 'free', '2023-04-15 07:52:18', '2023-04-15 07:52:18'),
+(11, 11, 7, 'free', '2023-04-15 07:52:23', '2023-04-15 07:52:23'),
+(12, 12, 9, 'free', '2023-04-15 07:52:27', '2023-04-15 07:52:27');
 
 -- --------------------------------------------------------
 
@@ -263,7 +286,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `role`, `status`, `image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Galib', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL),
 (7, 'Galib Jaman', NULL, '01747371076', 'staff', 1, 'default.png', NULL, '$2y$10$Z35m2w.iYepzB0L0Kd5MNO6QwrFEs9/sfKK.DCd9NfnjDDrKDb4OW', NULL, '2023-04-13 11:07:06', '2023-04-13 11:07:06'),
-(8, 'Rafi Hasan', NULL, '01766555212', 'staff', 1, 'default.png', NULL, '$2y$10$M/mnrWyuCqDWSrhfVnsRcuNBfIU8/qmF674ozfGS8Q.nWaqCB7oIe', NULL, '2023-04-13 11:42:34', '2023-04-13 11:42:34'),
+(8, 'Rafi Hasan', NULL, '01766555212', 'kitchen_staff', 1, 'default.png', NULL, '$2y$10$M/mnrWyuCqDWSrhfVnsRcuNBfIU8/qmF674ozfGS8Q.nWaqCB7oIe', NULL, '2023-04-13 11:42:34', '2023-04-15 04:12:28'),
 (9, 'Abdur Rahman', 'abdr01@gmail.com', '01766555211', 'staff', 1, 'default.png', NULL, '$2y$10$KFHkrSeNjfBX..XMncmSqevmm2sLADVjl2Trl4fWnBjtjJQ74AUQa', NULL, '2023-04-13 11:47:08', '2023-04-13 11:47:08');
 
 --
@@ -366,7 +389,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -396,7 +419,7 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
