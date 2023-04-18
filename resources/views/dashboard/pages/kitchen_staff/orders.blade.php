@@ -8,33 +8,42 @@
         <x-navbar />
         <div class="heading">
             <h2 class="heading__title text-title">Food Items</h2>
-            <a href="#open_menu_remodal" class="btn-sm btn-primary"></a>
+            <a href="#open_menu_remodal" class="btn-sm btn-primary">Food Status</a>
         </div>
+        <div class="order_table_wrapper order_table_wrapper--kitchen">
         @foreach ($tables as $table)
-        <div class="menu_wrapper" id="orders_wrapper">
-            @foreach ($table$orders->unique('category') as $category)
-                @foreach ($menu->where('category', $category->category) as $item)
-                @if ($loop->first)
-                <h3 class="menu_category_title">$category->category</h3>
-                @endif
-                <div class="item_wrapper border-bottom" style="padding: .8rem 0;">
-                    <div class="item_left">
-                        <div class="item_image">
-                            <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="food">
+        @if ($table->orders->count() > 0)
+        <div class="menu_wrapper menu_wrapper--kitchen bg-white" id="orders_wrapper" data-table-id="{{ $table->id }}">
+            <div class="menu_title">
+                <h2 class="menu_title_text">Table {{ $table->table_number }}</h2>
+                <span class="font-poppins fs-12 text-warning" id="time-table-{{ $table->id }}" data-oldest-order-time="{{ $table->oldestOrder->created_at }}" >{{ $table->oldestOrder->created_at->diff(now())->format('%H:%I:%S') }}</span>
+            </div>
+            @php
+                $ordersByCategory = $table->orders->groupBy('recipe.category');
+            @endphp
+            @foreach ($ordersByCategory as $category => $orders)
+                {{-- <h3 class="menu_category_title">{{ $category }}</h3> --}}
+                @foreach ($orders as $item)
+                    <div class="item_wrapper border-bottom" style="padding: .8rem 0;">
+                        <div class="item_left">
+                            <div class="item_image">
+                                <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="food">
+                            </div>
+                            <div class="item_content">
+                                <h3 class="item_title text-md-alt text">{{ $item->recipe->recipe_name }} <span class="text-sm-alt text-orange">x3</span></h3>
+                                <h3 class="item_subtitle text-sm-alt op-6">{{ $item->recipe->price }} BDT</h3>
+                            </div>
                         </div>
-                        <div class="item_content">
-                            <h3 class="item_title text-md-alt text">$item->recipe_name</h3>
-                            <h3 class="item_subtitle text-sm-alt op-6">$item->price BDT</h3>
+                        <div class="item_right">
+                            <div class="btn-sm btn-info">Ready</div>
                         </div>
                     </div>
-                    <div class="item_right">
-                        <span class="badge badge-info">x3</span>
-                    </div>
-                </div>
                 @endforeach
             @endforeach
         </div>
+        @endif
         @endforeach
+        </div>
     </div>
 
     {{-- <div class="modal remodal" data-remodal-id="open_menu_remodal">
@@ -118,6 +127,37 @@
             toastr.error("Something went wrong!");
         });
     }
+
+    // define a function to update the time elapsed for a specific table
+    function updateTime(tableId) {
+        // get the element that contains the time elapsed
+        var timeElement = document.getElementById('time-table-' + tableId);
+        // get the current time and the time when the oldest order was created
+        var now = new Date();
+        var oldestOrderTime = new Date(timeElement.getAttribute('data-oldest-order-time'));
+        // calculate the time elapsed
+        var diff = now.getTime() - oldestOrderTime.getTime();
+        var elapsed = new Date(diff);
+        // subtract 6 hours from the hours value
+        elapsed.setUTCHours(elapsed.getUTCHours() - 6);
+        // format the time elapsed as a string
+        var hours = elapsed.getUTCHours().toString().padStart(2, '0');
+        var minutes = elapsed.getUTCMinutes().toString().padStart(2, '0');
+        var seconds = elapsed.getUTCSeconds().toString().padStart(2, '0');
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        // update the element with the new time elapsed
+        timeElement.innerHTML = timeString;
+    }
+
+    // call the updateTime function for each table every second
+    setInterval(function() {
+        // loop through all the tables
+        var tables = document.querySelectorAll('.menu_wrapper--kitchen');
+        for (var i = 0; i < tables.length; i++) {
+            var tableId = tables[i].getAttribute('data-table-id');
+            updateTime(tableId);
+        }
+    }, 1000);
     // (function($){
     //     $(document).ready(function(){
     //         $('.data-table').DataTable({

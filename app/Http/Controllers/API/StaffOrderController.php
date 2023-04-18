@@ -86,6 +86,9 @@ class StaffOrderController extends Controller
             return $item;
         });
 
-        return response()->json(['orders' => $orders]);
+        return response()->json([
+            'orders' => $orders,
+            'oldestOrderTime' => Order::where('table_id', $request->table_id)->orderBy('created_at', 'asc')->first()->created_at ?? null,
+        ]);
     }
 }

@@ -11,4 +11,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        port: 5000 // replace with the desired port number
+    },
 });

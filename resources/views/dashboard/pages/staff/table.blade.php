@@ -321,6 +321,7 @@
         axios.get(base_url+`/staff/api/getOrders/${table_id}`).
         then(function(response){
             let data = response.data;
+            console.log(data);
             let table_status = document.getElementById('status_indicator'+table_id);
             let ordered_menu_button = document.getElementById('ordered_menu_button'+table_id);
             if(response.data.orders.length > 0){
@@ -329,7 +330,8 @@
                 //broadcast the table status
                 socket.emit('updateTableStatus', {
                     table_id: table_id,
-                    status: 'occupied'
+                    oldestOrderTime: data.oldestOrderTime,
+                    status: 'occupied',
                 });
 
             }else{
@@ -338,6 +340,7 @@
                 //broadcast the table status
                 socket.emit('updateTableStatus', {
                     table_id: table_id,
+                    oldestOrderTime: null,
                     status: 'free'
                 });
             }

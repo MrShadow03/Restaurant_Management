@@ -2,6 +2,22 @@
     max-height: 70vh;
     overflow-y: auto;
     overflow-x: hidden;
+    .menu_title{
+        border-bottom: 1px solid $border_light;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .menu_title_text{
+            font-family: 'poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: $primary;
+            opacity: .8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 1rem 0;
+        }
+    }
     .item_wrapper{
         display: flex;
         align-items: center;
@@ -49,6 +65,9 @@
             margin-right: 2rem;
         }
     }
+    .item_wrapper:last-child{
+        border-bottom: none !important;
+    }
     .item_wrapper-stripes:nth-child(even){
         background-color: #f6f6f6;
     }
@@ -64,7 +83,13 @@
         border-bottom: 1px solid $border_light;
     }
 }
-
+.order_table_wrapper--kitchen{
+    padding: 2rem !important;
+}
+.menu_wrapper--kitchen{
+    min-width: 40rem;
+    padding: 1rem 2rem;
+}
 
 .heading{
     margin-block: 2rem;

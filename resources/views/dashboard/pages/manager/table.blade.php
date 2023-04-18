@@ -23,7 +23,7 @@
         <div>
             <div class="order_table_wrapper">
                 @foreach ($tables as $table)
-                <div class="order_table">
+                <div class="order_table {{ $table->status == 'occupied' ? 'order_table_time' : '' }}" data-table-id="{{ $table->id }}">
                     <div class="order_table_title">{{ addLeadingZero($table->table_number) }}</div>
                     <div class="order_table_top">
                         <div class="order_table_top_left">
@@ -34,7 +34,7 @@
                                 @else
                                 <i class="text-success fa-solid fa-circle"></i>
                                 <span>Occupied</span>
-                                <p class="fs-12 font-poppins text-info op-7">{{ $table->oldestOrder->created_at->diff(now())->format('%H:%I:%S') }}</p>
+                                <p class="fs-14 font-poppins text-info op-7" id="time-table-{{ $table->id }}" data-oldest-order-time="{{ $table->oldestOrder->created_at }}">{{ $table->oldestOrder->created_at->diff(now())->format('%H:%I:%S') }}</p>
                                 @endif
                             </div>
                         </div>
@@ -191,7 +191,7 @@
         let table_status = document.getElementById('status_indicator'+data.table_id);
         let bill_button = document.getElementById('bill_button'+data.table_id);
         if(data.status == 'occupied'){
-            table_status.innerHTML = `<i class="fa-solid fa-circle text-success"></i><span>Occupied</span>`;
+            table_status.innerHTML = `<i class="fa-solid fa-circle text-success"></i><span>Occupied</span><p class="fs-14 font-poppins text-info op-7" id="time-table-${data.table_id}" data-oldest-order-time="${data.oldestOrderTime}">00:00:00</p>`;
             bill_button.classList.remove('d-none');
         }else{
             table_status.innerHTML = `<i class="fa-solid fa-circle text-yellow"></i><span>Free</span>`;
@@ -263,6 +263,36 @@
             console.log(error);
         });
     }
+    // define a function to update the time elapsed for a specific table
+    function updateTime(tableId) {
+        // get the element that contains the time elapsed
+        var timeElement = document.getElementById('time-table-' + tableId);
+        // get the current time and the time when the oldest order was created
+        var now = new Date();
+        var oldestOrderTime = new Date(timeElement.getAttribute('data-oldest-order-time'));
+        // calculate the time elapsed
+        var diff = now.getTime() - oldestOrderTime.getTime();
+        var elapsed = new Date(diff);
+        // subtract 6 hours from the hours value
+        elapsed.setUTCHours(elapsed.getUTCHours() - 6);
+        // format the time elapsed as a string
+        var hours = elapsed.getUTCHours().toString().padStart(2, '0');
+        var minutes = elapsed.getUTCMinutes().toString().padStart(2, '0');
+        var seconds = elapsed.getUTCSeconds().toString().padStart(2, '0');
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        // update the element with the new time elapsed
+        timeElement.innerHTML = timeString;
+    }
+
+    // call the updateTime function for each table every second
+    setInterval(function() {
+        // loop through all the tables
+        var tables = document.querySelectorAll('.order_table_time');
+        for (var i = 0; i < tables.length; i++) {
+            var tableId = tables[i].getAttribute('data-table-id');
+            updateTime(tableId);
+        }
+    }, 1000);
     
 </script>
 @endsection
