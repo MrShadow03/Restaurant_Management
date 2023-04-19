@@ -1,0 +1,28 @@
+@keyframes scale_bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes color_bounce {
+  0% {
+    background-color: #2196f3;
+  }
+  100% {
+    background-color: #ffffff;
+  }
+}
+
+.scale_bounce {
+  animation: scale_bounce 1s cubic-bezier(0.66, 0, 0, 1);
+}
+
+.color_bounce {
+  animation: color_bounce 1s cubic-bezier(0.66, 0, 0, 1);
+}

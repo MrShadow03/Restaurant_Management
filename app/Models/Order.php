@@ -14,6 +14,7 @@ class Order extends Model
         'recipe_id',
         'user_id',
         'quantity',
+        'status',
     ];
 
     public function table(){

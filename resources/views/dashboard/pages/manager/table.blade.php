@@ -23,7 +23,7 @@
         <div>
             <div class="order_table_wrapper">
                 @foreach ($tables as $table)
-                <div class="order_table {{ $table->status == 'occupied' ? 'order_table_time' : '' }}" data-table-id="{{ $table->id }}">
+                <div class="order_table {{ $table->status == 'occupied' ? 'order_table_time' : '' }}" data-table-id="{{ $table->id }}" id="order_table{{ $table->id }}">
                     <div class="order_table_title">{{ addLeadingZero($table->table_number) }}</div>
                     <div class="order_table_top">
                         <div class="order_table_top_left">
@@ -190,10 +190,13 @@
     socket.on('updateTableStatusResponse', function(data) {
         let table_status = document.getElementById('status_indicator'+data.table_id);
         let bill_button = document.getElementById('bill_button'+data.table_id);
+        let order_table = document.getElementById('order_table'+data.table_id);
         if(data.status == 'occupied'){
-            table_status.innerHTML = `<i class="fa-solid fa-circle text-success"></i><span>Occupied</span><p class="fs-14 font-poppins text-info op-7" id="time-table-${data.table_id}" data-oldest-order-time="${data.oldestOrderTime}">00:00:00</p>`;
+            order_table.classList.add('order_table_time');
+            table_status.innerHTML = `<i class="fa-solid fa-circle text-success"></i><span>Occupied</span><p class="fs-14 font-poppins text-info op-7" id="time-table-${data.table_id}" data-oldest-order-time="${data.oldestOrderTime}">New Order!</p>`;
             bill_button.classList.remove('d-none');
         }else{
+            order_table.classList.remove('order_table_time');
             table_status.innerHTML = `<i class="fa-solid fa-circle text-yellow"></i><span>Free</span>`;
             bill_button.classList.add('d-none');
         }

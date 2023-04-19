@@ -46,6 +46,10 @@ class StaffOrderController extends Controller
             ]);
         }
 
+        $order = Order::where('table_id', $request->table_id)->where('recipe_id', $request->recipe_id)->first();
+        $previous_quantity = $order ? $order->quantity : 0;
+        $current_status = $order ? $order->status : 'cooking';
+
         Order::updateOrCreate(
             [
                 'table_id' => $request->table_id,
@@ -54,6 +58,7 @@ class StaffOrderController extends Controller
             [
                 'quantity' => $request->quantity,
                 'user_id' => auth()->user()->id,
+                'status' => $request->quantity > $previous_quantity ? 'cooking' : $current_status,
             ]
         );
 
@@ -79,6 +84,7 @@ class StaffOrderController extends Controller
         }
 
         $orders = $orders->map(function($item){
+            $item->recipe_id = $item->recipe->id;
             $item->recipe_name = $item->recipe->recipe_name;
             $item->price = $item->recipe->price;
             $item->total_price = $item->recipe->price * $item->quantity;
@@ -86,9 +92,12 @@ class StaffOrderController extends Controller
             return $item;
         });
 
+        $orders->count() > 0 && $oldestOrder = Order::where('table_id', $request->table_id)->orderBy('created_at', 'asc')->first()->created_at->format('Y-m-d H:i:s');
+
         return response()->json([
             'orders' => $orders,
-            'oldestOrderTime' => Order::where('table_id', $request->table_id)->orderBy('created_at', 'asc')->first()->created_at ?? null,
+            'oldestOrderTime' => $oldestOrder ?? null,
+            'tableNumber' => Table::find($request->table_id)->table_number,
         ]);
     }
 }

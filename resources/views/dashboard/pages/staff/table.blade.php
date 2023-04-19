@@ -198,7 +198,6 @@
             quantity: quantity
         }).then(function(response){
             let data = response.data;
-            console.log(data);
             
             //if the order is deleted then show toastr warning
             if(data.message == 'deleted'){
@@ -206,6 +205,9 @@
                 document.getElementById('order_button'+data.recipe_id).innerHTML = 'Order';
                 toastr.warning('Order deleted');
 
+                //send to kitchen
+                sendOrderToKitchen(response.data, 'remove');
+                //update the table status
                 updateTableStatus(response.data.table_id);
                 return;
             }
@@ -221,7 +223,10 @@
             button.innerHTML = 'Ordered';
             button.classList.add('btn-success');
 
+            //update the table status
             updateTableStatus(response.data.table_id);
+            //send to kitchen
+            sendOrderToKitchen(response.data);
 
         }).catch(function(error){
             console.log(error);
@@ -230,6 +235,7 @@
 
     function getOrders(table){
         document.getElementById('orders_modal_title').innerHTML = 'Table-'+table.table_number+' Order';
+        document.getElementById('ordered_menu_button'+table.id).classList.remove('notification-head', 'notification-head-success', 'notification-head-danger');
 
         axios.get(base_url+`/staff/api/getOrders/${table.id}`).
         then(function(response){
@@ -243,7 +249,6 @@
             //get unique categories
             var uniqueCategories = [...new Set(orders.map(item => item.category))];
 
-            console.log(uniqueCategories);
             //create the orders
             uniqueCategories.forEach(function(category) {
                 var items = orders.filter(function(item) {
@@ -254,14 +259,24 @@
                     if (index === 0) {
                         html += '<h3 class="menu_category_title">' + category + '</h3>';
                     }
-
                     html += '<div class="item_wrapper border-bottom" style="padding: .8rem 0;">';
                     html += '<div class="item_left">';
                     html += '<div class="item_image">';
                     html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="">`;
                     html += '</div>';
                     html += '<div class="item_content">';
-                    html += '<span class="item_title text-md-alt text">' + item.recipe_name + ' </span>';
+
+                    let span = `<span id="item_status${item.recipe_id}"></span>`;
+                    
+                    if(item.status == 'cooking'){
+                        span = `<span id="item_status${item.recipe_id}" class="badge badge-warning">Cooking</span>`;
+                    }else if(item.status == 'ready'){
+                        span = `<span id="item_status${item.recipe_id}" class="badge badge-success">Ready</span>`;
+                    }else{
+                        span = `<span id="item_status${item.recipe_id}" class="badge badge-danger">Pending</span>`;
+                    }
+
+                    html += '<span class="item_title text-md-alt text">' + item.recipe_name + ' '+ span +'</span>';
                     html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
                     html += '</div>';
                     html += '</div>';
@@ -321,7 +336,6 @@
         axios.get(base_url+`/staff/api/getOrders/${table_id}`).
         then(function(response){
             let data = response.data;
-            console.log(data);
             let table_status = document.getElementById('status_indicator'+table_id);
             let ordered_menu_button = document.getElementById('ordered_menu_button'+table_id);
             if(response.data.orders.length > 0){
@@ -348,6 +362,42 @@
             console.log(error);
         });
     }
+
+    function sendOrderToKitchen(order, type = 'add'){
+        socket.emit('sendOrderToKitchen', {
+            order: order,
+            type: type,
+        });
+    }
+
+    socket.on('responseFromKitchen', function(data){
+        let ordered_menu_button = document.getElementById('ordered_menu_button'+data.table_id);
+
+        if(ordered_menu_button && data.status == 'ready'){
+            //add the notification head
+            ordered_menu_button.classList.remove('notification-head-warning');
+            ordered_menu_button.classList.add('notification-head', 'notification-head-success');
+
+            //update the item status
+            let item_status = document.getElementById('item_status'+data.recipe_id);
+            if(item_status){
+                item_status.classList.remove('badge-warning');
+                item_status.classList.add('badge-success');
+                item_status.innerText = 'Ready';
+            }
+        }else{
+            ordered_menu_button.classList.remove('notification-head-success');
+            ordered_menu_button.classList.add('notification-head', 'notification-head-warning');
+
+            //update the item status
+            let item_status = document.getElementById('item_status'+data.recipe_id);
+            if(item_status){
+                item_status.classList.remove('badge-success');
+                item_status.classList.add('badge-warning');
+                item_status.innerText = 'Cooking';
+            }
+        }
+    });
 
 </script>
 @endsection

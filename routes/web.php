@@ -93,13 +93,15 @@ Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' 
 Route::group(['middleware' => ['auth', 'auth.kitchen_staff'], 'prefix' => 'kitchen_staff', 'as' => 'kitchen_staff.'], function () {
     //kitchen staff Home
     Route::get('/home', function(){ return redirect()->route('kitchen_staff.recipe'); })->name('home');
-
+    
     //kitchen staff recipe
     Route::get('/recipe', [KitchenStaffRecipeController::class, 'index'])->name('recipe');
     Route::post('/recipe/toggle_availability', [KitchenStaffRecipeController::class, 'toggleAvailability'])->name('recipe.toggle_availability');
-
+    
     //kitchen staff order
     Route::get('/order', [KitchenStaffOrderController::class, 'index'])->name('order');
+    Route::post('/change_status', [KitchenStaffOrderController::class, 'changeStatus'])->name('change_status');
+    Route::get('/api/getOrders/{table_id}', [StaffOrderController::class, 'getOrders'])->name('api.get_orders');
 });
 
 Route::middleware('auth')->group(function () {

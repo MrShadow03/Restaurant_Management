@@ -12,12 +12,16 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on('sendOrderToKitchen', (msg) => {
-        socket.broadcast.emit('orderResponseFromKitchen', msg);
+        socket.broadcast.emit('orderFromStuff', msg);
     });
 
     socket.on('updateTableStatus', (msg) => {
         socket.broadcast.emit('updateTableStatusResponse', msg);
-    })
+    });
+
+    socket.on('responseToStaff', (msg) => {
+        socket.broadcast.emit('responseFromKitchen', msg);
+    });
 
     socket.on('disconnect', (socket) => {
         console.log('user disconnected');
