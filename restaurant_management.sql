@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2023 at 09:19 PM
+-- Generation Time: Apr 28, 2023 at 09:34 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `restaurant_management`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_information`
+--
+
+CREATE TABLE `business_information` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(30) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `business_information`
+--
+
+INSERT INTO `business_information` (`id`, `name`, `phone_number`, `email`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'Pepplo Cuisine', '01766555213', 'pepplo25@gamil.com', '68 Street, Barishal', '2023-04-28 16:17:34', '2023-04-28 19:27:57');
 
 -- --------------------------------------------------------
 
@@ -70,6 +93,69 @@ INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `unit_cost`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `id` bigint(20) NOT NULL,
+  `invoice_number` varchar(30) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `customer_name` varchar(50) DEFAULT NULL,
+  `customer_contact` varchar(20) DEFAULT NULL,
+  `table_number` bigint(20) DEFAULT NULL,
+  `total` bigint(20) DEFAULT 0,
+  `paid` int(11) NOT NULL,
+  `discount` int(4) DEFAULT 0,
+  `creator_name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `invoice_number`, `username`, `customer_name`, `customer_contact`, `table_number`, `total`, `paid`, `discount`, `creator_name`, `created_at`, `updated_at`) VALUES
+(22, '866496194247', 'Galib Jaman', 'Rafi Hassan', '01751664541', 7, 3151, 3000, 15, 'Galib', '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(23, '915418640222', 'Galib Jaman', 'Guest', 'N/A', 6, 2331, 2500, 15, 'Galib', '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(24, '358792854654', 'Galib Jaman', 'Abid Hasan', '01752332322', 6, 660, 600, 15, 'Galib', '2023-04-24 13:21:52', '2023-04-24 13:21:52'),
+(25, '299478151752', 'Galib Jaman', 'Anjumanara', 'N/A', 3, 430, 500, 70, 'Galib', '2023-04-24 13:36:21', '2023-04-24 13:36:21'),
+(26, '363970802556', 'Galib Jaman', 'Jashim', '01751664541', 1, 1960, 2000, 15, 'Galib', '2023-04-25 03:59:26', '2023-04-25 03:59:26'),
+(27, '820266204260', 'Galib Jaman', 'Guest', 'N/A', 3, 978, 1000, 10, 'Galib', '2023-04-25 05:58:41', '2023-04-25 05:58:41'),
+(28, '724614252555', 'Galib Jaman', 'Guest', 'N/A', 11, 199, 0, 0, 'Galib', '2023-04-25 08:52:06', '2023-04-25 08:52:06'),
+(29, '746987971666', 'Galib Jaman', 'Guest', 'N/A', 3, 600, 0, 0, 'Galib', '2023-04-25 08:54:53', '2023-04-25 08:54:53'),
+(30, '991936501351', 'Galib Jaman', 'Guest', 'N/A', 1, 2210, 0, 0, 'Galib', '2023-04-25 08:57:15', '2023-04-25 08:57:15'),
+(31, '260535012774', 'Galib Jaman', 'Guest', 'N/A', 1, 660, 700, 0, 'Galib', '2023-04-25 09:00:38', '2023-04-25 09:00:38'),
+(32, '433751110160', 'Galib Jaman', 'Guest', 'N/A', 1, 660, 1200, 0, 'Galib', '2023-04-25 09:01:41', '2023-04-25 09:01:41'),
+(33, '533817162970', 'Galib Jaman', 'Guest', 'N/A', 1, 300, 400, 0, 'Galib', '2023-04-25 09:05:27', '2023-04-25 09:05:27'),
+(34, '118336970826', 'Galib Jaman', 'Guest', 'N/A', 1, 300, 300, 0, 'Galib', '2023-04-25 09:08:08', '2023-04-25 09:08:08'),
+(35, '995291011838', 'Galib Jaman', 'Abdur Rahman', '01751664541', 1, 360, 23, 15, 'Galib', '2023-04-25 09:19:03', '2023-04-25 09:19:03'),
+(36, '616454029018', 'Galib Jaman', 'Guest', 'N/A', 1, 300, 500, 0, 'Galib', '2023-04-25 09:28:06', '2023-04-25 09:28:06'),
+(37, '526490505530', 'Galib Jaman', 'Guest', 'N/A', 1, 780, 1000, 0, 'Galib', '2023-04-25 09:47:58', '2023-04-25 09:47:58'),
+(38, '556597901126', 'Galib Jaman', 'Abdur Rahman', '01751664541', 1, 780, 100, 10, 'Galib', '2023-04-25 09:51:11', '2023-04-25 09:51:11'),
+(39, '999394156458', 'Galib Jaman', 'Guest', 'N/A', 1, 600, 600, 0, 'Galib', '2023-04-25 09:56:58', '2023-04-25 09:56:58'),
+(40, '671666261236', 'Galib Jaman', 'Guest', 'N/A', 1, 600, 600, 0, 'Galib', '2023-04-25 09:58:41', '2023-04-25 09:58:41'),
+(41, '882590283519', 'Galib Jaman', 'Guest', 'N/A', 1, 480, 500, 0, 'Galib', '2023-04-25 09:59:15', '2023-04-25 09:59:15'),
+(42, '818776594759', 'Galib Jaman', 'Guest', 'N/A', 1, 840, 1000, 0, 'Galib', '2023-04-25 12:48:22', '2023-04-25 12:48:22'),
+(43, '938556700559', 'Galib Jaman', 'Guest', 'N/A', 3, 960, 1000, 10, 'Galib', '2023-04-25 12:49:12', '2023-04-25 12:49:12'),
+(44, '686975995840', 'Galib Jaman', 'Guest', 'N/A', 3, 180, 200, 0, 'Galib', '2023-04-25 12:50:40', '2023-04-25 12:50:40'),
+(45, '322153392697', 'Galib Jaman', 'Guest', 'N/A', 1, 180, 200, 0, 'Galib', '2023-04-25 12:50:50', '2023-04-25 12:50:50'),
+(46, '309986958597', 'Galib Jaman', 'Guest', 'N/A', 1, 360, 500, 5, 'Galib', '2023-04-25 13:58:44', '2023-04-25 13:58:44'),
+(47, '495558952336', 'Galib Jaman', 'Guest', 'N/A', 3, 180, 200, 0, 'Galib', '2023-04-25 14:02:39', '2023-04-25 14:02:39'),
+(48, '342217352153', 'Galib Jaman', 'Jashim', '01751664541', 3, 660, 1000, 5, 'Galib', '2023-04-25 14:04:38', '2023-04-25 14:04:38'),
+(49, '566257896938', 'Galib Jaman', 'Abdul Aziz', '01799666213', 3, 3100, 3000, 15, 'Galib', '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(50, '143064451750', 'Galib Jaman', 'Guest', 'N/A', 1, 457, 420, 11, 'Galib', '2023-04-25 15:40:58', '2023-04-25 15:40:58'),
+(51, '179858886170', 'Galib Jaman', 'Guest', 'N/A', 3, 1195, 1000, 25, 'Galib', '2023-04-25 15:42:39', '2023-04-25 15:42:39'),
+(52, '785797501816', 'Galib Jaman', 'Galib', '01799666213', 11, 600, 520, 15, 'Galib', '2023-04-26 08:10:12', '2023-04-26 08:10:12'),
+(53, '977276877462', 'Galib Jaman', 'Guest', 'N/A', 1, 480, 360, 25, 'Galib', '2023-04-26 11:33:02', '2023-04-26 11:33:02'),
+(54, '253465479328', 'Galib Jaman', 'Guest', 'N/A', 3, 660, 600, 10, 'Galib', '2023-04-26 13:06:40', '2023-04-26 13:06:40'),
+(55, '319332385236', 'Galib Jaman', 'Guest', 'N/A', 12, 445, 400, 10, 'Galib', '2023-04-26 13:10:48', '2023-04-26 13:10:48'),
+(58, '332740336454', 'Galib Jaman', 'Guest', 'N/A', 3, 549, 500, 10, 'Galib', '2023-04-28 11:09:11', '2023-04-28 11:09:11'),
+(59, '586872259987', 'Galib Jaman', 'Andrew Tate', 'N/A', 3, 3615, 3100, 15, 'Galib Jaman', '2023-04-28 19:32:55', '2023-04-28 19:32:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -105,20 +191,6 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `table_id`, `recipe_id`, `quantity`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(282, 2, 11, 1, 7, 'cooking', '2023-04-19 11:48:44', '2023-04-19 13:15:10'),
-(283, 2, 2, 1, 7, 'cooking', '2023-04-19 11:48:45', '2023-04-19 13:15:11'),
-(284, 3, 10, 1, 7, 'cooking', '2023-04-19 11:59:14', '2023-04-19 12:00:54'),
-(285, 3, 2, 1, 7, 'cooking', '2023-04-19 11:59:27', '2023-04-19 11:59:27'),
-(286, 3, 11, 1, 7, 'cooking', '2023-04-19 11:59:30', '2023-04-19 11:59:30'),
-(287, 7, 10, 2, 7, 'cooking', '2023-04-19 12:04:04', '2023-04-19 12:08:41'),
-(292, 7, 2, 1, 7, 'cooking', '2023-04-19 12:08:45', '2023-04-19 12:08:45'),
-(294, 7, 11, 1, 7, 'cooking', '2023-04-19 12:08:53', '2023-04-19 12:08:53');
 
 -- --------------------------------------------------------
 
@@ -165,7 +237,9 @@ CREATE TABLE `recipes` (
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `category` varchar(255) DEFAULT NULL,
   `price` int(11) NOT NULL,
+  `production_cost` float DEFAULT NULL,
   `VAT` float DEFAULT 0,
+  `discount` int(11) DEFAULT 0,
   `on_menu` tinyint(1) DEFAULT 1,
   `is_available` tinyint(1) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -176,17 +250,21 @@ CREATE TABLE `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `VAT`, `on_menu`, `is_available`, `created_at`, `updated_at`) VALUES
-(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 300, 15, 1, 1, '2023-04-09 11:34:15', '2023-04-18 10:39:54'),
-(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 15, 1, 1, '2023-04-09 12:22:54', '2023-04-18 10:10:02'),
-(4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, NULL, 1, 1, '2023-04-10 02:16:11', '2023-04-16 12:15:56'),
-(5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, NULL, 1, 1, '2023-04-10 02:16:51', '2023-04-18 10:10:18'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 3, 1, 1, '2023-04-10 02:17:45', '2023-04-16 12:26:42'),
-(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, NULL, 1, 1, '2023-04-14 00:49:18', '2023-04-18 10:10:12'),
-(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 150, NULL, 1, 1, '2023-04-14 00:49:46', '2023-04-18 10:10:19'),
-(9, 'Kacchi Full', NULL, 'default.png', 1, 'Biryani', 500, NULL, 1, 1, '2023-04-14 00:50:35', '2023-04-18 10:10:14'),
-(10, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, NULL, 1, 1, '2023-04-14 00:50:51', '2023-04-16 12:26:47'),
-(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, NULL, 1, 1, '2023-04-14 00:51:13', '2023-04-16 12:26:49');
+INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `created_at`, `updated_at`) VALUES
+(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 300, 220, NULL, 0, 1, 1, '2023-04-09 11:34:15', '2023-04-28 11:20:03'),
+(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 200, NULL, 0, 1, 1, '2023-04-09 12:22:54', '2023-04-28 11:20:23'),
+(4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, 108, NULL, 0, 1, 1, '2023-04-10 02:16:11', '2023-04-27 18:03:01'),
+(5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, 40, NULL, 0, 1, 1, '2023-04-10 02:16:51', '2023-04-27 18:11:32'),
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 65, NULL, 2, 1, 1, '2023-04-10 02:17:45', '2023-04-27 18:03:05'),
+(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, 160, NULL, 0, 1, 1, '2023-04-14 00:49:18', '2023-04-27 18:03:06'),
+(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 180, 140, NULL, 0, 1, 1, '2023-04-14 00:49:46', '2023-04-27 18:03:14'),
+(9, 'Kacchi Full', NULL, 'default.png', 1, 'Biryani', 500, 400, NULL, 0, 1, 1, '2023-04-14 00:50:35', '2023-04-27 18:03:13'),
+(10, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, 200, NULL, 0, 1, 1, '2023-04-14 00:50:51', '2023-04-27 17:18:46'),
+(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, 80, NULL, 0, 1, 1, '2023-04-14 00:51:13', '2023-04-24 12:14:28'),
+(12, 'French Fries 1:2', NULL, 'default.png', 1, 'Apatizer', 60, 45, NULL, 15, 1, 1, '2023-04-23 08:32:04', '2023-04-27 18:05:47'),
+(13, 'Mountain Due 250ml', NULL, 'default.png', 1, 'Soft Drink', 25, 20, NULL, NULL, 1, 1, '2023-04-27 16:41:59', '2023-04-27 16:41:59'),
+(14, 'Water 500ml', NULL, 'default.png', 1, 'Water', 15, 12, NULL, NULL, 1, 1, '2023-04-27 16:42:35', '2023-04-27 16:42:35'),
+(15, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 16, NULL, NULL, 1, 1, '2023-04-27 16:43:43', '2023-04-27 16:43:43');
 
 -- --------------------------------------------------------
 
@@ -211,11 +289,131 @@ CREATE TABLE `recipe_inventory` (
 
 CREATE TABLE `sales` (
   `id` bigint(20) NOT NULL,
+  `invoice_id` bigint(20) NOT NULL,
   `recipe_id` bigint(20) NOT NULL,
+  `recipe_name` varchar(255) DEFAULT NULL,
   `price` float NOT NULL,
+  `discount` int(4) DEFAULT 0,
+  `quantity` int(10) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `table_number` int(11) DEFAULT NULL,
+  `production_cost` float DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `invoice_id`, `recipe_id`, `recipe_name`, `price`, `discount`, `quantity`, `username`, `table_number`, `production_cost`, `updated_at`, `created_at`) VALUES
+(66, 22, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 7, 220, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(67, 22, 7, 'Chicken Biryani', 180, 0, 3, 'Galib Jaman', 7, 160, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(68, 22, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 7, 140, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(69, 22, 9, 'Kacchi Full', 500, 0, 2, 'Galib Jaman', 7, 400, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(70, 22, 10, 'Kacchi Half', 250, 0, 1, 'Galib Jaman', 7, 200, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(71, 22, 2, 'Fried Rice 1:3', 250, 0, 1, 'Galib Jaman', 7, 200, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(72, 22, 11, 'Chinese Vegetable', 120, 0, 2, 'Galib Jaman', 7, 80, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(73, 22, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 7, 108, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(74, 22, 12, 'French Fries 1:2', 54, 10, 2, 'Galib Jaman', 7, 45, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(75, 22, 5, 'Cheese Slice', 60, 0, 1, 'Galib Jaman', 7, 40, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(76, 22, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 7, 65, '2023-04-24 12:30:01', '2023-04-24 12:30:01'),
+(77, 23, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 6, 160, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(79, 23, 6, 'Beef Patty', 80, 2, 2, 'Galib Jaman', 6, 65, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(80, 23, 12, 'French Fries 1:2', 60, 10, 1, 'Galib Jaman', 6, 45, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(81, 23, 4, 'Beef Burger', 145, 0, 2, 'Galib Jaman', 6, 108, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(82, 23, 8, 'Beef Tehari', 180, 0, 2, 'Galib Jaman', 6, 140, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(83, 23, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 6, 220, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(84, 23, 5, 'Cheese Slice', 60, 0, 1, 'Galib Jaman', 6, 40, '2023-04-24 12:59:44', '2023-04-24 12:59:44'),
+(85, 24, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 6, 220, '2023-04-24 13:21:52', '2023-04-24 13:21:52'),
+(86, 24, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 6, 160, '2023-04-24 13:21:52', '2023-04-24 13:21:52'),
+(87, 25, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 3, 140, '2023-04-24 13:36:21', '2023-04-24 13:36:21'),
+(88, 25, 10, 'Kacchi Half', 250, 0, 1, 'Galib Jaman', 3, 200, '2023-04-24 13:36:21', '2023-04-24 13:36:21'),
+(89, 26, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 03:59:26', '2023-04-25 03:59:26'),
+(90, 26, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 1, 160, '2023-04-25 03:59:26', '2023-04-25 03:59:26'),
+(91, 26, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 1, 140, '2023-04-25 03:59:26', '2023-04-25 03:59:26'),
+(92, 26, 9, 'Kacchi Full', 500, 0, 2, 'Galib Jaman', 1, 400, '2023-04-25 03:59:26', '2023-04-25 03:59:26'),
+(93, 26, 11, 'Chinese Vegetable', 120, 0, 1, 'Galib Jaman', 1, 80, '2023-04-25 03:59:26', '2023-04-25 03:59:26'),
+(94, 27, 5, 'Cheese Slice', 60, 0, 2, 'Galib Jaman', 3, 40, '2023-04-25 05:58:41', '2023-04-25 05:58:41'),
+(95, 27, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 3, 65, '2023-04-25 05:58:41', '2023-04-25 05:58:41'),
+(96, 27, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 3, 220, '2023-04-25 05:58:41', '2023-04-25 05:58:41'),
+(97, 27, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 3, 160, '2023-04-25 05:58:41', '2023-04-25 05:58:41'),
+(98, 28, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 11, 108, '2023-04-25 08:52:06', '2023-04-25 08:52:06'),
+(99, 28, 12, 'French Fries 1:2', 60, 10, 1, 'Galib Jaman', 11, 45, '2023-04-25 08:52:06', '2023-04-25 08:52:06'),
+(100, 29, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 3, 220, '2023-04-25 08:54:53', '2023-04-25 08:54:53'),
+(101, 30, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 1, 220, '2023-04-25 08:57:15', '2023-04-25 08:57:15'),
+(102, 30, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 1, 160, '2023-04-25 08:57:15', '2023-04-25 08:57:15'),
+(103, 30, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 1, 140, '2023-04-25 08:57:15', '2023-04-25 08:57:15'),
+(104, 30, 10, 'Kacchi Half', 250, 0, 1, 'Galib Jaman', 1, 200, '2023-04-25 08:57:15', '2023-04-25 08:57:15'),
+(105, 30, 9, 'Kacchi Full', 500, 0, 1, 'Galib Jaman', 1, 400, '2023-04-25 08:57:15', '2023-04-25 08:57:15'),
+(106, 30, 2, 'Fried Rice 1:3', 250, 0, 2, 'Galib Jaman', 1, 200, '2023-04-24 08:57:15', '2023-04-24 08:57:15'),
+(107, 31, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 09:00:38', '2023-04-25 09:00:38'),
+(108, 31, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 1, 160, '2023-04-25 09:00:38', '2023-04-25 09:00:38'),
+(109, 32, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 1, 160, '2023-04-25 09:01:41', '2023-04-25 09:01:41'),
+(110, 32, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 09:01:41', '2023-04-25 09:01:41'),
+(111, 33, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 09:05:27', '2023-04-25 09:05:27'),
+(112, 34, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 09:08:08', '2023-04-25 09:08:08'),
+(113, 35, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 1, 160, '2023-04-25 09:19:03', '2023-04-25 09:19:03'),
+(114, 36, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 09:28:06', '2023-04-25 09:28:06'),
+(115, 37, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 1, 220, '2023-04-25 09:47:58', '2023-04-25 09:47:58'),
+(116, 37, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 1, 160, '2023-04-25 09:47:58', '2023-04-25 09:47:58'),
+(117, 38, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 1, 220, '2023-04-25 09:51:11', '2023-04-25 09:51:11'),
+(118, 38, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 1, 160, '2023-04-25 09:51:11', '2023-04-25 09:51:11'),
+(119, 39, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 1, 220, '2023-04-25 09:56:58', '2023-04-25 09:56:58'),
+(120, 40, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 1, 220, '2023-04-25 09:58:41', '2023-04-25 09:58:41'),
+(121, 41, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 09:59:15', '2023-04-25 09:59:15'),
+(122, 41, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 1, 160, '2023-04-25 09:59:15', '2023-04-25 09:59:15'),
+(123, 42, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 12:48:22', '2023-04-25 12:48:22'),
+(124, 42, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 1, 160, '2023-04-25 12:48:22', '2023-04-25 12:48:22'),
+(125, 42, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 1, 140, '2023-04-25 12:48:22', '2023-04-25 12:48:22'),
+(126, 43, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 3, 160, '2023-04-25 12:49:12', '2023-04-25 12:49:12'),
+(127, 43, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 3, 220, '2023-04-25 12:49:12', '2023-04-25 12:49:12'),
+(128, 43, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 3, 140, '2023-04-25 12:49:12', '2023-04-25 12:49:12'),
+(129, 44, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 3, 160, '2023-04-25 12:50:40', '2023-04-25 12:50:40'),
+(130, 45, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 1, 160, '2023-04-25 12:50:50', '2023-04-25 12:50:50'),
+(131, 46, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 1, 160, '2023-04-25 13:58:44', '2023-04-25 13:58:44'),
+(132, 47, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 3, 140, '2023-04-25 14:02:39', '2023-04-25 14:02:39'),
+(133, 48, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 3, 220, '2023-04-25 14:04:38', '2023-04-25 14:04:38'),
+(134, 48, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 3, 160, '2023-04-25 14:04:38', '2023-04-25 14:04:38'),
+(135, 49, 6, 'Beef Patty', 80, 2, 2, 'Galib Jaman', 3, 65, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(136, 49, 5, 'Cheese Slice', 60, 0, 1, 'Galib Jaman', 3, 40, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(137, 49, 12, 'French Fries 1:2', 60, 10, 2, 'Galib Jaman', 3, 45, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(138, 49, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 3, 108, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(139, 49, 11, 'Chinese Vegetable', 120, 0, 2, 'Galib Jaman', 3, 80, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(140, 49, 2, 'Fried Rice 1:3', 250, 0, 1, 'Galib Jaman', 3, 200, '2023-04-24 15:38:31', '2023-04-24 15:38:31'),
+(141, 49, 10, 'Kacchi Half', 250, 0, 2, 'Galib Jaman', 3, 200, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(142, 49, 9, 'Kacchi Full', 500, 0, 1, 'Galib Jaman', 3, 400, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(143, 49, 8, 'Beef Tehari', 180, 0, 2, 'Galib Jaman', 3, 140, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(144, 49, 7, 'Chicken Biryani', 180, 0, 1, 'Galib Jaman', 3, 160, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(145, 49, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 3, 220, '2023-04-25 15:38:31', '2023-04-25 15:38:31'),
+(146, 50, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-25 15:40:58', '2023-04-25 15:40:58'),
+(147, 50, 6, 'Beef Patty', 80, 2, 2, 'Galib Jaman', 1, 65, '2023-04-25 15:40:58', '2023-04-25 15:40:58'),
+(148, 51, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 3, 160, '2023-04-25 15:42:39', '2023-04-25 15:42:39'),
+(149, 51, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 3, 220, '2023-04-25 15:42:39', '2023-04-25 15:42:39'),
+(150, 51, 6, 'Beef Patty', 80, 2, 3, 'Galib Jaman', 3, 65, '2023-04-25 15:42:39', '2023-04-25 15:42:39'),
+(151, 52, 1, 'Biryani 1:3', 300, 0, 2, 'Galib Jaman', 11, 220, '2023-04-26 08:10:12', '2023-04-26 08:10:12'),
+(152, 53, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 1, 220, '2023-04-26 11:33:02', '2023-04-26 11:33:02'),
+(153, 53, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 1, 140, '2023-04-26 11:33:02', '2023-04-26 11:33:02'),
+(154, 54, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 3, 220, '2023-04-26 13:06:40', '2023-04-26 13:06:40'),
+(155, 54, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 3, 160, '2023-04-26 13:06:40', '2023-04-26 13:06:40'),
+(156, 55, 5, 'Cheese Slice', 60, 0, 2, 'Galib Jaman', 12, 40, '2023-04-26 13:10:48', '2023-04-26 13:10:48'),
+(157, 55, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 12, 108, '2023-04-26 13:10:48', '2023-04-26 13:10:48'),
+(158, 55, 8, 'Beef Tehari', 180, 0, 1, 'Galib Jaman', 12, 140, '2023-04-26 13:10:48', '2023-04-26 13:10:48'),
+(169, 58, 6, 'Beef Patty', 80, 2, 2, 'Galib Jaman', 3, 65, '2023-04-28 11:09:11', '2023-04-28 11:09:11'),
+(170, 58, 12, 'French Fries 1:2', 60, 15, 2, 'Galib Jaman', 3, 45, '2023-04-28 11:09:11', '2023-04-28 11:09:11'),
+(171, 58, 4, 'Beef Burger', 145, 0, 2, 'Galib Jaman', 3, 108, '2023-04-28 11:09:11', '2023-04-28 11:09:11'),
+(172, 59, 1, 'Biryani 1:3', 300, 0, 1, 'Galib Jaman', 3, 220, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(173, 59, 7, 'Chicken Biryani', 180, 0, 2, 'Galib Jaman', 3, 160, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(174, 59, 8, 'Beef Tehari', 180, 0, 3, 'Galib Jaman', 3, 140, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(175, 59, 9, 'Kacchi Full', 500, 0, 2, 'Galib Jaman', 3, 400, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(176, 59, 10, 'Kacchi Half', 250, 0, 1, 'Galib Jaman', 3, 200, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(177, 59, 2, 'Fried Rice 1:3', 250, 0, 2, 'Galib Jaman', 3, 200, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(178, 59, 11, 'Chinese Vegetable', 120, 0, 2, 'Galib Jaman', 3, 80, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(179, 59, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 3, 108, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(180, 59, 12, 'French Fries 1:2', 60, 15, 2, 'Galib Jaman', 3, 45, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(181, 59, 5, 'Cheese Slice', 60, 0, 1, 'Galib Jaman', 3, 40, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(182, 59, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 3, 65, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(183, 59, 15, 'Water 1L', 20, 0, 2, 'Galib Jaman', 3, 16, '2023-04-28 19:32:55', '2023-04-28 19:32:55');
 
 -- --------------------------------------------------------
 
@@ -237,18 +435,18 @@ CREATE TABLE `tables` (
 --
 
 INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
-(1, 1, 7, 'free', '2023-04-19 13:17:31', '2023-04-13 10:20:43'),
-(2, 2, 7, 'occupied', '2023-04-19 11:48:44', '2023-04-13 10:22:25'),
-(3, 3, 7, 'occupied', '2023-04-19 11:59:14', '2023-04-13 10:22:32'),
+(1, 1, 9, 'free', '2023-04-26 11:33:02', '2023-04-13 10:20:43'),
+(2, 2, 9, 'free', '2023-04-23 04:58:47', '2023-04-13 10:22:25'),
+(3, 3, 7, 'free', '2023-04-28 19:32:55', '2023-04-13 10:22:32'),
 (4, 4, 9, 'free', '2023-04-18 23:19:55', '2023-04-13 10:22:46'),
-(5, 5, 7, 'free', '2023-04-19 01:57:57', '2023-04-13 10:22:50'),
-(6, 6, 7, 'free', '2023-04-19 07:22:37', '2023-04-13 10:22:56'),
-(7, 7, 7, 'occupied', '2023-04-19 12:04:04', '2023-04-15 07:51:55'),
+(5, 5, 7, 'free', '2023-04-28 09:38:51', '2023-04-13 10:22:50'),
+(6, 6, 7, 'free', '2023-04-24 13:21:52', '2023-04-13 10:22:56'),
+(7, 7, 7, 'free', '2023-04-24 12:30:01', '2023-04-15 07:51:55'),
 (8, 8, 9, 'free', '2023-04-15 07:53:06', '2023-04-15 07:52:09'),
 (9, 9, 9, 'free', '2023-04-15 07:52:13', '2023-04-15 07:52:13'),
 (10, 10, 7, 'free', '2023-04-19 05:19:30', '2023-04-15 07:52:18'),
-(11, 11, 7, 'free', '2023-04-19 05:04:41', '2023-04-15 07:52:23'),
-(12, 12, 9, 'free', '2023-04-15 07:52:27', '2023-04-15 07:52:27');
+(14, 11, 7, 'free', '2023-04-26 08:10:12', '2023-04-26 07:43:28'),
+(15, 12, 7, 'free', '2023-04-26 13:10:48', '2023-04-26 13:09:31');
 
 -- --------------------------------------------------------
 
@@ -276,14 +474,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `role`, `status`, `image`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Galib', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2a$12$WHO6aHJNXbyxXcduCFAyKOBtW3AIb4ZQjUFs.9v4WyIoFVskZbGCK', NULL, NULL, NULL),
+(1, 'Galib Jaman', 'reserved@admin.com', '01766555213', 'manager', 1, 'default.png', '2023-04-04 17:26:21', '$2y$10$wDNx0cHo6q3e011480inF.y6DNJscbG/6s4jJebY4CiwT6URo38ie', NULL, NULL, '2023-04-28 19:28:18'),
 (7, 'Galib Jaman', NULL, '01747371076', 'staff', 1, 'default.png', NULL, '$2y$10$Z35m2w.iYepzB0L0Kd5MNO6QwrFEs9/sfKK.DCd9NfnjDDrKDb4OW', NULL, '2023-04-13 11:07:06', '2023-04-13 11:07:06'),
 (8, 'Rafi Hasan', NULL, '01766555212', 'kitchen_staff', 1, 'default.png', NULL, '$2y$10$M/mnrWyuCqDWSrhfVnsRcuNBfIU8/qmF674ozfGS8Q.nWaqCB7oIe', NULL, '2023-04-13 11:42:34', '2023-04-15 04:12:28'),
-(9, 'Abdur Rahman', 'abdr01@gmail.com', '01766555211', 'staff', 1, 'default.png', NULL, '$2y$10$KFHkrSeNjfBX..XMncmSqevmm2sLADVjl2Trl4fWnBjtjJQ74AUQa', NULL, '2023-04-13 11:47:08', '2023-04-13 11:47:08');
+(9, 'Abdur Rahman', 'abdr01@gmail.com', '01766555211', 'staff', 1, 'default.png', NULL, '$2y$10$KFHkrSeNjfBX..XMncmSqevmm2sLADVjl2Trl4fWnBjtjJQ74AUQa', NULL, '2023-04-13 11:47:08', '2023-04-23 07:57:07');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `business_information`
+--
+ALTER TABLE `business_information`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -297,6 +501,13 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `inventories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `invoice_number` (`invoice_number`);
 
 --
 -- Indexes for table `migrations`
@@ -360,6 +571,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `business_information`
+--
+ALTER TABLE `business_information`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -372,6 +589,12 @@ ALTER TABLE `inventories`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -381,7 +604,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=482;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -393,7 +616,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `recipe_inventory`
@@ -405,13 +628,13 @@ ALTER TABLE `recipe_inventory`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`

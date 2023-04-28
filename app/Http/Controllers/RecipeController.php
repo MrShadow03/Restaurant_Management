@@ -21,6 +21,8 @@ class RecipeController extends Controller
                 'category' => 'nullable',
                 'price' => 'required',
                 'VAT' => 'nullable',
+                'discount' => 'nullable',
+                'production_cost' => 'required',
             ]);
 
         $recipe = new Recipe();
@@ -28,6 +30,8 @@ class RecipeController extends Controller
         $recipe->category = $request->category;
         $recipe->price = $request->price;
         $recipe->VAT = $request->VAT;
+        $recipe->discount = $request->discount;
+        $recipe->production_cost = $request->production_cost;
         $recipe->save();
 
         return redirect()->route('manager.recipe')->with('success', 'Recipe added successfully');
@@ -40,6 +44,8 @@ class RecipeController extends Controller
                 'category' => 'nullable',
                 'price' => 'required',
                 'VAT' => 'nullable',
+                'discount' => 'nullable',
+                'production_cost' => 'required',
             ]);
 
         $recipe = Recipe::find($request->id);
@@ -47,6 +53,8 @@ class RecipeController extends Controller
         $recipe->category = $request->category;
         $recipe->price = $request->price;
         $recipe->VAT = $request->VAT;
+        $recipe->discount = $request->discount;
+        $recipe->production_cost = $request->production_cost;
         $recipe->save();
 
         return redirect()->route('manager.recipe')->with('success', 'Recipe updated successfully');
@@ -54,10 +62,14 @@ class RecipeController extends Controller
 
     public function toggleOnMenu(Request $request){
         $recipe = Recipe::find($request->id);
-        $recipe->on_menu = isset($request->on_menu) ? 1 : 0;
+        $on_menu = $recipe->on_menu;
+        $recipe->on_menu = $on_menu ? 0 : 1;
         $recipe->save();
 
-        return redirect()->route('manager.recipe')->with('success', 'Recipe updated successfully');
+        return response()->json([
+            'onMenu' => $recipe->on_menu,
+            'recipeName' => $recipe->recipe_name,
+        ]);
     }
 
     public function destroy($id){

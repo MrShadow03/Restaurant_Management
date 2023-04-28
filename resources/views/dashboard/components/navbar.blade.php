@@ -16,7 +16,7 @@
         <div class="search"><input class="search_input" type="text"><i class="las la-search"></i></div>
     @endif
     <div class="social_link">
-        <div class="message"><i class="fa-regular fa-bell"></i></div>
+        {{-- <div class="message"><i class="fa-regular fa-bell"></i></div> --}}
         <div class="profile">
             <img class="profile_img" src="{{ $user_image }}" alt="img">
             <div class="profile_area">
@@ -27,17 +27,13 @@
                         <p>{{ Auth::user()->email ?? 'the_doe' }}</p>
                     </div>
                 </div>
-                <div class="profile_sub_item">
-                    <i class="fa-regular fa-circle-user"></i>
-                    <a href="#">Profile</a>
-                </div>
-                <div class="profile_sub_item">
+                {{-- <div class="profile_sub_item">
                     <i class="fa-regular fa-bell"></i>
                     <a href="#">Notices</a>
-                </div>
+                </div> --}}
                 <div class="profile_sub_item">
                     <i class="fa-regular fa-gear"></i>
-                    <a href="#">Settings</a>
+                    <a href="{{ route('manager.setting') }}">Settings</a>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="profile_sub_item" onclick="event.preventDefault(); this.closest('form').submit();">
                     @csrf

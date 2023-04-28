@@ -23,6 +23,14 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('responseFromKitchen', msg);
     });
 
+    socket.on('paymentDone', (msg) => {
+        socket.broadcast.emit('paymentDoneResponse', msg);
+    });
+
+    socket.on('tableDeleted', (tableId) => {
+        socket.broadcast.emit('tableDeletedEvent', tableId);
+    });
+
     socket.on('disconnect', (socket) => {
         console.log('user disconnected');
     });

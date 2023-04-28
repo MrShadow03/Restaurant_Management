@@ -6,7 +6,7 @@
     $max_table_number = $tables->max('table_number')+1;
 @endphp
 @section('title')
-<title>Admin-Teacher</title>
+<title>Tables & Payments | Manager</title>
 @endsection
 @extends('dashboard.app')
 @section('main')
@@ -16,8 +16,8 @@
         <div class="heading">
             <h2 class="heading__title text-title">Table Management</h2>
             <div class="heading__left">
-                <a href="#add_table" class="btn-sm btn-primary" onclick="setTableNumber({{ $max_table_number }})"><i class="fa-solid fa-chart-tree-map"></i>&nbsp; Add Table</a>
-                <audio src="{{ asset('dashboard/audio/ding.mp3') }}" controls class="d-none" id="table_sound"></audio>
+                <button data-remodal-target="add_table" class="btn-sm btn-primary" onclick="setTableNumber({{ $max_table_number }})"><i class="fa-solid fa-chart-tree-map"></i>&nbsp; Add Table</button>
+                <audio src="{{ asset('dashboard/audio/interface-option.wav') }}" controls class="d-none" id="payment_sound"></audio>
             </div>
         </div>
         <div>
@@ -39,14 +39,15 @@
                             </div>
                         </div>
                         <div class="order_table_top_right">
-                            <a href="#update_attendant" onclick="updateAttendant({{ json_encode($table) }})" class="btn-sm"><i class="order_table_icon fa-solid fa-user-pen"></i></a>
+                            <button title="Change table {{ $table->table_number }}'s attendant" data-remodal-target="update_attendant" class="btn-icon hover_info" onclick="updateAttendant({{ json_encode($table) }})"><i class="order_table_icon fa-regular fa-repeat"></i></button>
+                            <button onclick="deleteTable({{ $table->id }})" class="btn-icon hover_danger"><i class="order_table_icon fa-light fa-trash"></i></button>
                         </div>
                     </div>
                     <div class="order_table_bottom">
-                        <div class="oreder_table_bottom_left">
-                            <a href="#ordered_menu" onclick="getOrders({{ json_encode($table) }})" class="{{ $table->status == 'free' ? 'd-none' : '' }} btn-sm btn-primary" id="bill_button{{ $table->id }}">Prepare Bill</a>
+                        <div class="order_table_bottom_left">
+                            <button data-remodal-target="ordered_menu" onclick="getOrders({{ json_encode($table) }})" class="{{ $table->status == 'free' ? 'd-none' : '' }} btn-sm btn-primary" id="bill_button{{ $table->id }}">Prepare Bill</button>
                         </div>
-                        <div class="oreder_table_bottom_right">
+                        <div class="order_table_bottom_right">
                             <p class="text-sm-alt text-primary">{!! $table->user->name ?? '<i class="text-danger fa-solid fa-circle"></i> <span class="text-danger">Unattended</span>' !!}</p>
                         </div>
                     </div>
@@ -55,9 +56,8 @@
             </div>
         </div>
     </div>
-
     {{-- table add remodal --}}
-    <div class="modal remodal" data-remodal-id="add_table" data-remodal-options="confirmOnEnter: true">
+    <div class="modal remodal" data-remodal-id="add_table" data-remodal-options="confirmOnEnter: true, hashTracking: false">
         <div class="modal_heading">
             <h2 class="modal_title"><i class="fa-regular fa-user"></i> &nbsp; Add a new table</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -96,7 +96,8 @@
         </form>
     </div>
 
-    <div class="modal remodal" data-remodal-id="update_attendant" data-remodal-options="confirmOnEnter: true">
+    {{-- update attendant remodal --}}
+    <div class="modal remodal" data-remodal-id="update_attendant" data-remodal-options="confirmOnEnter: true, hashTracking: false">
         <div class="modal_heading">
             <h2 class="modal_title"><i class="fa-regular fa-user"></i> &nbsp; Select another attendant</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -127,8 +128,9 @@
             </div>
         </form>
     </div>
-
-    <div class="modal remodal pb-1" data-remodal-id="ordered_menu" id="orders_remodal">
+    
+    {{-- ordered menu remodal --}}
+    <div class="modal remodal pb-1" data-remodal-id="ordered_menu" id="orders_remodal" data-remodal-options="hashTracking: false">
         <div class="modal_heading">
             <h2 class="modal_title" id="orders_modal_title">Table-{{ $tables[0]->table_number }} Order</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -203,7 +205,7 @@
     })
     function getOrders(table){
         let base_url = window.location.origin;
-        document.getElementById('orders_modal_title').innerHTML = 'Table-'+table.table_number+' Order';
+        document.getElementById('orders_modal_title').innerHTML = 'Table-'+table.table_number+' Bill';
 
         axios.get(base_url+`/manager/api/getOrders/${table.id}`).
         then(function(response){
@@ -236,18 +238,29 @@
                     html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="">`;
                     html += '</div>';
                     html += '<div class="item_content">';
-                    html += '<span class="item_title text-md-alt text">' + item.recipe_name + ' </span>&nbsp<span class="text-sm-alt text-warning fw-600">x' + item.quantity + '</span>';
-                    html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
+                    html += '<span class="item_title text-md-alt text">' + item.recipe_name + ' </span>&nbsp<span class="text-sm-alt text-warning fw-600">x' + item.quantity + '</span><br>';
+
+                    //determine the price
+                    let price = item.price;
+                    console.log(item.discount);
+                    if(item.discount > 0){
+                        price = item.price - (item.price * (item.discount/100));
+                        html += '<span class="text-crossed item_subtitle text-sm-alt op-6">' + item.price + '</span><span class="text-sm-alt op-6">- '+item.discount+'% |</span>';
+                    }
+                    
+                    html += '<span class="item_subtitle text-sm-alt op-6"> ' + Math.round(price) + ' BDT</span>';
                     html += '</div>';
                     html += '</div>';
                     html += '<div class="item_right">';
-                    html+= '<span class="mr-1 text-sm-alt text-primary">' + item.quantity*item.price + ' BDT</span>';
+                    html+= '<span class="mr-1 text-sm-alt text-primary">' + Math.round(item.quantity*price) + ' BDT</span>';
                     html += '</div>';
                     html += '</div>';
 
-                    total_price += item.quantity*item.price;
+                    total_price += item.quantity*price;
                 });
             });
+
+            total_price = Math.floor(total_price);
 
             html += '<div class="item_wrapper" style="padding: .8rem 0;">';
             html += '<div class="item_left">';
@@ -255,13 +268,92 @@
             html += '<span class="item_title text-md-alt text"> Subtotal </span>';
             html += '</div>';
             html += '</div>';
-            html += '<div class="item_right">';
-            html+= '<span class="mr-1 text-sm-alt text-primary fw-600">' + total_price + ' BDT</span>';
+            html += '<div class="item_right" id="subtotal_parent' + table.id + '">';
+            html+= '<span class="mr-1 text-sm-alt text-primary fw-600" id="subtotal' + table.id + '">' + total_price + ' BDT</span>';
             html += '</div>';
             html += '</div>';
+            
+            //create a form to add discount, username and contact number
+            html += `<form action="{{ route('manager.payment') }}" onsubmit="processPayment(event, this)" method="POST" id="discount_form" class="modal__form border-top">`;
+            html += '@csrf';
+            html += '<input type="hidden" id="payment_table_id" name="table_id" value="'+table.id+'">';
+            html += '<div class="modal__input__group">';
+            html += '<div class="modal__input__field">';
+            html += '<label for="discount" class="modal__input__label">Discount(%)</label>';
+            html += '<input type="number" step=".01" min="0" oninput="updateTotal(this.value, ' + table.id + ', ' + total_price + ')" max="100" name="discount" id="discount" class="modal__input__input input" placeholder="Discount % (optional)">';
+            html += '</div>';
+            html += '<div class="modal__input__field">';
+            html += '<label for="paid" class="modal__input__label">Paid</label>';
+            html += '<input type="number" min="0" name="paid" id="paid" class="modal__input__input input" placeholder="Paid" required>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="modal__input__group">';
+            html += '<div class="modal__input__field">';
+            html += '<label for="username" class="modal__input__label">Customer Name</label>';
+            html += `<input title="Can only have letters and spaces" type="text" pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" name="customer_name" id="customer_name" class="modal__input__input input" placeholder="Customer name (optional)">`;
+            html += '</div>';
+            html += '<div class="modal__input__field">';
+            html += '<label for="contact_number" class="modal__input__label">Contact Number</label>';
+            html += '<input type="text" name="customer_contact" pattern="01[3-9]\\d{8}" title="Enter 11 digit valid phone number" id="contact_number" class="modal__input__input input" placeholder="Contact Number (optional)">';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="modal_input_group_wrapper" style="position: relative; z-index: 0;">';
+            html += '<div class="modal__input__group modal__button_group">';
+            html += '<button data-remodal-action="cancel" class="btn-sm">Cancel</button>';
+            html += '<button type="submit" class="btn-sm btn-primary" >Bill</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</form>';
 
             //append the menu
             orders_wrapper.innerHTML = html;
+        }).catch(function(error){
+            console.log(error);
+        });
+    }
+    //process the payment
+    function processPayment(e, form){
+        e.preventDefault();
+
+        let base_url = window.location.origin;
+        let table_id = document.getElementById('payment_table_id').value;
+        let paid = document.getElementById('paid').value;
+        let discount = document.getElementById('discount').value;
+        let customer_name = document.getElementById('customer_name').value;
+        let customer_contact = document.getElementById('contact_number').value;
+
+        console.log(table_id, paid, discount, customer_name, customer_contact);
+
+        //make an axios request to process the payment
+        axios.post(form.action, {
+            table_id: form.table_id.value,
+            paid: paid,
+            discount: discount,
+            customer_name: customer_name,
+            customer_contact: customer_contact
+        }).then(function(response){
+            console.log(response);
+            if(response.data.message == 'Payment successful'){
+                //close the modal
+                let instance = $('[data-remodal-id=ordered_menu]').remodal();
+                instance.close();
+                //update table status
+                let status_indicator = document.getElementById('status_indicator' + table_id);
+                status_indicator.innerHTML = '<i class="text-yellow fa-solid fa-circle"></i><span>Free</span>';
+                let bill_button = document.getElementById('bill_button' + table_id);
+                bill_button.classList.add('d-none');
+
+                //emit an event to update the table
+                socket.emit('paymentDone', table_id);
+                //open invoice in a new window popup
+                var popup = window.open(base_url + '/manager/receipt/' + response.data.invoiceId, '_blank', 'width=400, height=800, top=100, left=100, resizable=yes, scrollbars=yes');
+                popup.focus();
+                //reset and play notification sound from start
+                let audio = document.getElementById('payment_sound');
+                audio.pause();
+                audio.currentTime = 0;
+                audio.play();
+            }
         }).catch(function(error){
             console.log(error);
         });
@@ -275,9 +367,9 @@
         var oldestOrderTime = new Date(timeElement.getAttribute('data-oldest-order-time'));
         // calculate the time elapsed
         var diff = now.getTime() - oldestOrderTime.getTime();
-        var elapsed = new Date(diff);
-        // subtract 6 hours from the hours value
-        elapsed.setUTCHours(elapsed.getUTCHours() - 6);
+        var elapsed = new Date(diff); 
+        // adjust the elapsed time to the timezone of Dhaka
+        elapsed.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
         // format the time elapsed as a string
         var hours = elapsed.getUTCHours().toString().padStart(2, '0');
         var minutes = elapsed.getUTCMinutes().toString().padStart(2, '0');
@@ -286,7 +378,37 @@
         // update the element with the new time elapsed
         timeElement.innerHTML = timeString;
     }
-
+    function updateTotal(value, tableId, price){
+        //if value is a number and not empty and greater than 0
+        let totalPriceParent = document.getElementById('subtotal_parent' + tableId);
+        let totalPriceSpan = document.getElementById('subtotal' + tableId);
+        let discountedPrice = document.getElementById('discounted_price' + tableId);
+        if(!isNaN(value) && value != '' && value > 0 && value <= 100){
+            //get the total element
+            if(totalPriceParent && totalPriceSpan){
+                totalPriceSpan.classList.add('text-crossed');
+                totalPriceSpan.innerHTML = price;
+                //if there is no discount element, create one
+                if(discountedPrice){
+                    discountedPrice.innerHTML = Math.round(price - (price * (value / 100)))+ ' BDT';
+                }else{
+                    let span = document.createElement('span');
+                    span.classList.add('text-sm-alt','text-success');
+                    span.id = 'discounted_price' + tableId;
+                    span.innerHTML = Math.round(price - (price * (value / 100)))+ ' BDT';
+                    totalPriceParent.appendChild(span);
+                }
+            }
+        }else{
+            if(totalPriceParent && totalPriceSpan){
+                totalPriceSpan.classList.remove('text-crossed');
+                totalPriceSpan.innerHTML = price + ' BDT';
+                if(discountedPrice){
+                    discountedPrice.remove();
+                }
+            }
+        }
+    }
     // call the updateTime function for each table every second
     setInterval(function() {
         // loop through all the tables
@@ -296,7 +418,37 @@
             updateTime(tableId);
         }
     }, 1000);
+    //deleting table
+    function deleteTable(tableId){
+        //first show a confirmation message
+        if(!confirm('Are you sure you want to delete this table?')){
+            return;
+        }
+        //get the table
+        let table = document.getElementById('order_table' + tableId);
+        //get the base url
+        let base_url = window.location.origin;
+        //make an axios request to delete the table
+        axios.get(base_url+`/manager/table/destroy/${tableId}`)
+        .then(function(response){
+            //if the table has order and cannot be deleted
+            if(response.data.message == 'Table has order'){
+                //show an error message
+                toastr.error('This table has orders and cannot be deleted.');
+                return;
+            }
+
+            //if the table is deleted successfully
+            if(response.data.message == 'Table deleted'){
+                //remove the table from the dom
+                table && table.remove();
+                //emit an event to update the table
+                socket.emit('tableDeleted', response.data.tableId);
+            }
+        }).catch(function(error){
+            console.log(error);
+        });
+    }
     
 </script>
 @endsection
-

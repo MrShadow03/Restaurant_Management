@@ -70,6 +70,32 @@
         margin-bottom: 1rem;
     }
 }
+.modal__form--profile {
+    text-align: left;
+    font-family: 'inter', sans-serif;
+    .modal__input__group {
+        padding: unset;
+        width: 100%;
+        .modal__input__field {
+            flex: auto;
+            position: relative;
+            .modal__input__label {
+                font-size: 1.2rem;
+            }
+            .modal_input_icon{
+                top: 22px;
+            }
+        }
+    }
+    .modal__button_group{
+        gap: .5rem;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid $border_light;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+}
 .item_image_md{
     width: 8rem !important;
     aspect-ratio: 1/1;

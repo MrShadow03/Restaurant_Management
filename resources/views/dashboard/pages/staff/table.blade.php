@@ -6,7 +6,7 @@
     $max_table_number = $tables->max('table_number')+1;
 @endphp
 @section('title')
-<title>Admin-Teacher</title>
+<title>Manage Tables | Staff</title>
 @endsection
 @extends('dashboard.app')
 @section('main')
@@ -19,7 +19,7 @@
         <div>
             <div class="order_table_wrapper">
                 @foreach ($tables as $table)
-                <div class="order_table">
+                <div class="order_table" id="table{{ $table->id }}">
                     <div class="order_table_title">{{ addLeadingZero($table->table_number) }}</div>
                     <div class="order_table_top">
                         <div class="order_table_top_left">
@@ -40,10 +40,10 @@
                     </div>
                     <div class="order_table_bottom">
                         <div class="oreder_table_bottom_left">
-                            <a href="#ordering_menu" class="btn-sm btn-primary" onclick="getMenu({{ json_encode($table) }})">Take Order</a>
+                            <button data-remodal-target="ordering_menu" class="btn-sm btn-primary" onclick="getMenu({{ json_encode($table) }})">Take Order</button>
                         </div>
                         <div class="oreder_table_bottom_right">
-                            <a href="#ordered_menu" id="ordered_menu_button{{ $table->id }}" class="{{ $table->status == 'free' ? 'd-none' : '' }} btn-sm btn-info" onclick="getOrders({{ json_encode($table) }})">View Orders</a>
+                            <button data-remodal-target="ordered_menu" id="ordered_menu_button{{ $table->id }}" class="{{ $table->status == 'free' ? 'd-none' : '' }} btn-sm btn-info" onclick="getOrders({{ json_encode($table) }})">View Orders</button>
                         </div>
                     </div>
                 </div>
@@ -52,43 +52,18 @@
         </div>
     </div>
 
-    <div class="modal remodal" data-remodal-id="ordering_menu" id="ordering_remodal">
+    <div class="modal remodal" data-remodal-id="ordering_menu" id="ordering_remodal" data-remodal-options="hashTracking: false">
         <div class="modal_heading">
-            <h2 class="modal_title" id="modal_title">Table-{{ $tables[0]->table_number }} Order</h2>
+            <h2 class="modal_title" id="modal_title"></h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
             <input type="hidden" name="table_id" id="table_id" value="{{ $tables[0]->id }}">
         </div>
         <div class="menu_wrapper">
-            @foreach ($menu->unique('category') as $category)
-            @foreach ($menu->where('category', $category->category) as $item)
-            @if ($loop->first)
-            <h3 class="menu_category_title">{{ $category->category }}</h3>
-            @endif
-            <div class="item_wrapper item_wrapper-stripes">
-                <div class="item_left">
-                    <div class="item_image">
-                        <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">
-                    </div>
-                    <div class="item_content">
-                        <h3 class="item_title text-md-alt text">{{ $item->recipe_name }}</h3>
-                        <h3 class="item_subtitle text-sm-alt op-6">{{ $item->price }} BDT</h3>
-                        <div class="menu_quantity_wrapper">
-                            <button onclick="decQuantity({{ $item->id }})" class="menu_quantity_btn"><i class="fa-light fa-minus"></i></button>
-                            <input type="text" class="menu_quantity_input op-5" id="menu_quantity_input{{ $item->id }}" value="0" readonly>
-                            <button onclick="incQuantity({{ $item->id }})" class="menu_quantity_btn"><i class="fa-light fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item_right">
-                    <button class="btn-sm" onclick="placeOrder({{ $item->id }})" id="order_button{{ $item->id }}">Order</button>
-                </div>
-            </div>
-            @endforeach
-            @endforeach
+            <button data-remodal-action="close" class="btn-sm btn-primary mb-2">Close</button>
         </div>
     </div>
 
-    <div class="modal remodal pb-1" data-remodal-id="ordered_menu" id="orders_remodal">
+    <div class="modal remodal pb-1" data-remodal-id="ordered_menu" id="orders_remodal" data-remodal-options="hashTracking: false">
         <div class="modal_heading">
             <h2 class="modal_title" id="orders_modal_title">Table-{{ $tables[0]->table_number }} Order</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -158,7 +133,7 @@
                     html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">`;
                     html += '</div>';
                     html += '<div class="item_content">';
-                    html += '<h3 class="item_title text-md-alt text">' + item.recipe_name + '</h3>';
+                    html += `<h3 class="item_title text-md-alt text">${item.recipe_name} ${ !item.is_available ? '<span class="badge badge-danger">Unavailable</span>' : ''}</h3>`;
                     html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
                     html += '<div class="menu_quantity_wrapper">';
                     html += '<button onclick="decQuantity(' + item.id + ')" class="menu_quantity_btn"><i class="fa-light fa-minus"></i></button>';
@@ -171,10 +146,13 @@
                     html += '</div>';
                     html += '</div>';
                     html += '<div class="item_right">';
+ 
+                    if(item.is_available){
+                        let buttonClass = item.orderCount > 0 ? 'btn-sm btn-success' : 'btn-sm';
+                        let buttonText = item.orderCount > 0 ? 'Ordered' : 'Order';
+                        html += `<button class="${buttonClass}" onclick="placeOrder(${item.id})" id="order_button${item.id}">${buttonText}</button>`;
+                    }
 
-                    let buttonClass = item.orderCount > 0 ? 'btn-sm btn-success' : 'btn-sm';
-                    let buttonText = item.orderCount > 0 ? 'Ordered' : 'Order';
-                    html += `<button class="${buttonClass}" onclick="placeOrder(${item.id})" id="order_button${item.id}">${buttonText}</button>`;
                     html += '</div>';
                     html += '</div>';
                 });
@@ -209,6 +187,13 @@
                 sendOrderToKitchen(response.data, 'remove');
                 //update the table status
                 updateTableStatus(response.data.table_id);
+                return;
+            }
+            //if the recipe is not available then show toastr warning
+            if(data.message == 'not available'){
+                document.getElementById('order_button'+data.recipe_id).classList.add('btn-danger');
+                document.getElementById('order_button'+data.recipe_id).innerHTML = 'Unavailable';
+                toastr.error('Recipe is not available');
                 return;
             }
             if(data.message == 'empty'){
@@ -266,14 +251,14 @@
                     html += '</div>';
                     html += '<div class="item_content">';
 
-                    let span = `<span id="item_status${item.recipe_id}"></span>`;
+                    let span = `<span id="item_status${table.id+''+item.recipe_id}"></span>`;
                     
                     if(item.status == 'cooking'){
-                        span = `<span id="item_status${item.recipe_id}" class="badge badge-warning">Cooking</span>`;
+                        span = `<span id="item_status${table.id+''+item.recipe_id}" class="badge badge-warning">Cooking</span>`;
                     }else if(item.status == 'ready'){
-                        span = `<span id="item_status${item.recipe_id}" class="badge badge-success">Ready</span>`;
+                        span = `<span id="item_status${table.id+''+item.recipe_id}" class="badge badge-success">Ready</span>`;
                     }else{
-                        span = `<span id="item_status${item.recipe_id}" class="badge badge-danger">Pending</span>`;
+                        span = `<span id="item_status${table.id+''+item.recipe_id}" class="badge badge-danger">Pending</span>`;
                     }
 
                     html += '<span class="item_title text-md-alt text">' + item.recipe_name + ' '+ span +'</span>';
@@ -298,37 +283,44 @@
     }
     
     function incQuantity( id ){
-        let quantity = document.getElementById('menu_quantity_input'+id).value;
-        quantity = parseInt(quantity)+1;
-        document.getElementById('order_button'+id).classList.remove('btn-success');
-        document.getElementById('order_button'+id).classList.remove('btn-danger');
-        document.getElementById('menu_quantity_input'+id).value = quantity;
-        document.getElementById('order_button'+id).classList.add('btn-primary');
-        document.getElementById('order_button'+id).innerHTML = 'Order';
-        document.getElementById('menu_quantity_input'+id).classList.add('text-orange');
-        document.getElementById('menu_quantity_input'+id).classList.remove('op-5');
+        let order_button = document.getElementById('order_button'+id);
+        if(order_button){
+            let quantity = document.getElementById('menu_quantity_input'+id).value;
+            quantity = parseInt(quantity)+1;
+            order_button.classList.remove('btn-success');
+            order_button.classList.remove('btn-danger');
+            document.getElementById('menu_quantity_input'+id).value = quantity;
+            order_button.classList.add('btn-primary');
+            order_button.innerHTML = 'Order';
+            document.getElementById('menu_quantity_input'+id).classList.add('text-orange');
+            document.getElementById('menu_quantity_input'+id).classList.remove('op-5');
+        }
         
     }
     
     function decQuantity( id ){
-        let quantity = document.getElementById('menu_quantity_input'+id).value;
-        document.getElementById('order_button'+id).classList.remove('btn-success');
-        document.getElementById('order_button'+id).innerHTML = 'Order';
-        document.getElementById('order_button'+id).classList.add('btn-primary');
-        
-        quantity = parseInt(quantity)-1;
-        if( quantity < 0 ){
-            quantity = 0;
-        }
+        let order_button = document.getElementById('order_button'+id);
 
-        document.getElementById('menu_quantity_input'+id).value = quantity;
-
-        if( quantity == 0 ){
-            document.getElementById('order_button'+id).classList.remove('btn-primary');
-            document.getElementById('order_button'+id).classList.add('btn-danger');
-            document.getElementById('order_button'+id).innerText = 'Remove';
-            document.getElementById('menu_quantity_input'+id).classList.remove('text-orange');
-            document.getElementById('menu_quantity_input'+id).classList.add('op-5');
+        if(order_button){
+            let quantity = document.getElementById('menu_quantity_input'+id).value;
+            order_button.classList.remove('btn-success');
+            order_button.innerHTML = 'Order';
+            order_button.classList.add('btn-primary');
+            
+            quantity = parseInt(quantity)-1;
+            if( quantity < 0 ){
+                quantity = 0;
+            }
+    
+            document.getElementById('menu_quantity_input'+id).value = quantity;
+    
+            if( quantity == 0 ){
+                order_button.classList.remove('btn-primary');
+                order_button.classList.add('btn-danger');
+                order_button.innerText = 'Remove';
+                document.getElementById('menu_quantity_input'+id).classList.remove('text-orange');
+                document.getElementById('menu_quantity_input'+id).classList.add('op-5');
+            }
         }
     }
 
@@ -363,6 +355,13 @@
         });
     }
 
+    socket.on('paymentDoneResponse', function(table_id){
+        //close remodals
+        closeRemodals();
+        //update the table status
+        updateTableStatus(table_id);
+    });
+
     function sendOrderToKitchen(order, type = 'add'){
         socket.emit('sendOrderToKitchen', {
             order: order,
@@ -379,7 +378,8 @@
             ordered_menu_button.classList.add('notification-head', 'notification-head-success');
 
             //update the item status
-            let item_status = document.getElementById('item_status'+data.recipe_id);
+            let item_status = document.getElementById('item_status'+data.table_id+data.recipe_id);
+
             if(item_status){
                 item_status.classList.remove('badge-warning');
                 item_status.classList.add('badge-success');
@@ -390,7 +390,7 @@
             ordered_menu_button.classList.add('notification-head', 'notification-head-warning');
 
             //update the item status
-            let item_status = document.getElementById('item_status'+data.recipe_id);
+            let item_status = document.getElementById('item_status'+data.table_id+data.recipe_id);
             if(item_status){
                 item_status.classList.remove('badge-success');
                 item_status.classList.add('badge-warning');
@@ -398,6 +398,22 @@
             }
         }
     });
+
+    socket.on('tableDeletedEvent', function(tableId){
+        closeRemodals();
+        let table = document.getElementById('table'+tableId);
+        if(table){
+            table.remove();
+        }
+    });
+
+    function closeRemodals(){
+        let orderingModalInstance = $('#ordering_remodal').remodal();
+        orderingModalInstance.close();
+
+        let ordersModalInstance = $('#orders_remodal').remodal();
+        ordersModalInstance.close();
+    }
 
 </script>
 @endsection

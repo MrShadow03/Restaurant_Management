@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Table;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 
 class KitchenStaffOrderController extends Controller
@@ -12,6 +13,7 @@ class KitchenStaffOrderController extends Controller
         $tables = Table::with(['orders.recipe','oldestOrder'])->get();
         return view('dashboard.pages.kitchen_staff.orders', [
             'tables' => $tables,
+            'recipes' => Recipe::where('on_menu',  '1')->get(),
         ]);
     }
 

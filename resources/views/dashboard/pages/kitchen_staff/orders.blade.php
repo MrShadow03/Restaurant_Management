@@ -1,5 +1,5 @@
 @section('title')
-<title>Admin-Teacher</title>
+<title>Food Orders | Kitchen</title>
 @endsection
 @extends('dashboard.app')
 @section('main')
@@ -56,61 +56,40 @@
     <audio controls class="d-none" id="notification1" src="{{ asset('dashboard/audio/notification1.mp3') }}"></audio>
     <audio controls class="d-none" id="notification2" src="{{ asset('dashboard/audio/notification2.mp3') }}"></audio>
 
-    {{-- <div class="modal remodal" data-remodal-id="open_menu_remodal">
+    <div class="modal remodal" data-remodal-id="open_menu_remodal">
         <div class="modal_heading">
-            <h2 class="modal_title" id="edit_product">Edit Product</h2>
+            <h2 class="modal_title" id="edit_product">Menu Status</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
         </div>
-        <div class="table_box">
-            <div class="table-wrapper">
-                <table class="w-100 data-table">
-                    <thead>
-                        <tr class="heading-row">
-                            <th class="heading-column text-left">Product</th>
-                            <th class="heading-column text-left">Availability</th>
-                            <th class="heading-column"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($recipes as $recipe)
-                            <tr class="table-row">
-                                <td class="table-column">
-                                    <div class="table-column__wrapper">
-                                        <div class="table-column__image">
-                                            <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_sm" alt="">
-                                        </div>
-                                        <div class="table-column__content">
-                                            <p class="table-column__subtitle pt-0">{{ $recipe->category }}</p>
-                                            <h3 class="table-column__title table-column__product">{{ $recipe->recipe_name ?? '' }}</h3>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="table-column">
-                                    <div class="table-column__wrapper">
-                                        <div class="table-column__content" id="avaiability_status_indicator{{ $recipe->id }}">
-                                            <p class="table-column__status"><i class="fa-solid fa-circle-small" style="{{ $recipe->is_available ? 'color: #43A047;' : 'color: #dc3545' }}"></i> {{ $recipe->is_available ? "Available" : "Not Available" }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="table-column">
-                                    <div class="table-column__wrapper">
-                                        <div class="table-column__content">
-                                            <form class="switch" action="{{ route('kitchen_staff.recipe.toggle_availability') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="id" value={{ $recipe->id }}>
-                                                <input class="tgl tgl-ios" id="toggle_is_available{{ $recipe->id }}" name="is_available" type="checkbox" {{ $recipe->is_available ? 'checked' : '' }} onchange="toggleAvailability(this, {{ $recipe->id }})"/>
-                                                <label class="tgl-btn" for="toggle_is_available{{ $recipe->id }}"></label>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="menu_wrapper">
+            @foreach ($recipes->unique('category') as $category)
+            @foreach ($recipes->where('category', $category->category) as $recipe)
+            @if ($loop->first)
+            <h3 class="menu_category_title">{{ $category->category }}</h3>
+            @endif
+            <div class="item_wrapper border-bottom" style="padding: .8rem 0;">
+                <div class="item_left">
+                    <div class="item_image">
+                        <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image_sm" alt="food">
+                    </div>
+                    <div class="item_content">
+                        <h3 class="item_title text-md-alt text">{{ $recipe->recipe_name }} <span id="food_availability_status{{ $recipe->id }}" class="badge badge-success">Available</span></h3>
+                        <h3 class="item_subtitle text-sm-alt op-6">{{ $recipe->price }} BDT</h3>
+                    </div>
+                </div>
+                <div class="item_right">
+                    <form class="switch" action="{{ route('kitchen_staff.recipe.toggle_availability') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value={{ $recipe->id }}>
+                        <input class="tgl tgl-ios" id="toggle_is_available{{ $recipe->id }}" name="is_available" type="checkbox" {{ $recipe->is_available ? 'checked' : '' }} onchange="toggleAvailability(this, {{ $recipe->id }})"/>
+                        <label class="tgl-btn" for="toggle_is_available{{ $recipe->id }}"></label>
+                    </form>
+                </div>
             </div>
+            @endforeach
+            @endforeach
         </div>
-    </div> --}}
+    </div>
 
 @endsection
 
@@ -126,18 +105,22 @@
             if(data.is_available){
                 document.getElementById('toggle_is_available' + recipe_id).checked = true;
                 toastr.success(data.recipe_name+" is now available!");
-                document.getElementById('avaiability_status_indicator' + recipe_id).innerHTML = `<p class="table-column__status"><i class="fa-solid fa-circle-small" style="color: #43A047;"></i> Available</p>`;
+                document.getElementById('food_availability_status' + recipe_id).classList.remove('badge-danger');
+                document.getElementById('food_availability_status' + recipe_id).classList.add('badge-success');
+                document.getElementById('food_availability_status' + recipe_id).innerText = `Available`;
             }else{
                 document.getElementById('toggle_is_available' + recipe_id).checked = false;
                 toastr.warning(data.recipe_name+" is now unavailable!");
-                document.getElementById('avaiability_status_indicator' + recipe_id).innerHTML = `<p class="table-column__status"><i class="fa-solid fa-circle-small" style="color: #dc3545;"></i> Not Available</p>`;
+                document.getElementById('food_availability_status' + recipe_id).classList.remove('badge-success');
+                document.getElementById('food_availability_status' + recipe_id).classList.add('badge-danger');
+                document.getElementById('food_availability_status' + recipe_id).innerText = `Not Available`;
             }
         })
         .catch(function (error) {
+            console.log(error);
             toastr.error("Something went wrong!");
         });
     }
-
     // define a function to update the time elapsed for a specific table
     function updateTime(tableId) {
         // get the element that contains the time elapsed
@@ -148,8 +131,9 @@
         // calculate the time elapsed
         var diff = now.getTime() - oldestOrderTime.getTime();
         var elapsed = new Date(diff);
-        // subtract 6 hours from the hours value
-        elapsed.setUTCHours(elapsed.getUTCHours() - 6);
+
+        // adjust the elapsed time to the timezone of Dhaka
+        elapsed.toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
         // format the time elapsed as a string
         var hours = elapsed.getUTCHours().toString().padStart(2, '0');
         var minutes = elapsed.getUTCMinutes().toString().padStart(2, '0');
@@ -158,7 +142,6 @@
         // update the element with the new time elapsed
         timeElement.innerHTML = timeString;
     }
-
     //recive order from stuff
     socket.on('orderFromStuff', function(data){
         //get the orders for the table
@@ -186,11 +169,16 @@
                 item.classList.add('color_bounce');
                 setTimeout(function(){
                     item.classList.remove('color_bounce');
-                }, 2000);
+                }, 1000);
             }
         })
     })
-
+    socket.on('paymentDoneResponse', function(table_id){
+        let table = document.getElementById('table'+table_id);
+        if(table){
+            table.remove();
+        }
+    });
     function getOrders(table_id){
         return new Promise((resolve, reject) => {
             //get the base url
@@ -309,7 +297,6 @@
 
         table_wrapper.appendChild(table);
     }
-
     //change order status
     function changeOrderStatus(table_id, order_id, status){
         let base_url = window.location.origin;
@@ -328,7 +315,6 @@
             console.log(error);
         });
     }
-
     // call the updateTime function for each table every second
     setInterval(function() {
         // loop through all the tables

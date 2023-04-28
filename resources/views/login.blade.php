@@ -9,14 +9,14 @@
     @props(['title','input_type','input_name'])
     <div class="login_box">
         <div class="login_title">
-            <img src="{{ asset('/backend/img/logo.png') }}" alt="">
-            <h2>Portal Login</h2>
+            <img src="{{ asset('/dashboard/img/logo.png') }}" alt="">
         </div>
         @error('email')
         <div class="text-center mt-2">
             <p class="badge badge-danger">{{ $message }}</p>
         </div>
         @enderror
+        <p class="text-center text-primary font-inter text-sm-alt op-5">Welcome to Restaurant Inc</p>
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="input_single">

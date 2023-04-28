@@ -1,5 +1,5 @@
 @section('title')
-<title>Admin-Teacher</title>
+<title>Food Menu | Manager</title>
 @endsection
 @extends('dashboard.app')
 @section('main')
@@ -10,9 +10,9 @@
             <h2 class="heading__title text-title">Food Items</h2>
             <div class="heading__left">
                 <a href="#add_product" class="btn-sm btn-primary"><i class="fa-solid fa-burger-soda"></i>&nbsp; Add Item</a>
-                <audio src="{{ asset('dashboard/audio/order_recieved2.mp3') }}" controls class="d-none" id="order_recieved_sound"></audio>
+                {{-- <audio src="{{ asset('dashboard/audio/order_recieved2.mp3') }}" controls class="d-none" id="order_recieved_sound"></audio>
                 <audio src="{{ asset('dashboard/audio/ding.mp3') }}" controls class="d-none" id="order_recieved_sound2"></audio>
-                <audio src="{{ asset('dashboard/audio/order_recieved1.mp3') }}" controls class="d-none" id="order_recieved_sound3"></audio>
+                <audio src="{{ asset('dashboard/audio/order_recieved1.mp3') }}" controls class="d-none" id="order_recieved_sound3"></audio> --}}
             </div>
         </div>
         <div>
@@ -38,14 +38,17 @@
                                             <div class="table-column__content">
                                                 <p class="table-column__subtitle pt-0">{{ $recipe->category }}</p>
                                                 <h3 class="table-column__title table-column__product">{{ $recipe->recipe_name ?? '' }}</h3>
-                                                <p class="table-column__subtitle"><i class="fa-regular fa-bangladeshi-taka-sign"></i> {{ $recipe->price }} BDT</p>
+                                                <p class="table-column__subtitle d-inline"><i class="fa-regular fa-bangladeshi-taka-sign"></i> {{ $recipe->price }} BDT</p>
+                                                @if($recipe->discount > 0)
+                                                <span class="badge badge-warning"><i class="fa-solid fa-fire"></i>&nbsp; {{ $recipe->discount }}% off</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__content">
-                                                <p class="table-column__status"><i class="fa-solid fa-circle-small" style="{{ $recipe->on_menu ? 'color: #43A047;' : 'color: #dc3545' }}"></i> {{ $recipe->on_menu ? "On the menu" : "Not on the menu" }}</p>
+                                                <p class="table-column__status" id="on_menu_status{{ $recipe->id }}"><i class="fa-solid fa-circle-small" style="{{ $recipe->on_menu ? 'color: #43A047;' : 'color: #dc3545' }}"></i> {{ $recipe->on_menu ? "On the menu" : "Not on the menu" }}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -56,7 +59,7 @@
                                                     @csrf
                                                     @method('PATCH')
                                                     <input type="hidden" name="id" value={{ $recipe->id }}>
-                                                    <input class="tgl tgl-ios" id="toggle_on_menu{{ $recipe->id }}" name="on_menu" type="checkbox" {{ $recipe->on_menu ? 'checked' : '' }} onchange="this.form.submit()"/>
+                                                    <input class="tgl tgl-ios" id="toggle_on_menu{{ $recipe->id }}" name="on_menu" type="checkbox" {{ $recipe->on_menu ? 'checked' : '' }} onchange="toggleOnMenu(this, {{ $recipe->id }})"/>
                                                     <label class="tgl-btn" for="toggle_on_menu{{ $recipe->id }}"></label>
                                                 </form>
                                             </div>
@@ -120,11 +123,26 @@
                     <p class="input-error">{{ $message }}</p>
                     @enderror
                     <div class="modal__input__field">
+                        <label class="modal__input__label">Production cost</label>
+                        <input type="number" name="production_cost" class="input" placeholder="Price">
+                    </div>
+                    @error('production_cost')
+                    <p class="input-error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="modal__input__group">
+                    {{-- <div class="modal__input__field">
                         <label class="modal__input__label">VAT(%)</label>
                         <input type="number" name="VAT" class="input" placeholder="e.g: 5 (optional)">
-                        {{-- <i class="modal_input_icon fa-regular fa-percent"></i> --}}
                     </div>
-                    @error('VAT(%)')
+                    @error('VAT')
+                        <p class="input-error">{{ $message }}</p>
+                    @enderror --}}
+                    <div class="modal__input__field">
+                        <label class="modal__input__label">Discount(%)</label>
+                        <input type="number" name="discount" class="input" placeholder="e.g: 5 (optional)">
+                    </div>
+                    @error('discount')
                         <p class="input-error">{{ $message }}</p>
                     @enderror
                 </div>
@@ -137,7 +155,7 @@
     </div>
 
     {{-- product edit remodal --}}
-    <div class="modal remodal" data-remodal-id="edit_product_modal">
+    <div class="modal remodal" data-remodal-id="edit_product_modal" data-remodal-options="confirmOnEnter: true">
         <div class="modal_heading">
             <h2 class="modal_title" id="edit_product">Edit Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -168,22 +186,37 @@
                 @error('category')
                     <p class="input-error">{{ $message }}</p>
                 @enderror
+                <div class="modal__input__field">
+                    <label class="modal__input__label">Price (BDT)</label>
+                    <input type="number" name="price" id="recipe_price" oninput="updateButton()" class="input" placeholder="Price">
+                </div>
+                @error('price')
+                <p class="input-error">{{ $message }}</p>
+                @enderror
             </div>
             <div class="modal_input_group_wrapper" style="position: relative; z-index: 0;">
-                <div class="modal__input__group">
-                    <div class="modal__input__field">
-                        <label class="modal__input__label">Price (BDT)</label>
-                        <input type="number" name="price" id="recipe_price" oninput="updateButton()" class="input" placeholder="Price">
-                    </div>
-                    @error('price')
-                    <p class="input-error">{{ $message }}</p>
-                    @enderror
+                {{-- <div class="modal__input__group">
                     <div class="modal__input__field">
                         <label class="modal__input__label">VAT(%)</label>
                         <input type="number" name="VAT" id="recipe_VAT" oninput="updateButton()" class="input" placeholder="e.g: 5 (optional)">
-                        {{-- <i class="modal_input_icon fa-regular fa-percent"></i> --}}
                     </div>
                     @error('VAT(%)')
+                        <p class="input-error">{{ $message }}</p>
+                    @enderror
+                </div> --}}
+                <div class="modal__input__group">
+                    <div class="modal__input__field">
+                        <label class="modal__input__label" title="Total Cost to produce the product">Production Cost</label>
+                        <input type="number" name="production_cost" id="recipe_production_cost" class="input" oninput="updateButton()" placeholder="e.g 200">
+                    </div>
+                    @error('production_cost')
+                        <p class="input-error">{{ $message }}</p>
+                    @enderror
+                    <div class="modal__input__field">
+                        <label class="modal__input__label">Discount(%)</label>
+                        <input type="number" name="discount" id="recipe_discount" class="input" oninput="updateButton()" placeholder="e.g: 5 (optional)">
+                    </div>
+                    @error('discount')
                         <p class="input-error">{{ $message }}</p>
                     @enderror
                 </div>
@@ -236,6 +269,8 @@
         tomSelect2.addItem(recipe.category);
         $('#recipe_price').val(recipe.price);
         $('#recipe_VAT').val(recipe.VAT);
+        $('#recipe_discount').val(recipe.discount);
+        $('#recipe_production_cost').val(recipe.production_cost);
     }
     function addProduct(product){
         $('#add_edit_product').text('Add '+product.product_name);
@@ -248,6 +283,35 @@
     function updateButton(){
         //add btn-primary class to update button
         $('#edit_submit').addClass('btn-primary');
+    }
+    function toggleOnMenu(element, recipeId){
+        let base_url = window.location.origin;
+        axios.post(base_url + '/manager/recipe/toggleOnMenu', {
+            id: recipeId,
+        })
+        .then(function (response) {
+            data = response.data;
+            console.log(data);
+            if(data.onMenu){
+                document.getElementById('toggle_on_menu' + recipeId).checked = true;
+                toastr.success(data.recipeName+" is now available!");
+                let onMenuStatusParent = document.getElementById('on_menu_status' + recipeId);
+                if(onMenuStatusParent){
+                    onMenuStatusParent.innerHTML = `<i class="fa-solid fa-circle-small" style="color: #43A047;"></i> On the menu`;
+                }
+            }else{
+                document.getElementById('toggle_on_menu' + recipeId).checked = false;
+                toastr.warning(data.recipeName+" is now unavailable!");
+                let onMenuStatusParent = document.getElementById('on_menu_status' + recipeId);
+                if(onMenuStatusParent){
+                    onMenuStatusParent.innerHTML = `<i class="fa-solid fa-circle-small" style="color: #dc3545;"></i> Not on the menu`;
+                }
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            toastr.error("Something went wrong!");
+        });
     }
     
 </script>

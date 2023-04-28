@@ -1,5 +1,5 @@
 @section('title')
-<title>Admin-Teacher</title>
+<title>Available Foods | Kitchen</title>
 @endsection
 @extends('dashboard.app')
 @section('main')

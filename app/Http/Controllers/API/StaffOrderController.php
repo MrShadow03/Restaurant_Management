@@ -27,6 +27,17 @@ class StaffOrderController extends Controller
             ->where('recipe_id', $request->recipe_id)
             ->first();
 
+        $isRecipeAvailable = Recipe::find($request->recipe_id)->is_available;
+
+        //if the recipe is not available then return
+        if(!$isRecipeAvailable){
+            return response()->json([
+                'message' => 'not available',
+                'recipe_id' => $request->recipe_id,
+                'table_id' => $request->table_id
+            ]);
+        }
+
         if($alreadyOrdered && request()->quantity == 0){
             $alreadyOrdered->delete();
 
@@ -87,6 +98,8 @@ class StaffOrderController extends Controller
             $item->recipe_id = $item->recipe->id;
             $item->recipe_name = $item->recipe->recipe_name;
             $item->price = $item->recipe->price;
+            $item->VAT = $item->recipe->VAT;
+            $item->discount = $item->recipe->discount;
             $item->total_price = $item->recipe->price * $item->quantity;
             $item->category = $item->recipe->category;
             return $item;

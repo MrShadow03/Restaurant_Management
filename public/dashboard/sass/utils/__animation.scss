@@ -12,7 +12,7 @@
 
 @keyframes color_bounce {
   0% {
-    background-color: #2196f3;
+    background-color: #fffb1b;
   }
   100% {
     background-color: #ffffff;
@@ -24,5 +24,6 @@
 }
 
 .color_bounce {
+  padding-inline: 1rem !important;
   animation: color_bounce 1s cubic-bezier(0.66, 0, 0, 1);
 }
