@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2023 at 09:34 PM
+-- Generation Time: May 01, 2023 at 09:21 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -251,7 +251,6 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `created_at`, `updated_at`) VALUES
-(1, 'Biryani 1:3', NULL, 'default.png', 1, 'Biryani', 300, 220, NULL, 0, 1, 1, '2023-04-09 11:34:15', '2023-04-28 11:20:03'),
 (2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 200, NULL, 0, 1, 1, '2023-04-09 12:22:54', '2023-04-28 11:20:23'),
 (4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, 108, NULL, 0, 1, 1, '2023-04-10 02:16:11', '2023-04-27 18:03:01'),
 (5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, 40, NULL, 0, 1, 1, '2023-04-10 02:16:51', '2023-04-27 18:11:32'),
@@ -276,7 +275,7 @@ CREATE TABLE `recipe_inventory` (
   `id` bigint(20) NOT NULL,
   `recipe_id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL,
-  `amount` float NOT NULL,
+  `quantity` float NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

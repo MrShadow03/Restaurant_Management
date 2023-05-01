@@ -94,12 +94,37 @@
                 <div class="modal__input__field">
                     <label class="modal__input__label">Item Name</label>
                     <input type="text" name="recipe_name" class="input" placeholder="e.g. Biryani 1:3" required>
+                    @error('recipe_name')
+                        <p class="input-error">{{ $message }}</p>
+                    @enderror
                 </div>
-                @error('recipe_name')
-                    <p class="input-error">{{ $message }}</p>
-                @enderror
             </div>
             <div class="modal__input__group">
+                <div class="modal__input__field">
+                    <label title="E.g. Biryani 1:3's parent is Biryani half" class="modal__input__label" for="toggle_has_parent">Does this item have any parent item?</label>
+                    <input class="tgl tgl-ios" id="toggle_has_parent" name="has_parent" type="checkbox" onchange="toggleHasParent(this)"/>
+                    <label class="tgl-btn" for="toggle_has_parent"></label>
+                </div>
+            </div>
+            <div class="modal__input__group d-none" id="parent_group">
+                <div class="modal__input__field">
+                    <label class="modal__input__label">Parent Item Name</label>
+                    <select name="parent_item_id" class="input tom-select" required>
+                        <option value="" disabled selected>Select Parent Item</option>
+                        @foreach ($recipes as $recipe)
+                        <option value="{{ $recipe->id }}">{{ $recipe->recipe_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="modal__input__field">
+                    <label class="modal__input__label"><i class="fa-solid fa-users"></i> &nbsp; For People</label>
+                    <input type="number" name="for_people" class="input" placeholder="3" required>
+                    @error('for_people')
+                        <p class="input-error">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+            <div class="modal__input__group" id="category_group">
                 <div class="modal__input__field">
                     <label class="modal__input__label">Category</label>
                     <select name="category" id="add_category" class="input" required>
@@ -131,13 +156,6 @@
                     @enderror
                 </div>
                 <div class="modal__input__group">
-                    {{-- <div class="modal__input__field">
-                        <label class="modal__input__label">VAT(%)</label>
-                        <input type="number" name="VAT" class="input" placeholder="e.g: 5 (optional)">
-                    </div>
-                    @error('VAT')
-                        <p class="input-error">{{ $message }}</p>
-                    @enderror --}}
                     <div class="modal__input__field">
                         <label class="modal__input__label">Discount(%)</label>
                         <input type="number" name="discount" class="input" placeholder="e.g: 5 (optional)">
@@ -146,9 +164,33 @@
                         <p class="input-error">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <div class="modal__input__section" id="ingredient_section">
+                    <h3 class="modal__input__section__title"><i class="fa-light fa-wheat"></i> &nbsp; Select Ingredients</h3>
+                    <div class="modal__input__section__content" id="ingredients_input_wrapper">
+                        <div class="modal__input__group" id="ingredient_input0" data-nth-child="0">
+                            <div class="modal__input__field">
+                                <select name="ingredient[0]['name']" class="input tom-select" onchange="getMeasurementUnit(0, this.value, {{ json_encode($ingredients) }})" placeholder="Select Ingredient">
+                                    <option value="" disabled selected>Select Ingredient</option>
+                                    @foreach ($ingredients as $ingredient)
+                                        <option value="{{ $ingredient->product_name }}">{{ $ingredient->product_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="modal__input__field">
+                                <input step=".01" id="measurement_unit_input0" type="number" name="ingredient[0]['quantity']" class="input" placeholder="e.g: 5 (optional)">
+                            </div>
+                            <button type="button" id="remove_ingredient" class="btn-icon btn-disabled"><i class="fa-regular fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="modal__input__section__footer mt-1">
+                        <button type="button" class="btn-sm btn-primary" onclick="addIngredient({{ json_encode($ingredients) }})"><i class="fa-regular fa-grid-2-plus"></i> &nbsp; Add More</button>
+                    </div>
+                </div>
+
                 <div class="modal__input__group modal__button_group">
                     <button data-remodal-action="cancel" class="btn-sm">Cancel</button>
-                    <button type="submit" class="btn-sm btn-primary" onclick="this.form.submit()">Add</button>
+                    <button type="submit" class="btn btn-primary" onclick="this.form.submit()">Add</button>
                 </div>
             </div>
         </form>
@@ -232,6 +274,112 @@
 
 @section('exclusive_scripts')
 <script>
+
+    function addIngredient(ingredients){
+        let ingredientsInputWrapper = document.getElementById('ingredients_input_wrapper');
+        // get the last ingredient input group
+        let lastIngredienInputGroup = ingredientsInputWrapper.lastElementChild;
+        // get the last ingredient data-nth-child value
+        let lastGroupNumber = Number(lastIngredienInputGroup.dataset.nthChild)+1;
+
+        console.log(lastGroupNumber);
+
+        let ingredient = document.createElement('div');
+        ingredient.classList.add('modal__input__group');
+        ingredient.id = `ingredient_input${lastGroupNumber}`;
+        ingredient.dataset.nthChild = lastGroupNumber;
+
+        // create an array to store the selected options
+        let selectedOptions = [];
+
+        // loop through all the previous ingredient inputs and add their selected options to the array
+        for (let i = 0; i < lastGroupNumber; i++) {
+            let selectElement = document.querySelector(`select[name="ingredient[${i}]['name']"]`);
+            if (selectElement) {
+                let selectedOption = selectElement.value;
+                if (selectedOption) {
+                    selectedOptions.push(selectedOption);
+                }
+            }
+        }
+
+        //filter the ingredients array to remove the selected options
+        let filteredIngredients = ingredients.filter(ingredient => !selectedOptions.includes(ingredient.product_name));
+
+        console.log(filteredIngredients);
+
+        ingredient.innerHTML = `
+            <div class="modal__input__field">
+                <select id="ingredient_select${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['name']" onchange="getMeasurementUnit(${lastGroupNumber}, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
+                    <option value="" disabled selected>Select Ingredient</option>
+                    ${filteredIngredients.map(ingredient => `<option value="${ingredient.product_name}">${ingredient.product_name}</option>`).join('')}
+                </select>
+            </div>
+            <div class="modal__input__field">
+                <input type="number" step=".01" id="measurement_unit_input${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['quantity']" class="input" placeholder="e.g: 5 (optional)">
+            </div>
+            <button type="button" id="remove_ingredient${lastGroupNumber}" onclick="removeIngredient('ingredient_input${lastGroupNumber}')" class="btn-icon btn-danger"><i class="fa-regular fa-times"></i></button>
+        `;
+
+        ingredientsInputWrapper.appendChild(ingredient);
+
+        // get the new select element
+        let newSelect = document.getElementById(`ingredient_select${lastGroupNumber}`);
+        // initialize tom select
+        let settings = {
+            create: true,
+            maxItems: 1,
+        };
+        new TomSelect(newSelect,settings);
+    }
+
+    function removeIngredient(ingredientId){
+        let ingredient = document.getElementById(ingredientId);
+        ingredient.remove();
+    }
+
+    function getMeasurementUnit(nthChild, ingredientName, ingredients){
+        let measurementUnitInput = document.querySelector(`#measurement_unit_input${nthChild}`);
+        console.log(ingredients);
+        let measurementUnit = ingredients.find(ingredient => ingredient.product_name == ingredientName).measurement_unit;
+        measurementUnitInput.placeholder = `e.g: ${measurementUnit}`;
+
+        return 1;
+    }
+
+    function toggleHasParent(checkBox){
+        let parentGroup = document.getElementById('parent_group');
+        let categoryGroup = document.getElementById('category_group');
+        let ingredientSection = document.getElementById('ingredient_section');
+
+        if (checkBox.checked){
+            parentGroup.classList.remove('d-none');
+            categoryGroup.classList.add('d-none');
+            ingredientSection.classList.add('d-none');
+        }else{
+            parentGroup.classList.add('d-none');
+            categoryGroup.classList.remove('d-none');
+            ingredientSection.classList.remove('d-none');
+        }
+    }
+
+    document.querySelectorAll('.tom-select').forEach((el)=>{
+        let settings = {
+            create: true,
+            maxItems: 1,
+        };
+        new TomSelect(el,settings);
+    });
+
+
+
+
+
+
+
+
+
+
     (function($){
         $(document).ready(function(){
             $('.data-table').DataTable({
