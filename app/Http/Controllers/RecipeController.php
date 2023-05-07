@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventory;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,12 @@ class RecipeController extends Controller
         return view('dashboard.pages.manager.recipe',[
             'recipes' => Recipe::all(),
             'categories' => Recipe::distinct('category')->pluck('category'),
+            'ingredients' => Inventory::all(),
         ]);
     }
 
     public function store(Request $request){
+        dd($request->all());
         $request->validate([
                 'recipe_name' => 'required | unique:recipes',
                 'category' => 'nullable',

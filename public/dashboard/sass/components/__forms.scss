@@ -8,23 +8,25 @@
         align-items: center;
         padding: 1rem 0rem;
         width: 100%;
-        gap: 3rem;
+        gap: 2rem;
 
         .modal__input__field {
-            flex: auto;
+            flex: 50%;
             position: relative;
             .modal__input__label {
+                display: block;
                 font-size: 1.2rem;
                 font-weight: 500;
                 margin-right: .5rem;
                 opacity: .8;
-                color: $primary;
+                color: $info;
                 position: relative;
                 z-index: -1;
+                margin-bottom: 1rem;
             }
             .input {
                 padding: 1rem 1.5rem;
-                font-size: 1.4rem !important;
+                font-size: 1.3rem !important;
                 width: 100%;
                 border: 1px solid transparent;
                 background: $background;
@@ -32,7 +34,6 @@
                 transition: .3s ease-in-out;
                 font-weight: 400;
                 color: $primary;
-                margin-top: 1rem;
                 position: relative;
                 z-index: 10;
 
@@ -68,6 +69,17 @@
         border-top: 1px solid $border_light;
         justify-content: flex-end;
         margin-bottom: 1rem;
+    }
+    .modal__input__section{
+        margin-top: 1rem;
+    }
+    .modal__input__section__title{
+        border-bottom: 1px solid $border_light;
+        padding-block: 2rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: $primary;
+        opacity: .8;
     }
 }
 .modal__form--profile {
