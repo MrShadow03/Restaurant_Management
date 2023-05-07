@@ -33,7 +33,7 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__image">
-                                                <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">
+                                                <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_sm" alt="">
                                             </div>
                                             <div class="table-column__content">
                                                 <p class="table-column__subtitle pt-0">{{ $recipe->category }}</p>
@@ -148,8 +148,8 @@
                     <p class="input-error">{{ $message }}</p>
                     @enderror
                     <div class="modal__input__field">
-                        <label class="modal__input__label">Production cost</label>
-                        <input type="number" name="production_cost" class="input" placeholder="Price">
+                        <label class="modal__input__label">Making cost</label>
+                        <input type="number" id="production_cost" name="production_cost" class="input" placeholder="Price">
                     </div>
                     @error('production_cost')
                     <p class="input-error">{{ $message }}</p>
@@ -170,7 +170,7 @@
                     <div class="modal__input__section__content" id="ingredients_input_wrapper">
                         <div class="modal__input__group" id="ingredient_input0" data-nth-child="0">
                             <div class="modal__input__field">
-                                <select name="ingredient[0]['name']" class="input tom-select" onchange="getMeasurementUnit(0, this.value, {{ json_encode($ingredients) }})" placeholder="Select Ingredient">
+                                <select id="ingredient0" name="ingredient[0]['name']" class="lan-ban input tom-select" onchange="getMeasurementUnit(0, this.value, {{ json_encode($ingredients) }})" placeholder="Select Ingredient">
                                     <option value="" disabled selected>Select Ingredient</option>
                                     @foreach ($ingredients as $ingredient)
                                         <option value="{{ $ingredient->product_name }}">{{ $ingredient->product_name }}</option>
@@ -178,7 +178,8 @@
                                 </select>
                             </div>
                             <div class="modal__input__field">
-                                <input step=".01" id="measurement_unit_input0" type="number" name="ingredient[0]['quantity']" class="input" placeholder="e.g: 5 (optional)">
+                                <input oninput="calculateProductionCost({{ json_encode($ingredients) }})" step=".01" id="measurement_unit_input0" type="number" name="ingredient[0]['quantity']" class="quantity_input input pl-4" placeholder="Amount">
+                                <span class="modal_input_icon fw-500" id="quantity_icon0" style="top: 11px; left: 10px; width: fit-content;">{{ $ingredient->measurement_unit }}</span>
                             </div>
                             <button type="button" id="remove_ingredient" class="btn-icon btn-disabled"><i class="fa-regular fa-times"></i></button>
                         </div>
@@ -282,8 +283,6 @@
         // get the last ingredient data-nth-child value
         let lastGroupNumber = Number(lastIngredienInputGroup.dataset.nthChild)+1;
 
-        console.log(lastGroupNumber);
-
         let ingredient = document.createElement('div');
         ingredient.classList.add('modal__input__group');
         ingredient.id = `ingredient_input${lastGroupNumber}`;
@@ -306,8 +305,6 @@
         //filter the ingredients array to remove the selected options
         let filteredIngredients = ingredients.filter(ingredient => !selectedOptions.includes(ingredient.product_name));
 
-        console.log(filteredIngredients);
-
         ingredient.innerHTML = `
             <div class="modal__input__field">
                 <select id="ingredient_select${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['name']" onchange="getMeasurementUnit(${lastGroupNumber}, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
@@ -316,9 +313,10 @@
                 </select>
             </div>
             <div class="modal__input__field">
-                <input type="number" step=".01" id="measurement_unit_input${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['quantity']" class="input" placeholder="e.g: 5 (optional)">
+                <input oninput="calculateProductionCost({{ json_encode($ingredients) }})" type="number" step=".01" id="measurement_unit_input${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['quantity']" class="quantity_input input pl-4" placeholder="Amount">
+                <span class="modal_input_icon fw-500" id="quantity_icon${lastGroupNumber}" style="top: 11px; left: 10px; width: fit-content;">kg</span>
             </div>
-            <button type="button" id="remove_ingredient${lastGroupNumber}" onclick="removeIngredient('ingredient_input${lastGroupNumber}')" class="btn-icon btn-danger"><i class="fa-regular fa-times"></i></button>
+            <button type="button" id="remove_ingredient${lastGroupNumber}" onclick="removeIngredient('ingredient_input${lastGroupNumber}', {{ json_encode($ingredients) }})" class="btn-icon btn-danger"><i class="fa-regular fa-times"></i></button>
         `;
 
         ingredientsInputWrapper.appendChild(ingredient);
@@ -333,18 +331,21 @@
         new TomSelect(newSelect,settings);
     }
 
-    function removeIngredient(ingredientId){
+    function removeIngredient(ingredientId, ingredients){
         let ingredient = document.getElementById(ingredientId);
         ingredient.remove();
+
+        calculateProductionCost(ingredients);
     }
 
     function getMeasurementUnit(nthChild, ingredientName, ingredients){
         let measurementUnitInput = document.querySelector(`#measurement_unit_input${nthChild}`);
-        console.log(ingredients);
         let measurementUnit = ingredients.find(ingredient => ingredient.product_name == ingredientName).measurement_unit;
-        measurementUnitInput.placeholder = `e.g: ${measurementUnit}`;
+        let quantityIcon = document.querySelector(`#quantity_icon${nthChild}`);
+        
+        quantityIcon.innerHTML = measurementUnit;
 
-        return 1;
+        calculateProductionCost(ingredients);
     }
 
     function toggleHasParent(checkBox){
@@ -360,6 +361,40 @@
             parentGroup.classList.add('d-none');
             categoryGroup.classList.remove('d-none');
             ingredientSection.classList.remove('d-none');
+        }
+    }
+
+    function calculateProductionCost(ingredients){
+        let ingredientsInputWrapper = document.getElementById('ingredients_input_wrapper');
+        let productionCostInput = document.getElementById('production_cost');
+        
+        let totalCost = 0;
+        // for each child of the ingredients input wrapper get the ingredient name and quantity
+        for (let i = 0; i < ingredientsInputWrapper.children.length; i++) {
+            let child = ingredientsInputWrapper.children[i];
+
+            
+            let ingredientName = child.querySelector('select').value;
+            let ingredientQuantity = Number(child.querySelector('.quantity_input').value);
+            
+            // console.log(child.querySelector('.quantity_input'));
+            // console.log(ingredientName, ingredientQuantity);
+
+            // if the ingredient name and quantity are not empty
+            if (ingredientName && ingredientQuantity) {
+            // get the ingredient object from the ingredients array
+            let ingredient = ingredients.find(ingredient => ingredient.product_name == ingredientName);
+            
+            // calculate the ingredient cost
+            let ingredientUnitCost = Math.round(ingredient.unit_cost);
+            let ingredientCost = (ingredientQuantity) * ingredientUnitCost;
+
+            console.log(ingredientQuantity + 'x' + ingredientUnitCost + '=' + ingredientCost);
+            // add the ingredient cost to the total cost
+            totalCost += ingredientCost;
+
+            productionCostInput.value = totalCost;
+            }
         }
     }
 
