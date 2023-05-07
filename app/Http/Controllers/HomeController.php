@@ -16,9 +16,9 @@ class HomeController extends Controller
     {
         // Set the start and end date of the current week and last week
         $currentWeekStart = Carbon::now()->startOfWeek(Carbon::SATURDAY);
-        $currentWeekEnd = Carbon::now()->endOfWeek(Carbon::SATURDAY)->subDay();
+        $currentWeekEnd = Carbon::now()->endOfWeek(Carbon::FRIDAY);
         $lastWeekStart = Carbon::now()->subWeek()->startOfWeek(Carbon::SATURDAY);
-        $lastWeekEnd = Carbon::now()->subWeek()->endOfWeek(Carbon::SATURDAY)->subDay();
+        $lastWeekEnd = Carbon::now()->subWeek()->endOfWeek(Carbon::FRIDAY);
         // Get the top sales of the current week and last week
         $topSales = DB::table('sales')
                     ->select('recipe_name', DB::raw('COUNT(*) as sales_count'),
@@ -30,6 +30,8 @@ class HomeController extends Controller
                     ->orderByDesc('total_sale')
                     ->setBindings([$currentWeekStart, $currentWeekEnd, $lastWeekStart, $lastWeekEnd])
                     ->get();
+
+        // dd($currentWeekStart, $currentWeekEnd, $lastWeekStart, $lastWeekEnd);
 
         // Get Top 20 recent purchases
         $recentPurchases = Invoice::orderBy('created_at', 'desc')->take(20)->get();
