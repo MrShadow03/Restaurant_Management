@@ -5,6 +5,7 @@
 <script src="{{ asset('dashboard/vendors/js/axios.min.js') }}"></script>
 <script src="{{ asset('dashboard/vendors/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('dashboard/vendors/js/toastr.min.js') }}"></script>
+<script src="{{ asset('dashboard/vendors/js/simplebar.min.js') }}"></script>
 <script src="{{ asset('dashboard/vendors/js/remodal.js') }}"></script>
 <script src="{{ asset('dashboard/js/app.js') }}"></script>
 <script src="{{ asset('dashboard/js/custom.js') }}"></script>

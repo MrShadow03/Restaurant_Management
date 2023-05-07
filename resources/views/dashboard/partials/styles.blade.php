@@ -9,4 +9,5 @@
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/tiny-slider.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/vendors/css/toastr.min.css') }}">
+<link rel="stylesheet" href="{{ asset('dashboard/vendors/css/simplebar.css') }}">
 <link rel="stylesheet" href="{{ asset('dashboard/css/main.min.css') }}">

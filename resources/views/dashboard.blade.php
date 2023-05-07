@@ -4,7 +4,7 @@
 @extends('dashboard.app')
 @section('main')
     <x-sidebar/>
-    <div class="right_content">
+    <div class="right_content" data-simplebar>
         <x-navbar />
         <div class="dashboard_card_wrapper">
             @php
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="dashboard_card_wrapper dashboard_card_wrapper--row2">
-            <div class="card">
+            <div class="card" data-simplebar>
                 <div class="modal_heading">
                     <h2 class="modal_title text-primary op-8" id="edit_product"><i class="fa-solid fa-chart-mixed fs-16"></i> &nbsp; Top Selling Items</h2>
                 </div>
@@ -120,7 +120,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="card">
+            <div class="card" data-simplebar>
                 <div class="modal_heading">
                     <h2 class="modal_title text-primary op-8"><i class="fa-regular fa-messages-dollar fs-16"></i> &nbsp; Recent Purchases</h2>
                 </div>
@@ -143,7 +143,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="card">
+            <div class="card" data-simplebar>
                 <div class="modal_heading">
                     <h2 class="modal_title"><i class="fa-solid fa-fork-knife fs-16"></i> &nbsp; Todays Menu</h2>
                 </div>
