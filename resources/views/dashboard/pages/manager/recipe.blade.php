@@ -88,7 +88,7 @@
             <h2 class="modal_title"><i class="fa-regular fa-fork-knife"></i> &nbsp; New Item</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
         </div>
-        <form class="modal__form" action="{{ route('manager.recipe.store') }}" method="POST" >
+        <form class="modal__form" action="{{ route('manager.recipe.store') }}" method="POST">
             @csrf
             <div class="modal__input__group">
                 <div class="modal__input__field">
@@ -109,7 +109,7 @@
             <div class="modal__input__group d-none" id="parent_group">
                 <div class="modal__input__field">
                     <label class="modal__input__label">Parent Item Name</label>
-                    <select name="parent_item_id" class="input tom-select" required>
+                    <select name="parent_item_id" class="input tom-select">
                         <option value="" disabled selected>Select Parent Item</option>
                         @foreach ($recipes as $recipe)
                         <option value="{{ $recipe->id }}">{{ $recipe->recipe_name }}</option>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="modal__input__field">
                     <label class="modal__input__label"><i class="fa-solid fa-users"></i> &nbsp; For People</label>
-                    <input type="number" name="for_people" class="input" placeholder="3" required>
+                    <input type="number" name="for_people" class="input" placeholder="3">
                     @error('for_people')
                         <p class="input-error">{{ $message }}</p>
                     @enderror
@@ -295,6 +295,10 @@
         for (let i = 0; i < lastGroupNumber; i++) {
             let selectElement = document.querySelector(`select[name="ingredient[${i}]['name']"]`);
             if (selectElement) {
+                if (selectElement.value == ''){
+                    toastr.error("Please select an ingredient first!");
+                    return;
+                }
                 let selectedOption = selectElement.value;
                 if (selectedOption) {
                     selectedOptions.push(selectedOption);
@@ -352,14 +356,16 @@
         let parentGroup = document.getElementById('parent_group');
         let categoryGroup = document.getElementById('category_group');
         let ingredientSection = document.getElementById('ingredient_section');
-
+        let addCategorySelect = document.getElementById('add_category');
         if (checkBox.checked){
             parentGroup.classList.remove('d-none');
             categoryGroup.classList.add('d-none');
+            addCategorySelect.required = false;
             ingredientSection.classList.add('d-none');
         }else{
             parentGroup.classList.add('d-none');
             categoryGroup.classList.remove('d-none');
+            addCategorySelect.required = true;
             ingredientSection.classList.remove('d-none');
         }
     }
@@ -393,7 +399,7 @@
             // add the ingredient cost to the total cost
             totalCost += ingredientCost;
 
-            productionCostInput.value = totalCost;
+            productionCostInput.value = Math.round(totalCost);
             }
         }
     }

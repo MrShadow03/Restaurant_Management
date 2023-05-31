@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2023 at 09:21 PM
+-- Generation Time: May 31, 2023 at 11:50 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -151,7 +151,8 @@ INSERT INTO `invoices` (`id`, `invoice_number`, `username`, `customer_name`, `cu
 (54, '253465479328', 'Galib Jaman', 'Guest', 'N/A', 3, 660, 600, 10, 'Galib', '2023-04-26 13:06:40', '2023-04-26 13:06:40'),
 (55, '319332385236', 'Galib Jaman', 'Guest', 'N/A', 12, 445, 400, 10, 'Galib', '2023-04-26 13:10:48', '2023-04-26 13:10:48'),
 (58, '332740336454', 'Galib Jaman', 'Guest', 'N/A', 3, 549, 500, 10, 'Galib', '2023-04-28 11:09:11', '2023-04-28 11:09:11'),
-(59, '586872259987', 'Galib Jaman', 'Andrew Tate', 'N/A', 3, 3615, 3100, 15, 'Galib Jaman', '2023-04-28 19:32:55', '2023-04-28 19:32:55');
+(59, '586872259987', 'Galib Jaman', 'Andrew Tate', 'N/A', 3, 3615, 3100, 15, 'Galib Jaman', '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(60, '813410373455', 'Galib Jaman', 'Guest', 'N/A', 3, 815, 800, 2, 'Galib Jaman', '2023-05-31 13:06:00', '2023-05-31 13:06:00');
 
 -- --------------------------------------------------------
 
@@ -242,6 +243,8 @@ CREATE TABLE `recipes` (
   `discount` int(11) DEFAULT 0,
   `on_menu` tinyint(1) DEFAULT 1,
   `is_available` tinyint(1) DEFAULT 1,
+  `parent_id` bigint(20) DEFAULT 0,
+  `quantity_multiplier` int(3) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -250,20 +253,19 @@ CREATE TABLE `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `created_at`, `updated_at`) VALUES
-(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 200, NULL, 0, 1, 1, '2023-04-09 12:22:54', '2023-04-28 11:20:23'),
-(4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, 108, NULL, 0, 1, 1, '2023-04-10 02:16:11', '2023-04-27 18:03:01'),
-(5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, 40, NULL, 0, 1, 1, '2023-04-10 02:16:51', '2023-04-27 18:11:32'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 65, NULL, 2, 1, 1, '2023-04-10 02:17:45', '2023-04-27 18:03:05'),
-(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, 160, NULL, 0, 1, 1, '2023-04-14 00:49:18', '2023-04-27 18:03:06'),
-(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 180, 140, NULL, 0, 1, 1, '2023-04-14 00:49:46', '2023-04-27 18:03:14'),
-(9, 'Kacchi Full', NULL, 'default.png', 1, 'Biryani', 500, 400, NULL, 0, 1, 1, '2023-04-14 00:50:35', '2023-04-27 18:03:13'),
-(10, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, 200, NULL, 0, 1, 1, '2023-04-14 00:50:51', '2023-04-27 17:18:46'),
-(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, 80, NULL, 0, 1, 1, '2023-04-14 00:51:13', '2023-04-24 12:14:28'),
-(12, 'French Fries 1:2', NULL, 'default.png', 1, 'Apatizer', 60, 45, NULL, 15, 1, 1, '2023-04-23 08:32:04', '2023-04-27 18:05:47'),
-(13, 'Mountain Due 250ml', NULL, 'default.png', 1, 'Soft Drink', 25, 20, NULL, NULL, 1, 1, '2023-04-27 16:41:59', '2023-04-27 16:41:59'),
-(14, 'Water 500ml', NULL, 'default.png', 1, 'Water', 15, 12, NULL, NULL, 1, 1, '2023-04-27 16:42:35', '2023-04-27 16:42:35'),
-(15, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 16, NULL, NULL, 1, 1, '2023-04-27 16:43:43', '2023-04-27 16:43:43');
+INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `parent_id`, `quantity_multiplier`, `created_at`, `updated_at`) VALUES
+(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 200, NULL, 0, 1, 1, 0, 1, '2023-04-09 12:22:54', '2023-04-28 11:20:23'),
+(4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, 108, NULL, 0, 1, 1, 0, 1, '2023-04-10 02:16:11', '2023-04-27 18:03:01'),
+(5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, 40, NULL, 0, 1, 1, 0, 1, '2023-04-10 02:16:51', '2023-04-27 18:11:32'),
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 65, NULL, 2, 1, 1, 0, 1, '2023-04-10 02:17:45', '2023-05-31 21:17:55'),
+(7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, 160, NULL, 0, 1, 1, 0, 1, '2023-04-14 00:49:18', '2023-04-27 18:03:06'),
+(8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 180, 140, NULL, 0, 1, 1, 0, 1, '2023-04-14 00:49:46', '2023-04-27 18:03:14'),
+(11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, 80, NULL, 0, 1, 1, 0, 1, '2023-04-14 00:51:13', '2023-04-24 12:14:28'),
+(12, 'French Fries 1:2', NULL, 'default.png', 1, 'Apatizer', 60, 45, NULL, 15, 1, 1, 0, 1, '2023-04-23 08:32:04', '2023-04-27 18:05:47'),
+(13, 'Mountain Due 250ml', NULL, 'default.png', 1, 'Soft Drink', 25, 20, NULL, NULL, 1, 1, 0, 1, '2023-04-27 16:41:59', '2023-04-27 16:41:59'),
+(14, 'Water 500ml', NULL, 'default.png', 1, 'Water', 15, 12, NULL, NULL, 1, 1, 0, 1, '2023-04-27 16:42:35', '2023-04-27 16:42:35'),
+(15, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 16, NULL, NULL, 1, 1, 0, 1, '2023-04-27 16:43:43', '2023-04-27 16:43:43'),
+(16, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, 150, NULL, NULL, 1, 1, 0, 1, '2023-05-31 21:39:24', '2023-05-31 21:40:16');
 
 -- --------------------------------------------------------
 
@@ -412,7 +414,12 @@ INSERT INTO `sales` (`id`, `invoice_id`, `recipe_id`, `recipe_name`, `price`, `d
 (180, 59, 12, 'French Fries 1:2', 60, 15, 2, 'Galib Jaman', 3, 45, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
 (181, 59, 5, 'Cheese Slice', 60, 0, 1, 'Galib Jaman', 3, 40, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
 (182, 59, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 3, 65, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
-(183, 59, 15, 'Water 1L', 20, 0, 2, 'Galib Jaman', 3, 16, '2023-04-28 19:32:55', '2023-04-28 19:32:55');
+(183, 59, 15, 'Water 1L', 20, 0, 2, 'Galib Jaman', 3, 16, '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
+(184, 60, 2, 'Fried Rice 1:3', 250, 0, 1, 'Galib Jaman', 3, 200, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
+(185, 60, 11, 'Chinese Vegetable', 120, 0, 2, 'Galib Jaman', 3, 80, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
+(186, 60, 12, 'French Fries 1:2', 60, 15, 2, 'Galib Jaman', 3, 45, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
+(187, 60, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 3, 108, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
+(188, 60, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 3, 65, '2023-05-31 13:06:00', '2023-05-31 13:06:00');
 
 -- --------------------------------------------------------
 
@@ -436,7 +443,7 @@ CREATE TABLE `tables` (
 INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
 (1, 1, 9, 'free', '2023-04-26 11:33:02', '2023-04-13 10:20:43'),
 (2, 2, 9, 'free', '2023-04-23 04:58:47', '2023-04-13 10:22:25'),
-(3, 3, 7, 'free', '2023-04-28 19:32:55', '2023-04-13 10:22:32'),
+(3, 3, 7, 'free', '2023-05-31 13:06:00', '2023-04-13 10:22:32'),
 (4, 4, 9, 'free', '2023-04-18 23:19:55', '2023-04-13 10:22:46'),
 (5, 5, 7, 'free', '2023-04-28 09:38:51', '2023-04-13 10:22:50'),
 (6, 6, 7, 'free', '2023-04-24 13:21:52', '2023-04-13 10:22:56'),
@@ -591,7 +598,7 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -603,7 +610,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=482;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=488;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -615,7 +622,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `recipe_inventory`
@@ -627,7 +634,7 @@ ALTER TABLE `recipe_inventory`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT for table `tables`

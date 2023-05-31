@@ -19,20 +19,22 @@ class RecipeController extends Controller
 
     public function store(Request $request){
         dd($request->all());
+        $has_parent = isset($request->has_parent) ? 1 : 0;
         $request->validate([
                 'recipe_name' => 'required | unique:recipes',
                 'category' => 'nullable',
                 'price' => 'required',
-                'VAT' => 'nullable',
-                'discount' => 'nullable',
                 'production_cost' => 'required',
             ]);
+
+        if($has_parent){
+
+        }
 
         $recipe = new Recipe();
         $recipe->recipe_name = $request->recipe_name;
         $recipe->category = $request->category;
         $recipe->price = $request->price;
-        $recipe->VAT = $request->VAT;
         $recipe->discount = $request->discount;
         $recipe->production_cost = $request->production_cost;
         $recipe->save();
