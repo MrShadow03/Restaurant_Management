@@ -5,7 +5,7 @@
 @section('exclusive_styles')
 @endsection
 @section('main')
-<div class="right_content">
+<div class="right_content" data-simplebar>
     @props(['title','input_type','input_name'])
     <div class="login_box">
         <div class="login_title">

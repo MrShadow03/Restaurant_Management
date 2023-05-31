@@ -4,7 +4,7 @@
 @extends('dashboard.app')
 @section('main')
     <x-sidebar/>
-    <div class="right_content">
+    <div class="right_content" data-simplebar>
         <x-navbar />
         <div class="heading">
             <h2 class="heading__title text-title">Food Items</h2>
