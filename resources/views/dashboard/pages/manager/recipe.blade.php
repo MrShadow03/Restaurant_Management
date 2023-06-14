@@ -118,7 +118,7 @@
                 </div>
                 <div class="modal__input__field">
                     <label class="modal__input__label"><i class="fa-solid fa-users"></i> &nbsp; For People</label>
-                    <input type="number" name="for_people" class="input" placeholder="3">
+                    <input type="number" name="for_people" id="for_people" class="input" placeholder="3">
                     @error('for_people')
                         <p class="input-error">{{ $message }}</p>
                     @enderror
@@ -275,7 +275,19 @@
 
 @section('exclusive_scripts')
 <script>
+    function getCost(recipes){
+        let hasParent = document.getElementById('toggle_has_parent').checked;
+        let parentItemId = document.getElementById('parent_item_id').value;
+        let forPeople = document.getElementById('for_people').value;
+        let priceInput = document.getElementById('price');
+        let productionCostInput = document.getElementById('production_cost');
 
+        if(hasParent && parentItemId && forPeople){
+            let parentItem = recipes.find(recipe => recipe.id == parentItemId);
+            priceInput.value = parentItem.price * forPeople;
+            productionCostInput.value = parentItem.production_cost * forPeople;
+        }
+    }
     function addIngredient(ingredients){
         let ingredientsInputWrapper = document.getElementById('ingredients_input_wrapper');
         // get the last ingredient input group
@@ -334,14 +346,12 @@
         };
         new TomSelect(newSelect,settings);
     }
-
     function removeIngredient(ingredientId, ingredients){
         let ingredient = document.getElementById(ingredientId);
         ingredient.remove();
 
         calculateProductionCost(ingredients);
     }
-
     function getMeasurementUnit(nthChild, ingredientName, ingredients){
         let measurementUnitInput = document.querySelector(`#measurement_unit_input${nthChild}`);
         let measurementUnit = ingredients.find(ingredient => ingredient.product_name == ingredientName).measurement_unit;
@@ -351,7 +361,6 @@
 
         calculateProductionCost(ingredients);
     }
-
     function toggleHasParent(checkBox){
         let parentGroup = document.getElementById('parent_group');
         let categoryGroup = document.getElementById('category_group');
@@ -369,7 +378,6 @@
             ingredientSection.classList.remove('d-none');
         }
     }
-
     function calculateProductionCost(ingredients){
         let ingredientsInputWrapper = document.getElementById('ingredients_input_wrapper');
         let productionCostInput = document.getElementById('production_cost');
@@ -403,50 +411,6 @@
             }
         }
     }
-
-    document.querySelectorAll('.tom-select').forEach((el)=>{
-        let settings = {
-            create: true,
-            maxItems: 1,
-        };
-        new TomSelect(el,settings);
-    });
-
-
-
-
-
-
-
-
-
-
-    (function($){
-        $(document).ready(function(){
-            $('.data-table').DataTable({
-                "processing": true,
-                lengthMenu: [ [20, 10, 15, 25, 50], [20, 10, 15, 25, 50] ],
-            });
-
-            socket.on('orderResponseFromKitchen', function(data){
-                console.log(data);
-                toastr.warning("New Order Received!");
-                $('#order_recieved_sound')[0].play();
-            });
-
-        });
-    })(jQuery);
-
-    //tom select in category
-    tomSelect = new TomSelect('#add_category', {
-        create: true,
-        maxItems: 1,
-    });
-    tomSelect2 = new TomSelect('#recipe_category', {
-        create: true,
-        maxItems: 1,
-    });
-
     function editProduct(recipe){
         //modal.open();
         //remove btn-primary class from update button
@@ -502,7 +466,38 @@
             toastr.error("Something went wrong!");
         });
     }
-    
+    document.querySelectorAll('.tom-select').forEach((el)=>{
+        let settings = {
+            create: true,
+            maxItems: 1,
+        };
+        new TomSelect(el,settings);
+    });
+    (function($){
+        $(document).ready(function(){
+            $('.data-table').DataTable({
+                "processing": true,
+                lengthMenu: [ [20, 10, 15, 25, 50], [20, 10, 15, 25, 50] ],
+            });
+
+            socket.on('orderResponseFromKitchen', function(data){
+                console.log(data);
+                toastr.warning("New Order Received!");
+                $('#order_recieved_sound')[0].play();
+            });
+
+        });
+    })(jQuery);
+    //tom select in category
+    tomSelect = new TomSelect('#add_category', {
+        create: true,
+        maxItems: 1,
+    });
+    tomSelect2 = new TomSelect('#recipe_category', {
+        create: true,
+        maxItems: 1,
+    });
+
 </script>
 @endsection
 
