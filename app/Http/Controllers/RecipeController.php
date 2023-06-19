@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
 use App\Models\Recipe;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
+use App\Models\RecipeInventory;
 
 class RecipeController extends Controller
 {
     public function index()
     {
         return view('dashboard.pages.manager.recipe',[
-            'recipes' => Recipe::all(),
+            'recipes' => Recipe::with('inventories')->get(),
             'categories' => Recipe::distinct('category')->pluck('category'),
             'ingredients' => Inventory::all(),
         ]);
@@ -59,6 +60,7 @@ class RecipeController extends Controller
             'discount' => 'nullable',
         ]);
 
+        
         $recipe = new Recipe();
         $recipe->recipe_name = $request->recipe_name;
         $recipe->category = $request->category;
@@ -67,7 +69,22 @@ class RecipeController extends Controller
         $recipe->production_cost = $request->production_cost;
         $recipe->save();
 
+        $this->storeRecipeItems($request->ingredient, $recipe->id);
+        
         return redirect()->route('manager.recipe')->with('success', 'Recipe added successfully');
+    }
+
+    private function storeRecipeItems($ingredients, $recipe_id){
+        foreach($ingredients as $ingredient){
+            $inventory_id = Inventory::where('product_name', $ingredient['name'])->first()->id;
+
+            $recipe_item = new RecipeInventory();
+            
+            $recipe_item->recipe_id = $recipe_id;
+            $recipe_item->inventory_id = $inventory_id;
+            $recipe_item->quantity = $ingredient['quantity'];
+            $recipe_item->save();
+        }
     }
 
     public function update(Request $request){
@@ -88,6 +105,10 @@ class RecipeController extends Controller
         $recipe->discount = $request->discount;
         $recipe->production_cost = $request->production_cost;
         $recipe->save();
+
+        // Delete all recipe items
+        RecipeInventory::where('recipe_id', $recipe->id)->delete();
+        $this->storeRecipeItems($request->update_ingredient, $recipe->id);
 
         return redirect()->route('manager.recipe')->with('success', 'Recipe updated successfully');
     }

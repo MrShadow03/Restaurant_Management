@@ -33,7 +33,7 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__image">
-                                                <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_sm" alt="">
+                                                <img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_sm" alt="" loading="lazy">
                                             </div>
                                             <div class="table-column__content">
                                                 <p class="table-column__subtitle pt-0">{{ $recipe->category }}</p>
@@ -68,7 +68,7 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__content">
-                                                <a href="#edit_product_modal" title="Edit product" class="btn-sm" onclick="editProduct({{ json_encode($recipe) }})">Edit</a>
+                                                <a href="#" data-remodal-target="edit_product_modal" title="Edit product" class="btn-sm" onclick="editProduct({{ json_encode($recipe) }}, {{ json_encode($ingredients) }})">Edit</a>
                                                 <a href="{{ route('manager.recipe.destroy', $recipe->id) }}" title="Delete product" class="btn-sm" onclick="return confirm('This Will Delete this product')" ><i class="fa-regular fa-trash"></i></a>
                                             </div>
                                         </div>
@@ -170,7 +170,7 @@
                     <div class="modal__input__section__content" id="ingredients_input_wrapper">
                         <div class="modal__input__group" id="ingredient_input0" data-nth-child="0">
                             <div class="modal__input__field">
-                                <select id="ingredient0" name="ingredient[0]['name']" class="lan-ban input tom-select" onchange="getMeasurementUnit(0, this.value, {{ json_encode($ingredients) }})" placeholder="Select Ingredient">
+                                <select id="ingredient0" name="ingredient[0][name]" class="lan-ban input tom-select" onchange="getMeasurementUnit(0, this.value, {{ json_encode($ingredients) }})" placeholder="Select Ingredient">
                                     <option value="" disabled selected>Select Ingredient</option>
                                     @foreach ($ingredients as $ingredient)
                                         <option value="{{ $ingredient->product_name }}">{{ $ingredient->product_name }}</option>
@@ -178,7 +178,7 @@
                                 </select>
                             </div>
                             <div class="modal__input__field">
-                                <input oninput="calculateProductionCost({{ json_encode($ingredients) }})" step=".01" id="measurement_unit_input0" type="number" name="ingredient[0]['quantity']" class="quantity_input input pl-4" placeholder="Amount">
+                                <input oninput="calculateProductionCost({{ json_encode($ingredients) }})" step=".01" id="measurement_unit_input0" type="number" name="ingredient[0][quantity]" class="quantity_input input pl-4" placeholder="Amount">
                                 <span class="modal_input_icon fw-500" id="quantity_icon0" style="top: 11px; left: 10px; width: fit-content;">{{ $ingredient->measurement_unit }}</span>
                             </div>
                             <button type="button" id="remove_ingredient" class="btn-icon btn-disabled"><i class="fa-regular fa-times"></i></button>
@@ -198,7 +198,7 @@
     </div>
 
     {{-- product edit remodal --}}
-    <div class="modal remodal" data-remodal-id="edit_product_modal" data-remodal-options="confirmOnEnter: true">
+    <div class="modal remodal" data-remodal-id="edit_product_modal" data-remodal-options="confirmOnEnter: true, hashTracking: false">
         <div class="modal_heading">
             <h2 class="modal_title" id="edit_product">Edit Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
@@ -238,19 +238,10 @@
                 @enderror
             </div>
             <div class="modal_input_group_wrapper" style="position: relative; z-index: 0;">
-                {{-- <div class="modal__input__group">
-                    <div class="modal__input__field">
-                        <label class="modal__input__label">VAT(%)</label>
-                        <input type="number" name="VAT" id="recipe_VAT" oninput="updateButton()" class="input" placeholder="e.g: 5 (optional)">
-                    </div>
-                    @error('VAT(%)')
-                        <p class="input-error">{{ $message }}</p>
-                    @enderror
-                </div> --}}
                 <div class="modal__input__group">
                     <div class="modal__input__field">
                         <label class="modal__input__label" title="Total Cost to produce the product">Production Cost</label>
-                        <input type="number" name="production_cost" id="recipe_production_cost" class="input" oninput="updateButton()" placeholder="e.g 200">
+                        <input type="number" name="production_cost" id="update_production_cost" class="input" oninput="updateButton()" placeholder="e.g 200">
                     </div>
                     @error('production_cost')
                         <p class="input-error">{{ $message }}</p>
@@ -262,6 +253,29 @@
                     @error('discount')
                         <p class="input-error">{{ $message }}</p>
                     @enderror
+                </div>
+                <div class="modal__input__section" id="update_ingredient_section">
+                    <h3 class="modal__input__section__title"><i class="fa-light fa-wheat"></i> &nbsp; Select Ingredients</h3>
+                    <div class="modal__input__section__content" id="update_ingredients_input_wrapper">
+                        <div class="modal__input__group" id="update_ingredient_input0" data-nth-child="0">
+                            <div class="modal__input__field">
+                                <select id="update_ingredient0" name="update_ingredient[0][name]" class="lan-ban input tom-select" onchange="getMeasurementUnitForUpdate(0, this.value, {{ json_encode($ingredients) }})" placeholder="Select Ingredient">
+                                    <option value="" disabled selected>Select Ingredient</option>
+                                    @foreach ($ingredients as $ingredient)
+                                        <option value="{{ $ingredient->product_name }}">{{ $ingredient->product_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="modal__input__field">
+                                <input oninput="calculateProductionCostForUpdate({{ json_encode($ingredients) }})" step=".01" id="update_measurement_unit_input0" type="number" name="update_ingredient[0][quantity]" class="quantity_input input pl-4" placeholder="Amount">
+                                <span class="modal_input_icon fw-500" id="update_quantity_icon0" style="top: 11px; left: 10px; width: fit-content;">{{ $ingredient->measurement_unit }}</span>
+                            </div>
+                            <button type="button" id="update_remove_ingredient" class="btn-icon btn-disabled"><i class="fa-regular fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="modal__input__section__footer mt-1">
+                        <button type="button" class="btn-sm btn-primary" onclick="addIngredientForUpdate({{ json_encode($ingredients) }})"><i class="fa-regular fa-grid-2-plus"></i> &nbsp; Add More</button>
+                    </div>
                 </div>
                 <div class="modal__input__group modal__button_group">
                     <button data-remodal-action="cancel" class="btn-sm">Cancel</button>
@@ -323,13 +337,13 @@
 
         ingredient.innerHTML = `
             <div class="modal__input__field">
-                <select id="ingredient_select${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['name']" onchange="getMeasurementUnit(${lastGroupNumber}, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
+                <select id="ingredient_select${lastGroupNumber}" name="ingredient[${lastGroupNumber}][name]" onchange="getMeasurementUnit(${lastGroupNumber}, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
                     <option value="" disabled selected>Select Ingredient</option>
                     ${filteredIngredients.map(ingredient => `<option value="${ingredient.product_name}">${ingredient.product_name}</option>`).join('')}
                 </select>
             </div>
             <div class="modal__input__field">
-                <input oninput="calculateProductionCost({{ json_encode($ingredients) }})" type="number" step=".01" id="measurement_unit_input${lastGroupNumber}" name="ingredient[${lastGroupNumber}]['quantity']" class="quantity_input input pl-4" placeholder="Amount">
+                <input oninput="calculateProductionCost({{ json_encode($ingredients) }})" type="number" step=".01" id="measurement_unit_input${lastGroupNumber}" name="ingredient[${lastGroupNumber}][quantity]" class="quantity_input input pl-4" placeholder="Amount">
                 <span class="modal_input_icon fw-500" id="quantity_icon${lastGroupNumber}" style="top: 11px; left: 10px; width: fit-content;">kg</span>
             </div>
             <button type="button" id="remove_ingredient${lastGroupNumber}" onclick="removeIngredient('ingredient_input${lastGroupNumber}', {{ json_encode($ingredients) }})" class="btn-icon btn-danger"><i class="fa-regular fa-times"></i></button>
@@ -346,11 +360,77 @@
         };
         new TomSelect(newSelect,settings);
     }
+    function addIngredientForUpdate(ingredients){
+        let ingredientsInputWrapper = document.getElementById('update_ingredients_input_wrapper');
+        // get the last ingredient input group
+        let lastIngredienInputGroup = ingredientsInputWrapper.lastElementChild;
+        // get the last ingredient data-nth-child value
+        let lastGroupNumber = Number(lastIngredienInputGroup.dataset.nthChild)+1;
+
+        console.log(lastIngredienInputGroup, lastGroupNumber);
+
+        let ingredient = document.createElement('div');
+        ingredient.classList.add('modal__input__group');
+        ingredient.id = `update_ingredient_input${lastGroupNumber}`;
+        ingredient.dataset.nthChild = lastGroupNumber;
+
+        // create an array to store the selected options
+        let selectedOptions = [];
+
+        // loop through all the previous ingredient inputs and add their selected options to the array
+        for (let i = 0; i < lastGroupNumber; i++) {
+            let selectElement = document.querySelector(`select[name="update_ingredient[${i}]['name']"]`);
+            if (selectElement) {
+                if (selectElement.value == ''){
+                    toastr.error("Please select an ingredient first!");
+                    return;
+                }
+                let selectedOption = selectElement.value;
+                if (selectedOption) {
+                    selectedOptions.push(selectedOption);
+                }
+            }
+        }
+
+        //filter the ingredients array to remove the selected options
+        let filteredIngredients = ingredients.filter(ingredient => !selectedOptions.includes(ingredient.product_name));
+
+        ingredient.innerHTML = `
+            <div class="modal__input__field">
+                <select id="update_ingredient_select${lastGroupNumber}" name="update_ingredient[${lastGroupNumber}][name]" onchange="getMeasurementUnitForUpdate(${lastGroupNumber}, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
+                    <option value="" disabled selected>Select Ingredient</option>
+                    ${filteredIngredients.map(ingredient => `<option value="${ingredient.product_name}">${ingredient.product_name}</option>`).join('')}
+                </select>
+            </div>
+            <div class="modal__input__field">
+                <input oninput="calculateProductionCostForUpdate({{ json_encode($ingredients) }})" type="number" step=".01" id="update_measurement_unit_input${lastGroupNumber}" name="update_ingredient[${lastGroupNumber}][quantity]" class="quantity_input input pl-4" placeholder="Amount">
+                <span class="modal_input_icon fw-500" id="update_quantity_icon${lastGroupNumber}" style="top: 11px; left: 10px; width: fit-content;">kg</span>
+            </div>
+            <button type="button" id="update_remove_ingredient${lastGroupNumber}" onclick="removeIngredientForUpdate('update_ingredient_input${lastGroupNumber}', {{ json_encode($ingredients) }})" class="btn-icon btn-danger"><i class="fa-regular fa-times"></i></button>
+        `;
+
+        ingredientsInputWrapper.appendChild(ingredient);
+
+        // get the new select element
+        let newSelect = document.getElementById(`update_ingredient_select${lastGroupNumber}`);
+        // initialize tom select
+        let settings = {
+            create: true,
+            maxItems: 1,
+        };
+        new TomSelect(newSelect,settings);
+    }
     function removeIngredient(ingredientId, ingredients){
         let ingredient = document.getElementById(ingredientId);
         ingredient.remove();
 
         calculateProductionCost(ingredients);
+    }
+    function removeIngredientForUpdate(ingredientId, ingredients){
+        let ingredient = document.getElementById(ingredientId);
+        ingredient.remove();
+
+        calculateProductionCostForUpdate(ingredients);
     }
     function getMeasurementUnit(nthChild, ingredientName, ingredients){
         let measurementUnitInput = document.querySelector(`#measurement_unit_input${nthChild}`);
@@ -360,6 +440,16 @@
         quantityIcon.innerHTML = measurementUnit;
 
         calculateProductionCost(ingredients);
+    }
+    function getMeasurementUnitForUpdate(nthChild, ingredientName, ingredients){
+        console.log(nthChild, ingredientName, ingredients);
+        let measurementUnitInput = document.querySelector(`#update_measurement_unit_input${nthChild}`);
+        let measurementUnit = ingredients.find(ingredient => ingredient.product_name == ingredientName).measurement_unit;
+        let quantityIcon = document.querySelector(`#update_quantity_icon${nthChild}`);
+        
+        quantityIcon.innerHTML = measurementUnit;
+
+        calculateProductionCostForUpdate(ingredients);
     }
     function toggleHasParent(checkBox){
         let parentGroup = document.getElementById('parent_group');
@@ -411,8 +501,41 @@
             }
         }
     }
-    function editProduct(recipe){
-        //modal.open();
+    function calculateProductionCostForUpdate(ingredients){
+        let ingredientsInputWrapper = document.getElementById('update_ingredients_input_wrapper');
+        let productionCostInput = document.getElementById('update_production_cost');
+        
+        let totalCost = 0;
+        // for each child of the ingredients input wrapper get the ingredient name and quantity
+        for (let i = 0; i < ingredientsInputWrapper.children.length; i++) {
+            let child = ingredientsInputWrapper.children[i];
+
+            
+            let ingredientName = child.querySelector('select').value;
+            let ingredientQuantity = Number(child.querySelector('.quantity_input').value);
+            
+            // console.log(child.querySelector('.quantity_input'));
+            // console.log(ingredientName, ingredientQuantity);
+
+            // if the ingredient name and quantity are not empty
+            if (ingredientName && ingredientQuantity) {
+            // get the ingredient object from the ingredients array
+            let ingredient = ingredients.find(ingredient => ingredient.product_name == ingredientName);
+            
+            // calculate the ingredient cost
+            let ingredientUnitCost = Math.round(ingredient.unit_cost);
+            let ingredientCost = (ingredientQuantity) * ingredientUnitCost;
+
+            console.log(ingredientQuantity + 'x' + ingredientUnitCost + '=' + ingredientCost);
+            // add the ingredient cost to the total cost
+            totalCost += ingredientCost;
+
+            productionCostInput.value = Math.round(totalCost);
+            }
+        }
+    }
+    function editProduct(recipe, ingredients){
+        console.log(recipe);
         //remove btn-primary class from update button
         $('#edit_submit').removeClass('btn-primary');
         $('#edit_product').text('Edit Item: '+recipe.recipe_name);
@@ -423,7 +546,55 @@
         $('#recipe_price').val(recipe.price);
         $('#recipe_VAT').val(recipe.VAT);
         $('#recipe_discount').val(recipe.discount);
-        $('#recipe_production_cost').val(recipe.production_cost);
+        $('#update_production_cost').val(recipe.production_cost);
+
+        let usedIngredients = recipe.inventories;
+        let ingredientsInputWrapper = document.getElementById('update_ingredients_input_wrapper');
+        ingredientsInputWrapper.innerHTML = '';
+        //if there are no ingredients in the recipe then add one input field
+        console.log(usedIngredients.length);
+        if(usedIngredients.length == 0){
+            ingredientsInputWrapper.innerHTML += 
+            `<div class="modal__input__group" data-nth-child="0" id="update_ingredient_input0">
+                <div class="modal__input__field">
+                <select id="update_ingredient_select0" name="update_ingredient[0][name]" onchange="getMeasurementUnitForUpdate(0, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
+                    <option value="" disabled selected>Select Ingredient</option>
+                    ${ingredients.map(ingredient => `<option value="${ingredient.product_name}">${ingredient.product_name}</option>`).join('')}
+                </select>
+            </div>
+            <div class="modal__input__field">
+                <input oninput="calculateProductionCostForUpdate({{ json_encode($ingredients) }})" type="number" step=".01" id="update_measurement_unit_input0" name="update_ingredient[0][quantity]" class="quantity_input input pl-4" placeholder="Amount">
+                <span class="modal_input_icon fw-500" id="update_quantity_icon0" style="top: 11px; left: 10px; width: fit-content;">kg</span>
+            </div>
+            <button type="button" id="update_remove_ingredient0" onclick="removeIngredientForUpdate('update_ingredient_input0', {{ json_encode($ingredients) }})" class="btn-icon btn-disabled"><i class="fa-regular fa-times"></i></button>
+            </div>`;
+
+            return;
+        }
+        let i = 0;
+        usedIngredients.forEach(item => {
+            ingredientsInputWrapper.innerHTML += 
+            `<div class="modal__input__group" data-nth-child="${i}" id="update_ingredient_input${i}">
+                <div class="modal__input__field">
+                <select id="update_ingredient_select${i}" name="update_ingredient[${i}][name]" onchange="getMeasurementUnitForUpdate(${i}, this.value, {{ json_encode($ingredients) }})" class="input tom-select" required>
+                    
+                    ${ingredients.map(ingredient => {
+                        if (ingredient.product_name == item.product_name){
+                            return `<option selected value="${ingredient.product_name}">${ingredient.product_name}</option>`
+                        }else{
+                            return `<option value="${ingredient.product_name}">${ingredient.product_name}</option>`
+                        }
+                    }).join('')}
+                </select>
+            </div>
+            <div class="modal__input__field">
+                <input value="${item.pivot.quantity}" oninput="calculateProductionCostForUpdate({{ json_encode($ingredients) }})" type="number" step=".01" id="update_measurement_unit_input${i}" name="update_ingredient[${i}][quantity]" class="quantity_input input pl-4" placeholder="Amount">
+                <span class="modal_input_icon fw-500" id="update_quantity_icon${i}" style="top: 11px; left: 10px; width: fit-content;">kg</span>
+            </div>
+            <button type="button" id="update_remove_ingredient${i}" onclick="removeIngredientForUpdate('update_ingredient_input${i}', {{ json_encode($ingredients) }})" class="btn-icon btn-${i == 0 ? 'disabled' : 'danger'}"><i class="fa-regular fa-times"></i></button>
+            </div>`;
+            i++;
+        });
     }
     function addProduct(product){
         $('#add_edit_product').text('Add '+product.product_name);
