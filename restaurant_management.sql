@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2023 at 11:50 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Jun 21, 2023 at 01:04 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,7 @@ CREATE TABLE `business_information` (
 --
 
 INSERT INTO `business_information` (`id`, `name`, `phone_number`, `email`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'Pepplo Cuisine', '01766555213', 'pepplo25@gamil.com', '68 Street, Barishal', '2023-04-28 16:17:34', '2023-04-28 19:27:57');
+(1, 'Pizza Hut', '01766555213', 'pepplo25@gamil.com', '68 Street, Barishal', '2023-04-28 16:17:34', '2023-06-21 09:26:38');
 
 -- --------------------------------------------------------
 
@@ -227,6 +227,20 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `plans`
+--
+
+CREATE TABLE `plans` (
+  `id` bigint(20) NOT NULL,
+  `recipe_id` bigint(20) NOT NULL,
+  `quantity` float NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `recipes`
 --
 
@@ -254,10 +268,10 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `parent_id`, `quantity_multiplier`, `created_at`, `updated_at`) VALUES
-(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 200, NULL, 0, 1, 1, 0, 1, '2023-04-09 12:22:54', '2023-04-28 11:20:23'),
+(2, 'Fried Rice 1:3', NULL, 'default.png', 1, 'Chinese', 250, 200, NULL, 0, 1, 1, 0, 1, '2023-04-09 12:22:54', '2023-06-21 09:24:33'),
 (4, 'Beef Burger', NULL, 'default.png', 1, 'Apatizer', 145, 108, NULL, 0, 1, 1, 0, 1, '2023-04-10 02:16:11', '2023-04-27 18:03:01'),
 (5, 'Cheese Slice', NULL, 'default.png', 1, 'Add One', 60, 40, NULL, 0, 1, 1, 0, 1, '2023-04-10 02:16:51', '2023-04-27 18:11:32'),
-(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 65, NULL, 2, 1, 1, 0, 1, '2023-04-10 02:17:45', '2023-05-31 21:17:55'),
+(6, 'Beef Patty', NULL, 'default.png', 1, 'Add One', 80, 76, NULL, 0, 1, 1, 0, 1, '2023-04-10 02:17:45', '2023-06-19 10:09:32'),
 (7, 'Chicken Biryani', NULL, 'default.png', 1, 'Biryani', 180, 160, NULL, 0, 1, 1, 0, 1, '2023-04-14 00:49:18', '2023-04-27 18:03:06'),
 (8, 'Beef Tehari', NULL, 'default.png', 1, 'Biryani', 180, 140, NULL, 0, 1, 1, 0, 1, '2023-04-14 00:49:46', '2023-04-27 18:03:14'),
 (11, 'Chinese Vegetable', NULL, 'default.png', 1, 'Chinese', 120, 80, NULL, 0, 1, 1, 0, 1, '2023-04-14 00:51:13', '2023-04-24 12:14:28'),
@@ -265,7 +279,10 @@ INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `c
 (13, 'Mountain Due 250ml', NULL, 'default.png', 1, 'Soft Drink', 25, 20, NULL, NULL, 1, 1, 0, 1, '2023-04-27 16:41:59', '2023-04-27 16:41:59'),
 (14, 'Water 500ml', NULL, 'default.png', 1, 'Water', 15, 12, NULL, NULL, 1, 1, 0, 1, '2023-04-27 16:42:35', '2023-04-27 16:42:35'),
 (15, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 16, NULL, NULL, 1, 1, 0, 1, '2023-04-27 16:43:43', '2023-04-27 16:43:43'),
-(16, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, 150, NULL, NULL, 1, 1, 0, 1, '2023-05-31 21:39:24', '2023-05-31 21:40:16');
+(16, 'Kacchi Half', NULL, 'default.png', 1, 'Biryani', 250, 150, NULL, NULL, 1, 1, 0, 1, '2023-05-31 21:39:24', '2023-05-31 21:40:16'),
+(18, 'Black Forest', NULL, 'default.png', 1, 'Cake', 100, 90, 0, NULL, 1, 1, 0, 1, '2023-06-19 07:28:53', '2023-06-19 07:28:53'),
+(24, 'Khichuri', NULL, 'default.png', 1, 'Chinese', 180, 114, NULL, 10, 1, 1, 0, 1, '2023-06-19 07:38:14', '2023-06-21 07:30:29'),
+(25, 'Pasta', NULL, 'default.png', 1, 'Apatizer', 220, 155, NULL, 5, 1, 1, 0, 1, '2023-06-19 09:34:10', '2023-06-19 09:53:23');
 
 -- --------------------------------------------------------
 
@@ -281,6 +298,19 @@ CREATE TABLE `recipe_inventory` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `recipe_inventory`
+--
+
+INSERT INTO `recipe_inventory` (`id`, `recipe_id`, `inventory_id`, `quantity`, `updated_at`, `created_at`) VALUES
+(10, 25, 2, 0.1, '2023-06-19 09:53:23', '2023-06-19 09:53:23'),
+(11, 25, 6, 0.5, '2023-06-19 09:53:23', '2023-06-19 09:53:23'),
+(13, 6, 2, 0.08, '2023-06-19 10:09:32', '2023-06-19 10:09:32'),
+(14, 6, 6, 0.1, '2023-06-19 10:09:32', '2023-06-19 10:09:32'),
+(18, 24, 5, 0.25, '2023-06-21 07:30:29', '2023-06-21 07:30:29'),
+(19, 24, 7, 0.1, '2023-06-21 07:30:29', '2023-06-21 07:30:29'),
+(20, 24, 2, 0.1, '2023-06-21 07:30:29', '2023-06-21 07:30:29');
 
 -- --------------------------------------------------------
 
@@ -542,6 +572,12 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `plans`
+--
+ALTER TABLE `plans`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `recipes`
 --
 ALTER TABLE `recipes`
@@ -619,16 +655,22 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `plans`
+--
+ALTER TABLE `plans`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `recipe_inventory`
 --
 ALTER TABLE `recipe_inventory`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `sales`

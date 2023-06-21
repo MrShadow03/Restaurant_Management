@@ -23,19 +23,20 @@
             {{-- sidebar for students --}}
             @if (Auth::user()->role == 'admin')
             <li><a href="#"><i class="menu_icon fa-light fa-chart-mixed"></i>Dashboard</a></li>
-            <li><a href="{{ route('admin.inventory') }}"><i class="menu_icon fa-regular fa-box-circle-check"></i></i>Inventory</a></li>
+            <li><a href="{{ route('admin.inventory') }}"><i class="menu_icon fa-regular fa-box-circle-check"></i>Inventory</a></li>
             @elseif (Auth::user()->role == 'manager')
-            <li><a href="{{ route('manager.dashboard') }}"><i class="menu_icon fa-regular fa-chart-mixed"></i></i>Dashboard</a></li>
-            <li><a href="{{ route('manager.table') }}"><i class="menu_icon fa-light fa-grid-2"></i></i>Tables</a></li>
+            <li><a href="{{ route('manager.dashboard') }}"><i class="menu_icon fa-regular fa-chart-mixed"></i>Dashboard</a></li>
+            <li><a href="{{ route('manager.table') }}"><i class="menu_icon fa-light fa-grid-2"></i>Tables</a></li>
             <li><a href="{{ route('manager.staff') }}"><i class="menu_icon fa-light fa-user"></i>Staff</a></li>
-            <li><a href="{{ route('manager.inventory') }}"><i class="menu_icon fa-light fa-box-circle-check"></i></i>Inventory</a></li>
-            <li><a href="{{ route('manager.recipe') }}"><i class="menu_icon fa-light fa-burger-soda"></i></i>Food Items</a></li>
+            <li><a href="{{ route('manager.inventory') }}"><i class="menu_icon fa-light fa-box-circle-check"></i>Inventory</a></li>
+            <li><a href="{{ route('manager.recipe') }}"><i class="menu_icon fa-light fa-burger-soda"></i>Food Items</a></li>
+            <li><a href="{{ route('manager.menu_planner') }}"><i class="menu_icon fa-light fa-list-dropdown"></i>Menu Planner</a></li>
             <li><a href="{{ route('manager.setting') }}"><i class="fa-duotone fa-gear menu_icon"></i>Settings</a></li>
             @elseif (Auth::user()->role == 'staff')
-            <li><a href="{{ route('staff.table') }}"><i class="menu_icon fa-light fa-grid-2"></i></i>Tables</a></li>
+            <li><a href="{{ route('staff.table') }}"><i class="menu_icon fa-light fa-grid-2"></i>Tables</a></li>
             @elseif (Auth::user()->role == 'kitchen_staff')
-            <li><a href="{{ route('kitchen_staff.recipe') }}"><i class="menu_icon fa-light fa-grid-2"></i></i>Food Items</a></li>
-            <li><a href="{{ route('kitchen_staff.order') }}"><i class="menu_icon fa-light fa-burger-soda"></i></i>Orders</a></li>
+            <li><a href="{{ route('kitchen_staff.recipe') }}"><i class="menu_icon fa-light fa-grid-2"></i>Food Items</a></li>
+            <li><a href="{{ route('kitchen_staff.order') }}"><i class="menu_icon fa-light fa-burger-soda"></i>Orders</a></li>
             @endif
         </ul>
     </div>

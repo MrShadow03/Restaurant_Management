@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\RecipeController;
@@ -10,10 +11,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\StaffTableController;
 use App\Http\Controllers\API\StaffOrderController;
-use App\Http\Controllers\BusinessInformationController;
+use App\Http\Controllers\ManagerProfileController;
 use App\Http\Controllers\KitchenStaffOrderController;
 use App\Http\Controllers\KitchenStaffRecipeController;
-use App\Http\Controllers\ManagerProfileController;
+use App\Http\Controllers\BusinessInformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,13 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::patch('/recipe/update', [RecipeController::class, 'update'])->name('recipe.update');
     Route::post('/recipe/toggleOnMenu', [RecipeController::class, 'toggleOnMenu'])->name('recipe.toggle_on_menu');
     Route::get('/recipe/delete/{id}', [recipeController::class, 'destroy'])->name('recipe.destroy');
+    
+    //manager recipe
+    Route::get('/menu_planner', [PlanController::class, 'index'])->name('menu_planner');
+    // Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
+    // Route::patch('/recipe/update', [RecipeController::class, 'update'])->name('recipe.update');
+    // Route::post('/recipe/toggleOnMenu', [RecipeController::class, 'toggleOnMenu'])->name('recipe.toggle_on_menu');
+    // Route::get('/recipe/delete/{id}', [recipeController::class, 'destroy'])->name('recipe.destroy');
 
     //manager staff
     Route::get('/staff', [StaffController::class, 'index'])->name('staff');

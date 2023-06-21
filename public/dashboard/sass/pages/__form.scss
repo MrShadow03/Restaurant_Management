@@ -36,7 +36,11 @@ input {
         opacity: .5;
     } 
 }
-
+.modal__form--profile{
+    input{
+        margin-top: 1rem;
+    }
+}
 
 // SELECT INPUT HERE
 .select_input_box {
