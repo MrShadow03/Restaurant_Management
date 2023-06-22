@@ -6,138 +6,214 @@
     <x-sidebar/>
     <div class="right_content" data-simplebar>
         <x-navbar />
-        <div class="table_box table-xs">
-            <div class="table-wrapper">
-                <h1 class="text-title-alt text-primary pb-2 border-bottom">Settings & Profile</h1>
-                    <div class="menu_wrapper">
-                        <form class="item_wrapper item-wrapper--profile" action="{{ route('manager.setting.update') }}" method="POST">
-                            @csrf
-                            <div class="item_left">
-                                <div class="item_content w-100">
-                                    <p class="text-md-alt text-primary pb-1">Business Details</p>
-                                    <p class="text-sm-alt text-orange">Update Business Information</p>
-                                    <p class="text-sm-alt text-primary pb-1 op-6">These informations are used throughout the software (e.g Invoice & UI)</p>
-                                    <div class="modal__form modal__form--profile">
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="text" oninput="changeButtonStyle(this ,'business_details_button')" name="name" class="input" placeholder="Business name" required>
-                                                @error('name')
-                                                    <p class="input-error">{{ $message }}</p>
-                                                @enderror
-                                            </div> 
-                                        </div>
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="text" oninput="changeButtonStyle(this ,'business_details_button')" name="phone_number" class="input" placeholder="Phone number" required>
-                                                <i class="modal_input_icon fa-solid fa-phone"></i>
-                                            </div>
-                                        </div>
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="text" oninput="changeButtonStyle(this ,'business_details_button')" name="address" class="input" placeholder="Address" required>
-                                                <i class="modal_input_icon fa-solid fa-location-dot"></i>
-                                            </div>
-                                        </div>
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="email" oninput="changeButtonStyle(this ,'business_details_button')" name="email" class="input" placeholder="Email (optional)">
-                                                <i class="modal_input_icon fa-solid fa-envelope"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="table_box d-flex">
+            <div class="card card-column" data-simplebar style="width: 30% !important;">
+                <div class="modal_heading">
+                    <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-calendar fs-16"></i> &nbsp; Todays Menu</h2>
+                    <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-clock fs-16"></i> &nbsp; {{ Carbon\Carbon::now()->format('dS F, Y') }}</h2>
+                </div>
+                <div class="menu_wrapper">
+                    @foreach ($recipes as $recipe)
+                    <div class="item_wrapper">
+                        <div class="item_left">
+                            <div class="item_image">
+                                <p id="food_availability_index{{ $recipe->id }}" class="badge-index {{ $recipe->on_menu ? 'badge-info' : 'badge-danger' }}"><i class="fa-solid fa-meat"></i></p>
                             </div>
-                            <div class="item_right">
-                                <button id="business_details_button" type="submit" class="mt-1 btn-sm btn-disabled"><i class="fa-solid fa-save"></i> &nbsp; Save</button>
+                            <div class="item_content">
+                                <h3 class="text-md-alt text-primary op-9">{{ $recipe->recipe_name }} <i id="food_availability_status{{ $recipe->id }}" class="fs-12 fa-solid {{ $recipe->on_menu ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger' }}"></i></h3>
+                                <h3 class="item_subtitle text-sm-alt op-6 d-inline">{{ $recipe->price }} BDT 
+                                </h3>
+                                @if($recipe->discount > 0)
+                                <span class="badge badge-warning"><i class="fa-solid fa-fire"></i>&nbsp; {{ $recipe->discount }}% off</span>
+                                @endif
                             </div>
-                        </form>
-                        <form class="item_wrapper item-wrapper--profile" onsubmit="checkPassword(event)" action="{{ route('manager.profile.update') }}" method="POST" style="padding: 1.5rem 0;">
-                            @csrf
-                            <div class="item_left">
-                                <div class="item_content w-100">
-                                    <p class="text-md-alt text-primary pb-1">Password and Security</p>
-                                    <p class="text-sm-alt text-orange">Change Username and Password</p>
-                                    <p class="text-sm-alt text-primary pb-1 op-6">Provide username and password to change</p>
-                                    <div class="modal__form modal__form--profile">
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="text" name="name" oninput="changeButtonStyle(this ,'profile_button')" class="input" placeholder="Username" value="{{ auth()->user()->name }}" required>
-                                                <i class="modal_input_icon fa-solid fa-user"></i>
-                                            </div>
-                                        </div>
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="password" id="password" pattern="^(?!\s)[\S]{8,}$" name="password" oninput="changeButtonStyle(this ,'profile_button')" class="input" placeholder="New password" required>
-                                                <i class="modal_input_icon fa-solid fa-key"></i>
-                                            </div>
-                                        </div>
-                                        <div class="modal__input__group">
-                                            <div class="modal__input__field">
-                                                <input type="password" id="password_confirmation" pattern="^(?!\s)[\S]{8,}$" name="password_confirmation" oninput="confirmPasswordMatch(this.value, 'password')" class="input" placeholder="Re-type password" required>
-                                                <p id="password_error" class="input_error d-none">Passwords Doesn't Match</p>
-                                                <i class="modal_input_icon fa-solid fa-key"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_right">
-                                <button id="profile_button" type="submit" class="mt-1 btn-sm btn-disabled"><i class="fa-solid fa-save"></i> &nbsp; Save</button>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="item_right">
+                            <form class="switch" action="{{ route('manager.recipe.toggle_on_menu') }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="id" value={{ $recipe->id }}>
+                                <input class="tgl tgl-ios" id="toggle_on_menu{{ $recipe->id }}" name="on_menu" type="checkbox" {{ $recipe->on_menu ? 'checked' : '' }} onchange="toggleOnMenu(this, {{ $recipe->id }})"/>
+                                <label title="Remove or include item on the menu" class="tgl-btn" for="toggle_on_menu{{ $recipe->id }}"></label>
+                            </form>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="card card-column" data-simplebar>
+                <div class="modal_heading">
+                    <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-calendar fs-16"></i> &nbsp; Plans for tomorrow</h2>
+                    <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-clock fs-16"></i> &nbsp; {{ Carbon\Carbon::now()->addDay(1)->format('dS F, Y') }}</h2>
+                </div>
+                <div class="div-message text-center" style="margin-top: 10rem">
+                    <h2 class="div-message-title fs-14 font-inter text-center text-sm-alt text-orange mb-2">Currently there are no plans for tomorrow!</h2>
+                    <div class="button-group">
+                        <button class="btn-sm btn-primary" data-remodal-target="ordering_menu" onclick="getMenu({{ json_encode($recipes) }})"><i class="fa-solid fa-list"></i> &nbsp; Prepare Menu</button>
+                        <button class="btn-sm"><i class="fa-solid fa-check-circle"></i> &nbsp; Same as today</button>
                     </div>
                 </div>
+                {{-- <div class="menu_wrapper">
+                    @foreach ($recipes as $recipe)
+                    <div class="item_wrapper">
+                        <div class="item_left">
+                            <div class="item_image">
+                                <p id="food_availability_index{{ $recipe->id }}" class="badge-index {{ $recipe->on_menu ? 'badge-info' : 'badge-danger' }}"><i class="fa-solid fa-meat"></i></p>
+                            </div>
+                            <div class="item_content">
+                                <h3 class="text-md-alt text-primary op-9">{{ $recipe->recipe_name }} <i id="food_availability_status{{ $recipe->id }}" class="fs-12 fa-solid {{ $recipe->on_menu ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger' }}"></i></h3>
+                                <h3 class="item_subtitle text-sm-alt op-6 d-inline">{{ $recipe->price }} BDT 
+                                </h3>
+                                @if($recipe->discount > 0)
+                                <span class="badge badge-warning"><i class="fa-solid fa-fire"></i>&nbsp; {{ $recipe->discount }}% off</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="item_right">
+                            <form class="switch" action="{{ route('manager.recipe.toggle_on_menu') }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="id" value={{ $recipe->id }}>
+                                <input class="tgl tgl-ios" id="toggle_on_menu{{ $recipe->id }}" name="on_menu" type="checkbox" {{ $recipe->on_menu ? 'checked' : '' }} onchange="toggleOnMenu(this, {{ $recipe->id }})"/>
+                                <label title="Remove or include item on the menu" class="tgl-btn" for="toggle_on_menu{{ $recipe->id }}"></label>
+                            </form>
+                        </div>
+                    </div>
+                    @endforeach
+                </div> --}}
             </div>
         </div>
     </div>
-    {{-- product edit remodal --}}
-    <div class="modal remodal" data-remodal-id="edit_product_modal" data-remodal-options="confirmOnEnter: true">
+    <div class="modal remodal" data-remodal-id="ordering_menu" id="ordering_remodal" data-remodal-options="hashTracking: false">
         <div class="modal_heading">
-            <h2 class="modal_title" id="edit_product">Edit Product</h2>
+            <h2 class="modal_title" id="modal_title"></h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
         </div>
-        <form class="modal__form" action="{{ route('manager.recipe.update') }}" method="POST" >
-            @csrf
-            @method('PATCH')
-        </form>
+        <div class="menu_wrapper" id="menu_wrapper" data-simplebar>
+            <button data-remodal-action="close" class="btn-sm btn-primary mb-2">Close</button>
+        </div>
     </div>
-
 @endsection
 
 @section('exclusive_scripts')
 <script>
-    function changeButtonStyle(input, button_id){
-        if(input.value.length > 0){
-            document.getElementById(button_id).classList.remove('btn-disabled');
-            document.getElementById(button_id).classList.add('btn-primary');
-        }else{
-            document.getElementById(button_id).classList.remove('btn-primary');
-            document.getElementById(button_id).classList.add('btn-disabled');
-        }
-    }
+    function getMenu(menu){
+        //clear menu wrapper
+        let menu_wrapper = document.querySelector('#menu_wrapper');
+        menu_wrapper.innerHTML = '';
 
-    function confirmPasswordMatch(confirmedPassword, password_id){
-        let password_error = document.getElementById('password_error');
-        let password = document.getElementById(password_id).value;
-        if(confirmedPassword != password){
-            password_error.classList.remove('d-none');
-        }else{
-            password_error.classList.add('d-none');
-        }
-    }
+            html = '';
+            //get unique categories
+            var uniqueCategories = [...new Set(menu.map(item => item.category))];
+            //create the menu
+            uniqueCategories.forEach(function(category) {
+                var items = menu.filter(function(item) {
+                    return item.category === category;
+                });
 
-    function checkPassword(event){
-        event.preventDefault();
-        let password_error = document.getElementById('password_error');
-        let password = document.getElementById('password').value;
-        let password_confirmation = document.getElementById('password_confirmation').value;
-        if(password != password_confirmation){
-            toastr.error('Passwords Doesn\'t Match');
-            password_error.classList.remove('d-none');
-        }else{
-            event.target.submit();
-        }
-    }
+                items.forEach(function(item, index) {
+                    if (index === 0) {
+                        html += '<h3 class="menu_category_title">' + category + '</h3>';
+                    }
+
+                    html += '<div class="item_wrapper">';
+                    html += '<div class="item_left">';
+                    html += '<div class="item_image">';
+                    html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">`;
+                    html += '</div>';
+                    html += '<div class="item_content">';
+                    html += `<h3 class="item_title text-md-alt text">${item.recipe_name} ${ !item.is_available ? '<span class="badge badge-danger">Unavailable</span>' : ''}</h3>`;
+                    html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
+                    html += '<div class="menu_quantity_wrapper">';
+                    html += '<button onclick="decQuantity(' + item.id + ')" class="menu_quantity_btn"><i class="fa-light fa-minus"></i></button>';
+
+                    let classList = item.orderCount > 0 ? 'menu_quantity_input text-orange' : 'menu_quantity_input op-5';
+                    html += `<input type="text" class="${classList}" id="menu_quantity_input${item.id}" value="${item.orderCount}" readonly>`;
+
+                    html += '<button onclick="incQuantity(' + item.id + ')" class="menu_quantity_btn"><i class="fa-light fa-plus"></i></button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="item_right">';
+
+                    if(item.is_available){
+                        let buttonClass = item.orderCount > 0 ? 'btn-sm btn-success' : 'btn-sm';
+                        let buttonText = item.orderCount > 0 ? 'Ordered' : 'Order';
+                        html += `<button class="${buttonClass}" onclick="placeOrder(${item.id})" id="order_button${item.id}">${buttonText}</button>`;
+                    }
+
+                    html += '</div>';
+                    html += '</div>';
+                });
+            });
+
+            //append the menu
+            menu_wrapper.innerHTML = html;
+        
+        // let base_url = window.location.origin;
+        // //get menu
+        // axios.get(base_url+'/manager/api/getMenu/')
+        // .then(function(response){
+        //     //data
+        //     let menu = response.data;
+        //     console.log(menu);
+        //     //clear menu wrapper
+        //     let menu_wrapper = document.querySelector('#menu_wrapper');
+        //     menu_wrapper.innerHTML = '';
+
+        //     html = '';
+        //     //get unique categories
+        //     var uniqueCategories = [...new Set(menu.map(item => item.category))];
+        //     //create the menu
+        //     uniqueCategories.forEach(function(category) {
+        //         var items = menu.filter(function(item) {
+        //             return item.category === category;
+        //         });
+
+        //         items.forEach(function(item, index) {
+        //             if (index === 0) {
+        //                 html += '<h3 class="menu_category_title">' + category + '</h3>';
+        //             }
+
+        //             html += '<div class="item_wrapper">';
+        //             html += '<div class="item_left">';
+        //             html += '<div class="item_image">';
+        //             html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">`;
+        //             html += '</div>';
+        //             html += '<div class="item_content">';
+        //             html += `<h3 class="item_title text-md-alt text">${item.recipe_name} ${ !item.is_available ? '<span class="badge badge-danger">Unavailable</span>' : ''}</h3>`;
+        //             html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
+        //             html += '<div class="menu_quantity_wrapper">';
+        //             html += '<button onclick="decQuantity(' + item.id + ')" class="menu_quantity_btn"><i class="fa-light fa-minus"></i></button>';
+
+        //             let classList = item.orderCount > 0 ? 'menu_quantity_input text-orange' : 'menu_quantity_input op-5';
+        //             html += `<input type="text" class="${classList}" id="menu_quantity_input${item.id}" value="${item.orderCount}" readonly>`;
+
+        //             html += '<button onclick="incQuantity(' + item.id + ')" class="menu_quantity_btn"><i class="fa-light fa-plus"></i></button>';
+        //             html += '</div>';
+        //             html += '</div>';
+        //             html += '</div>';
+        //             html += '<div class="item_right">';
+ 
+        //             if(item.is_available){
+        //                 let buttonClass = item.orderCount > 0 ? 'btn-sm btn-success' : 'btn-sm';
+        //                 let buttonText = item.orderCount > 0 ? 'Ordered' : 'Order';
+        //                 html += `<button class="${buttonClass}" onclick="placeOrder(${item.id})" id="order_button${item.id}">${buttonText}</button>`;
+        //             }
+
+        //             html += '</div>';
+        //             html += '</div>';
+        //         });
+        //     });
+
+        //     //append the menu
+        //     menu_wrapper.innerHTML = html;
+        // }).catch(function(error){
+        //     console.log(error);
+        // });
+    };
+
 </script>
+    
 @endsection
 

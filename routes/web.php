@@ -97,12 +97,15 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     
     //manager order
     Route::get('/api/getOrders/{table_id}', [StaffOrderController::class, 'getOrders'])->name('api.get_orders');
-
+    
     //manager receipt
     Route::get('/receipt/{invoice_id}', [TableController::class, 'receipt'])->name('receipt');
-
+    
     //manager payment controller
     Route::post('/payment', [PaymentController::class, 'payment'])->name('payment');
+
+    //manager planning
+    Route::get('/api/getMenu', [StaffOrderController::class, 'getMenu'])->name('api.get_menu');
 });
 
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {

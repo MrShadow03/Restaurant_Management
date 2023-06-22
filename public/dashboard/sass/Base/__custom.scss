@@ -252,6 +252,25 @@ table{
 .table_box{
     background-color: $white;
     padding: 3rem;
+    gap: 5rem;
+}
+.card-column{
+    width: 40% !important;
+    display: block !important;
+    min-height: 10rem !important;
+    border-radius: 0 !important;
+    .simplebar-content-wrapper{
+        height: 100% !important;
+    }
+    .modal_heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "inter",sans-serif;
+        margin: 0 0 2rem 0 !important;
+        padding-block: 0 2rem !important;
+        border-bottom: 1px solid rgba(0,37,75,.123);
+    }
 }
 .grid-row2{
     grid-column: 2;
