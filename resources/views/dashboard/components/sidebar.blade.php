@@ -37,6 +37,7 @@
             @elseif (Auth::user()->role == 'kitchen_staff')
             <li><a href="{{ route('kitchen_staff.recipe') }}"><i class="menu_icon fa-light fa-grid-2"></i>Food Items</a></li>
             <li><a href="{{ route('kitchen_staff.order') }}"><i class="menu_icon fa-light fa-burger-soda"></i>Orders</a></li>
+            <li><a href="{{ route('kitchen_staff.menu_planner') }}"><i class="menu_icon fa-light fa-list-dropdown"></i>Menu Planner</a></li>
             @endif
         </ul>
     </div>

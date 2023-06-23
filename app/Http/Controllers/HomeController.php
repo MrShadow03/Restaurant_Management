@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
 use Carbon\Carbon;
 use App\Models\Sale;
+use App\Models\Waste;
 use App\Models\Recipe;
+use App\Models\Invoice;
+use Termwind\Components\Dd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Termwind\Components\Dd;
 
 class HomeController extends Controller
 {
@@ -63,14 +64,24 @@ class HomeController extends Controller
                     'created_at' => $invoice->created_at->format('Y-m-d'),
                 ]
             );
-        }); 
+        });
+
+        $waste = Waste::all();
+        $waste = $waste->map(function ($waste) {
+            return collect(
+                [
+                    'cost' => $waste->amount * $waste->production_cost,
+                ]
+            );
+        });
 
         // dd($sales->where('created_at', Carbon::now()->format('Y-m-d'))->sum('total_discounted_price'));
         return view('dashboard',[
             'recipes' => Recipe::all(),
             'top_sales' => $topSales,
             'recent_purchases' => $recentPurchases,
-            'sales' => $sales
+            'sales' => $sales,
+            'waste' => $waste,
         ]);
     }
 }

@@ -276,14 +276,14 @@
                         <td colspan="5">Grand total</td>
                         <td class="text-right">{{ $grandTotal = round($subTotal-$discount) }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td colspan="5">Paid</td>
                         <td class="text-right">{{ $invoice->paid }}</td>
                     </tr>
                     <tr class="border-top border-dark">
                         <td colspan="5">{{ $invoice->paid < $grandTotal ? 'Due' : 'Change'}}</td>
                         <td class="text-right">{{ abs($invoice->paid - $grandTotal) }}</td>
-                    </tr>
+                    </tr> --}}
             </table>
         </div>
         <div class="barcode">

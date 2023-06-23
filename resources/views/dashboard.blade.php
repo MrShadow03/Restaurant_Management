@@ -44,6 +44,9 @@
                 $hasThisYearRevenueDecreased = $thisYearsTotalRevenue < $lastYearsTotalRevenue;
                 $thisYearsNumberOfSales = abs($thisYearsTotalSale - $lastYearsTotalSale);
 
+                //sum up the wasted cost
+                $wastedCost = $waste->sum('cost');
+
             @endphp
             <div class="card">
                 <div class="card__icon__wrapper bg-purple-light"><i class="card__icon fa-solid fa-coins text-purple"></i></div>
@@ -71,10 +74,10 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card__icon__wrapper bg-teal-light"><i class="card__icon fa-solid fa-stars text-teal"></i></div>
+                <div class="card__icon__wrapper bg-danger-light"><i class="card__icon fa-solid fa-trash-can text-danger"></i></div>
                 <div class="card__details">
-                    <h6 class="card__title">This Week's Revenue</h6>
-                    <h6 class="card__data text-teal">{{ number_format($thisWeeksTotalRevenue, 0, '.', ',') }} TK</h6>
+                    <h6 class="card__title">Total Waste</h6>
+                    <h6 class="card__data text-danger">{{ number_format($wastedCost, 0, '.', ',') }} TK</h6>
                 </div>
             </div>
         </div>

@@ -29,6 +29,11 @@ class Recipe extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
     public function getOrderCountAttribute()
     {
         return $this->orders()->count();

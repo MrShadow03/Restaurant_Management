@@ -12,6 +12,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\StaffTableController;
 use App\Http\Controllers\API\StaffOrderController;
 use App\Http\Controllers\ManagerProfileController;
+use App\Http\Controllers\KitchenStaffPlanController;
 use App\Http\Controllers\KitchenStaffOrderController;
 use App\Http\Controllers\KitchenStaffRecipeController;
 use App\Http\Controllers\BusinessInformationController;
@@ -74,10 +75,6 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     
     //manager recipe
     Route::get('/menu_planner', [PlanController::class, 'index'])->name('menu_planner');
-    // Route::post('/recipe/store', [RecipeController::class, 'store'])->name('recipe.store');
-    // Route::patch('/recipe/update', [RecipeController::class, 'update'])->name('recipe.update');
-    // Route::post('/recipe/toggleOnMenu', [RecipeController::class, 'toggleOnMenu'])->name('recipe.toggle_on_menu');
-    // Route::get('/recipe/delete/{id}', [recipeController::class, 'destroy'])->name('recipe.destroy');
 
     //manager staff
     Route::get('/staff', [StaffController::class, 'index'])->name('staff');
@@ -105,7 +102,8 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     Route::post('/payment', [PaymentController::class, 'payment'])->name('payment');
 
     //manager planning
-    Route::get('/api/getMenu', [StaffOrderController::class, 'getMenu'])->name('api.get_menu');
+    Route::post('/api/storePlan', [PlanController::class, 'store'])->name('api.store_plan');
+    Route::get('/api/getPlanCount/{day}', [PlanController::class, 'getPlanCount'])->name('api.get_plan_count');
 });
 
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {
@@ -133,6 +131,9 @@ Route::group(['middleware' => ['auth', 'auth.kitchen_staff'], 'prefix' => 'kitch
     Route::get('/order', [KitchenStaffOrderController::class, 'index'])->name('order');
     Route::post('/change_status', [KitchenStaffOrderController::class, 'changeStatus'])->name('change_status');
     Route::get('/api/getOrders/{table_id}', [StaffOrderController::class, 'getOrders'])->name('api.get_orders');
+
+    //planned menu
+    Route::get('/menu_planner', [KitchenStaffPlanController::class, 'index'])->name('menu_planner');
 });
 
 Route::middleware('auth')->group(function () {

@@ -109,6 +109,7 @@
         .then(function(response){
             //data
             let menu = response.data;
+            console.log(menu);
             //clear menu wrapper
             let menu_wrapper = document.querySelector('.menu_wrapper');
             menu_wrapper.innerHTML = '';
@@ -133,7 +134,7 @@
                     html += `<img src="{{ asset('dashboard/img/food/default.png') }}" class="item_image item_image_md" alt="">`;
                     html += '</div>';
                     html += '<div class="item_content">';
-                    html += `<h3 class="item_title text-md-alt text">${item.recipe_name} ${ !item.is_available ? '<span class="badge badge-danger">Unavailable</span>' : ''}</h3>`;
+                    html += `<h3 class="item_title text-md-alt text">${item.recipe_name} ${item.availableQuantity ? `<span class="badge badge-success">${item.availableQuantity} units available</span>` : '<span class="badge badge-danger">Unavailable</span>'}</h3>`;
                     html += '<h3 class="item_subtitle text-sm-alt op-6">' + item.price + ' BDT</h3>';
                     html += '<div class="menu_quantity_wrapper">';
                     html += '<button onclick="decQuantity(' + item.id + ')" class="menu_quantity_btn"><i class="fa-light fa-minus"></i></button>';
@@ -147,7 +148,7 @@
                     html += '</div>';
                     html += '<div class="item_right">';
  
-                    if(item.is_available){
+                    if(item.availableQuantity){
                         let buttonClass = item.orderCount > 0 ? 'btn-sm btn-success' : 'btn-sm';
                         let buttonText = item.orderCount > 0 ? 'Ordered' : 'Order';
                         html += `<button class="${buttonClass}" onclick="placeOrder(${item.id})" id="order_button${item.id}">${buttonText}</button>`;

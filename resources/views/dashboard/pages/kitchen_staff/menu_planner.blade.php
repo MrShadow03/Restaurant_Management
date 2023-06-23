@@ -11,18 +11,14 @@
                 <div class="menu_heading">
                     <div class="modal_heading_left">
                         <h2 class="text-md-alt text-primary op-6 font-roboto"><i class="fa-light fa-calendar fs-16"></i> &nbsp; Todays Menu</h2>
-                        <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-clock fs-16"></i> &nbsp; {{ Carbon\Carbon::now()->format('dS F, Y') }}</h2>
                     </div>
                     <div class="modal_heading_right">
-                        <button class="btn-sm btn-info" data-remodal-target="ordering_menu" onclick="getMenu({{ json_encode($recipes) }}, 'today')"><i class="fa-solid fa-list"></i></button>
+                        <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-clock fs-16"></i> &nbsp; {{ Carbon\Carbon::now()->format('dS F, Y') }}</h2>
                     </div>
                 </div>
                 @if ($plans->where('date', Carbon\Carbon::now()->format('Y-m-d'))->count() == 0)
                 <div class="div-message text-center" style="margin-top: 10rem">
-                    <h2 class="div-message-title fs-14 font-inter text-center text-sm-alt text-orange mb-2">Make plans for today!</h2>
-                    <div class="button-group">
-                        <button class="btn-sm btn-primary" data-remodal-target="ordering_menu" onclick="getMenu({{ json_encode($recipes) }}, 'today')"><i class="fa-solid fa-list"></i> &nbsp; Prepare Menu</button>
-                    </div>
+                    <h2 class="div-message-title fs-14 font-inter text-center text-sm-alt text-orange mb-2">No plans for today!</h2>
                 </div>
                 @else
                 <div class="menu_wrapper">
@@ -60,19 +56,14 @@
                 <div class="menu_heading">
                     <div class="menu_heading_left">
                         <h2 class="text-md-alt text-primary op-6 font-roboto"><i class="fa-light fa-calendar fs-16"></i> &nbsp; Plans for tomorrow</h2>
-                        <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-clock fs-16"></i> &nbsp; {{ Carbon\Carbon::now()->addDay(1)->format('dS F, Y') }}</h2>
                     </div>
                     <div class="menu_heading_right">
-                        <button class="btn-sm btn-info" data-remodal-target="ordering_menu" onclick="getMenu({{ json_encode($recipes) }}, 'tomorrow')"><i class="fa-solid fa-list"></i></button>
+                        <h2 class="text-sm-alt text-primary op-6 font-roboto"><i class="fa-light fa-clock fs-16"></i> &nbsp; {{ Carbon\Carbon::now()->addDay(1)->format('dS F, Y') }}</h2>
                     </div>
                 </div>
                 @if ($plans->where('date', Carbon\Carbon::now()->addDay(1)->format('Y-m-d'))->count() == 0)
                 <div class="div-message text-center" style="margin-top: 10rem">
                     <h2 class="div-message-title fs-14 font-inter text-center text-sm-alt text-orange mb-2">Currently there are no plans for tomorrow!</h2>
-                    <div class="button-group">
-                        <button class="btn-sm btn-primary" data-remodal-target="ordering_menu" onclick="getMenu({{ json_encode($recipes) }}, 'tomorrow')"><i class="fa-solid fa-list"></i> &nbsp; Prepare Menu</button>
-                        <button class="btn-sm"><i class="fa-solid fa-check-circle"></i> &nbsp; Same as today</button>
-                    </div>
                 </div>
                 @else
                 <div class="menu_wrapper">
@@ -106,15 +97,6 @@
                 </div>
                 @endif
             </div>
-        </div>
-    </div>
-    <div class="modal remodal" data-remodal-id="ordering_menu" id="ordering_remodal" data-remodal-options="hashTracking: false">
-        <div class="modal_heading">
-            <h2 class="modal_title" id="modal_title"></h2>
-            <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
-        </div>
-        <div class="menu_wrapper" id="menu_wrapper" data-simplebar>
-            <button data-remodal-action="close" class="btn-sm btn-primary mb-2">Close</button>
         </div>
     </div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Plan;
 use App\Models\Order;
 use App\Models\Table;
 use App\Models\Recipe;
@@ -11,11 +12,15 @@ use App\Http\Controllers\Controller;
 class StaffOrderController extends Controller
 {
     public function getMenu(Request $request){
-        $menu = Recipe::where('on_menu', 1)->get();
+        $menu = Recipe::with('plans')->where('on_menu', 1)->get();
         $table_id = $request->table_id;
 
         $menu = $menu->map(function($item) use ($table_id){
             $item->orderCount = Order::where('recipe_id', $item->id)->where('table_id', $table_id)->sum('quantity');
+            $item->availableQuantity = 0;
+            if($item->plans->where('date', date('Y-m-d'))->count() > 0){
+                $item->availableQuantity = $item->plans->where('date', date('Y-m-d'))->first()->quantity;
+            }
             return $item;
         });
         
@@ -27,7 +32,10 @@ class StaffOrderController extends Controller
             ->where('recipe_id', $request->recipe_id)
             ->first();
 
-        $isRecipeAvailable = Recipe::find($request->recipe_id)->is_available;
+        $isRecipeAvailable = Plan::where('recipe_id', $request->recipe_id)
+            ->where('date', date('Y-m-d'))
+            ->where('quantity', '>', 0)
+            ->count() > 0;
 
         //if the recipe is not available then return
         if(!$isRecipeAvailable){
@@ -39,8 +47,17 @@ class StaffOrderController extends Controller
         }
 
         if($alreadyOrdered && request()->quantity == 0){
-            $alreadyOrdered->delete();
+            
+            //update the plan
+            $plan = Plan::where('recipe_id', $request->recipe_id)
+            ->where('date', date('Y-m-d'))
+            ->first();
+            
+            $plan->quantity = $plan->quantity + $alreadyOrdered->quantity;
+            $plan->save();
 
+            $alreadyOrdered->delete();
+            
             return response()->json([
                 'message' => 'deleted',
                 'recipe_id' => $request->recipe_id,
@@ -72,6 +89,14 @@ class StaffOrderController extends Controller
                 'status' => $request->quantity > $previous_quantity ? 'cooking' : $current_status,
             ]
         );
+
+        //update the plan
+        $plan = Plan::where('recipe_id', $request->recipe_id)
+            ->where('date', date('Y-m-d'))
+            ->first();
+
+        $plan->quantity = $plan->quantity - ($request->quantity - $previous_quantity);
+        $plan->save();
 
         return response()->json([
             'message' => 'done',
