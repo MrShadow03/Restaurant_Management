@@ -38,7 +38,7 @@ class StaffController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        return redirect()->route('manager.staff')->with('success', 'Staff added successfully');
+        return redirect()->back()->with('success', 'Staff added successfully');
     }
 
     public function update(Request $request){
@@ -56,7 +56,7 @@ class StaffController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        return redirect()->route('manager.staff')->with('success', $request->name.'\'s data updated successfully');
+        return redirect()->back()->with('success', $request->name.'\'s data updated successfully');
     }
 
     public function toggleStatus(Request $request){
@@ -64,13 +64,13 @@ class StaffController extends Controller
         $user->status = isset($request->status) ? 1 : 0;
         $user->save();
 
-        return redirect()->route('manager.staff')->with('success', 'Staff updated successfully');
+        return redirect()->back()->with('success', 'Staff updated successfully');
     }
 
     public function destroy(Request $request){
         $user = User::find($request->id);
         $user->delete();
 
-        return redirect()->route('manager.staff')->with('success', 'Staff deleted successfully');
+        return redirect()->back()->with('success', 'Staff deleted successfully');
     }
 }

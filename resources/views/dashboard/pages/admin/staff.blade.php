@@ -50,7 +50,7 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__content">
-                                                <form class="switch" action="{{ route('manager.staff.toggle_status') }}" method="POST">
+                                                <form class="switch" action="{{ route('admin.staff.toggle_status') }}" method="POST">
                                                     @csrf
                                                     @method('PATCH')
                                                     <input type="hidden" name="id" value={{ $person->id }}>
@@ -64,7 +64,7 @@
                                         <div class="table-column__wrapper">
                                             <div class="table-column__content">
                                                 <a href="#edit_product_modal" title="Edit product" class="btn-sm" onclick="editProduct({{ json_encode($person) }})">Edit</a>
-                                                <a href="{{ route('manager.staff.destroy', $person->id) }}" title="Delete product" class="btn-sm" onclick="return confirm('This Will Delete this product')" ><i class="fa-regular fa-trash"></i></a>
+                                                <a href="{{ route('admin.staff.destroy', $person->id) }}" title="Delete product" class="btn-sm" onclick="return confirm('This Will Delete this product')" ><i class="fa-regular fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </td>
@@ -83,7 +83,7 @@
             <h2 class="modal_title"><i class="fa-regular fa-user"></i> &nbsp; Add new staff</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
         </div>
-        <form class="modal__form" action="{{ route('manager.staff.store') }}" method="POST" >
+        <form class="modal__form" action="{{ route('admin.staff.store') }}" method="POST" >
             @csrf
             <div class="modal__input__group">
                 <div class="modal__input__field">
@@ -138,7 +138,7 @@
             <h2 class="modal_title" id="edit_product">Edit Product</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
         </div>
-        <form class="modal__form" action="{{ route('manager.staff.update') }}" method="POST" >
+        <form class="modal__form" action="{{ route('admin.staff.update') }}" method="POST" >
             @csrf
             @method('PATCH')
             <input type="hidden" name="id" id="staff_id">
@@ -154,6 +154,7 @@
                     <label class="modal__input__label">Role</label>
                     <select name="role" class="input" oninput="updateButton()" id="role" required>
                         <option selected disabled>Role</option>
+                        <option value="manager">Manager</option>
                         <option value="staff">Staff</option>
                         <option value="kitchen_staff">Kitchen Staff</option>
                     </select>
