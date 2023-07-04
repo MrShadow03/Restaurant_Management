@@ -284,7 +284,7 @@
             html += '</div>';
             html += '<div class="modal__input__field">';
             html += '<label for="paid" class="modal__input__label">Paid</label>';
-            html += '<input type="number" min="0" name="paid" id="paid" class="modal__input__input input" placeholder="Paid" required>';
+            html += '<input type="number" min="0" name="paid" id="paid" class="modal__input__input input" placeholder="Paid">';
             html += '</div>';
             html += '</div>';
             html += '<div class="modal__input__group">';

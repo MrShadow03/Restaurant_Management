@@ -3,41 +3,110 @@
     //split the business name from the first space
     $business_name = explode(' ', $business_details->name);
 @endphp
-<div class="left_nevbar">
+<div class="left_sidebar left_sidebar--expanded" id="sidebar">
     <div class="side_bar">
-        <div class="header">                    
+        <div class="header">
             <div class="logo">
                 {{-- <img src="{{ asset('dashboard/img/logo.png') }}" alt=""> --}}
                 <p class="ml-2 op-9 text-yellow fw-500 fs-16">
                     <i class="fa-duotone fa-fork-knife"></i>
-                    <span class="fs-14 fw-600" style="text-transform:uppercase; letter-spacing: 1px; margin-left: 1rem;">{{ $business_name[0] }}</span>
-                    <span class="fs-14 fw-300 text-white" style="text-transform:uppercase; letter-spacing: 1px;">{{ $business_name[1] ?? '' }}</span>
+                    <span class="fs-14 fw-600 hidden-on-collapse"
+                        style="text-transform:uppercase; letter-spacing: 1px; margin-left: 1rem;">{{ $business_name[0] }}</span>
+                    <span class="fs-14 fw-300 text-white hidden-on-collapse"
+                        style="text-transform:uppercase; letter-spacing: 1px;">{{ $business_name[1] ?? '' }}</span>
                 </p>
             </div>
             <div class="menu_bars">
                 <i class="menu-cross fa-solid fa-times"></i>
-            </div>                                       
+            </div>
         </div>
         {{-- sidebar menu starts here --}}
         <ul class="nav_area mt-2">
             {{-- sidebar for students --}}
             @if (Auth::user()->role == 'admin')
-            <li><a href="#"><i class="menu_icon fa-light fa-chart-mixed"></i>Dashboard</a></li>
-            <li><a href="{{ route('admin.inventory') }}"><i class="menu_icon fa-regular fa-box-circle-check"></i>Inventory</a></li>
+                <li><a class="menu__link" href="#"><i class="menu_icon fa-light fa-chart-mixed"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Dashboard</p>
+                    </a></li>
+                <li><a class="menu__link" href="{{ route('admin.inventory') }}"><i
+                            class="menu_icon fa-regular fa-box-circle-check"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Inventory</p>
+                    </a></li>
             @elseif (Auth::user()->role == 'manager')
-            <li><a href="{{ route('manager.dashboard') }}"><i class="menu_icon fa-regular fa-chart-mixed"></i>Dashboard</a></li>
-            <li><a href="{{ route('manager.table') }}"><i class="menu_icon fa-light fa-grid-2"></i>Tables</a></li>
-            <li><a href="{{ route('manager.staff') }}"><i class="menu_icon fa-light fa-user"></i>Staff</a></li>
-            <li><a href="{{ route('manager.inventory') }}"><i class="menu_icon fa-light fa-box-circle-check"></i>Inventory</a></li>
-            <li><a href="{{ route('manager.recipe') }}"><i class="menu_icon fa-light fa-burger-soda"></i>Food Items</a></li>
-            <li><a href="{{ route('manager.menu_planner') }}"><i class="menu_icon fa-light fa-list-dropdown"></i>Menu Planner</a></li>
-            <li><a href="{{ route('manager.setting') }}"><i class="fa-duotone fa-gear menu_icon"></i>Settings</a></li>
+                <li class="{{ 'manager/dashboard' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.dashboard') }}"><i
+                            class="menu_icon fa-regular fa-chart-mixed"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Dashboard</p>
+                    </a></li>
+                <li class="{{ 'manager/table' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.table') }}"><i
+                            class="menu_icon fa-duotone fa-grid-2"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Tables</p>
+                    </a></li>
+                <li class="{{ 'manager/staff' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.staff') }}"><i
+                            class="menu_icon fa-duotone fa-user"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Staff</p>
+                    </a></li>
+                <li class="{{ 'manager/inventory' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.inventory') }}"><i
+                            class="menu_icon fa-duotone fa-box-circle-check"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Inventory</p>
+                    </a></li>
+                <li class="{{ 'manager/recipe' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.recipe') }}"><i
+                            class="menu_icon fa-duotone fa-burger-soda"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Food Items</p>
+                    </a></li>
+                <li class="{{ 'manager/menu_planner' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.menu_planner') }}"><i
+                            class="menu_icon fa-duotone fa-list-dropdown"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Menu Planner</p>
+                    </a></li>
+                <li class="{{ str_contains(request()->path(), 'manager/report') ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link toggle_btn" href="#"><i class="fa-duotone fa-chart-pie menu_icon"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Reporting</p><i class="sub_icon fa-regular fa-chevron-down hidden-on-collapse"></i>
+                    </a>
+                    <ul class="sub_menu {{ str_contains(request()->path(), 'manager/report') ? 'active' : '' }}"
+                        style="{{ str_contains(request()->path(), 'manager/report') ? 'display: block;' : 'display: none;' }}">
+                        <li><a class="{{ 'manager/report/products' == request()->path() ? 'submenu__link--active' : '' }}"
+                                href="{{ route('manager.report.products') }}"><i
+                                    class="fa-duotone fa-message-dollar"></i>
+                                <p class="sidebar-link-name hidden-on-collapse">Product Report</p>
+                            </a></li>
+                        <li><a class="{{ 'manager/report/sales' == request()->path() ? 'submenu__link--active' : '' }}"
+                                href="{{ route('manager.report.sales') }}"><i class="fa-duotone fa-graduation-cap"></i>
+                                <p class="sidebar-link-name hidden-on-collapse">Sales</p>
+                            </a></li>
+                        {{-- <li><a class="{{ 'manager/report/activities' == request()->path() ? 'submenu__link--active' : '' }}" href="#"><i class="fa-duotone fa-trash-can-clock"></i></i>Wastes</a></li> --}}
+                    </ul>
+                </li>
+                <li class="{{ 'manager/setting' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('manager.setting') }}"><i
+                            class="fa-duotone fa-gear menu_icon"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Settings</p>
+                    </a></li>
             @elseif (Auth::user()->role == 'staff')
-            <li><a href="{{ route('staff.table') }}"><i class="menu_icon fa-light fa-grid-2"></i>Tables</a></li>
+                <li class="{{ 'staff/table' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('staff.table') }}"><i
+                            class="menu_icon fa-duotone fa-grid-2"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Tables</p>
+                    </a></li>
             @elseif (Auth::user()->role == 'kitchen_staff')
-            <li><a href="{{ route('kitchen_staff.recipe') }}"><i class="menu_icon fa-light fa-grid-2"></i>Food Items</a></li>
-            <li><a href="{{ route('kitchen_staff.order') }}"><i class="menu_icon fa-light fa-burger-soda"></i>Orders</a></li>
-            <li><a href="{{ route('kitchen_staff.menu_planner') }}"><i class="menu_icon fa-light fa-list-dropdown"></i>Menu Planner</a></li>
+                <li class="{{ 'kitchen_staff/recipe' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('kitchen_staff.recipe') }}"><i
+                            class="menu_icon fa-duotone fa-grid-2"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Food Items</p>
+                    </a></li>
+                <li class="{{ 'kitchen_staff/order' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('kitchen_staff.order') }}"><i
+                            class="menu_icon fa-duotone fa-burger-soda"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Orders</p>
+                    </a></li>
+                <li class="{{ 'kitchen_staff/menu_planner' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('kitchen_staff.menu_planner') }}"><i
+                            class="menu_icon fa-light fa-list-dropdown"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Menu Planner</p>
+                    </a></li>
             @endif
         </ul>
     </div>

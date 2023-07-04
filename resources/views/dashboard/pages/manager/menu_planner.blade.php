@@ -110,7 +110,7 @@
     </div>
     <div class="modal remodal" data-remodal-id="ordering_menu" id="ordering_remodal" data-remodal-options="hashTracking: false">
         <div class="modal_heading">
-            <h2 class="modal_title" id="modal_title"></h2>
+            <h2 class="modal_title" id="modal_title">Menu Planner</h2>
             <button data-remodal-action="close"><i class="fa-light fa-times"></i></button>
         </div>
         <div class="menu_wrapper" id="menu_wrapper" data-simplebar>

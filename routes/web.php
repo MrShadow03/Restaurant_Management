@@ -6,6 +6,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
@@ -104,6 +105,10 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     //manager planning
     Route::post('/api/storePlan', [PlanController::class, 'store'])->name('api.store_plan');
     Route::get('/api/getPlanCount/{day}', [PlanController::class, 'getPlanCount'])->name('api.get_plan_count');
+
+    //manager reporting
+    Route::get('/report/sales', [ReportController::class, 'salesReport'])->name('report.sales');
+    Route::get('/report/products', [ReportController::class, 'productsReport'])->name('report.products');
 });
 
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {

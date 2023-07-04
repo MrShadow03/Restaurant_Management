@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2023 at 05:02 PM
+-- Generation Time: Jul 04, 2023 at 07:58 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -42,7 +42,7 @@ CREATE TABLE `business_information` (
 --
 
 INSERT INTO `business_information` (`id`, `name`, `phone_number`, `email`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'Pizza Hut', '01766555213', 'pepplo25@gamil.com', '68 Street, Barishal', '2023-04-28 16:17:34', '2023-06-21 09:26:38');
+(1, 'Richa Restaurant', '01766555213', 'pepplo25@gamil.com', '68 Street, Barishal', '2023-04-28 16:17:34', '2023-06-28 14:56:16');
 
 -- --------------------------------------------------------
 
@@ -83,12 +83,14 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `unit_cost`, `total_cost`, `measurement_unit`, `last_added`, `created_at`, `updated_at`) VALUES
-(2, 'Mutton', 147, 746.894, 112781, 'kg', '2023-04-12 03:24:47', '2023-04-07 12:01:16', '2023-06-23 13:27:58'),
-(3, 'খাসি', 20, 1100, 22000, 'kg', '2023-04-07 12:05:11', '2023-04-07 12:05:11', '2023-04-07 12:05:11'),
 (4, 'Chicken', 15, 216, 3240, 'kg', '2023-04-10 01:14:07', '2023-04-08 00:09:40', '2023-04-10 01:14:07'),
-(5, 'Basmati Rice', 6.25, 148, 1813, 'kg', '2023-04-08 01:55:02', '2023-04-08 01:55:02', '2023-06-23 13:27:58'),
+(5, 'বাসমতি চাল', 42.25, 254.453, 14313, 'kg', '2023-06-27 11:06:46', '2023-04-08 01:55:02', '2023-06-28 19:05:18'),
 (6, 'Soyabean Oil', 5.9, 160, 1280, 'ltr', '2023-04-08 01:56:27', '2023-04-08 01:56:27', '2023-06-23 13:27:47'),
-(7, 'Potato', 123.5, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-06-23 13:27:58');
+(7, 'Potato', 110, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-06-28 19:05:22'),
+(8, 'Mutton', 29.75, 1000, 50000, 'kg', '2023-06-27 11:00:54', '2023-06-27 11:00:54', '2023-06-28 19:05:22'),
+(9, 'Water 1L', 890, 15, 15000, 'pcs', '2023-06-27 11:02:38', '2023-06-27 11:02:38', '2023-06-28 19:05:27'),
+(10, 'চিনিগুঁড়া চাল', 87, 140, 14000, 'kg', '2023-06-27 11:04:50', '2023-06-27 11:04:50', '2023-06-28 19:05:22'),
+(11, 'Water 0.5L', 0, 10, 1000, 'pcs', '2023-06-27 11:08:06', '2023-06-27 11:08:06', '2023-06-27 11:24:55');
 
 -- --------------------------------------------------------
 
@@ -152,7 +154,9 @@ INSERT INTO `invoices` (`id`, `invoice_number`, `username`, `customer_name`, `cu
 (55, '319332385236', 'Galib Jaman', 'Guest', 'N/A', 12, 445, 400, 10, 'Galib', '2023-04-26 13:10:48', '2023-04-26 13:10:48'),
 (58, '332740336454', 'Galib Jaman', 'Guest', 'N/A', 3, 549, 500, 10, 'Galib', '2023-04-28 11:09:11', '2023-04-28 11:09:11'),
 (59, '586872259987', 'Galib Jaman', 'Andrew Tate', 'N/A', 3, 3615, 3100, 15, 'Galib Jaman', '2023-04-28 19:32:55', '2023-04-28 19:32:55'),
-(60, '813410373455', 'Galib Jaman', 'Guest', 'N/A', 3, 815, 800, 2, 'Galib Jaman', '2023-05-31 13:06:00', '2023-05-31 13:06:00');
+(60, '813410373455', 'Galib Jaman', 'Guest', 'N/A', 3, 815, 800, 2, 'Galib Jaman', '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
+(61, '569446715416', 'Galib Jaman', 'Guest', 'N/A', 3, 324, 300, 10, 'Galib Jaman', '2023-06-27 10:02:26', '2023-06-27 10:02:26'),
+(62, '613217998772', 'Galib Jaman', 'Guest', 'N/A', 3, 2080, 2080, 0, 'Galib Jaman', '2023-06-28 19:07:01', '2023-06-28 19:07:01');
 
 -- --------------------------------------------------------
 
@@ -192,13 +196,6 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `table_id`, `recipe_id`, `quantity`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(490, 3, 24, 2, 7, 'cooking', '2023-06-23 14:16:21', '2023-06-23 14:16:30');
 
 -- --------------------------------------------------------
 
@@ -276,8 +273,10 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `parent_id`, `quantity_multiplier`, `created_at`, `updated_at`) VALUES
-(24, 'Khichuri', NULL, 'default.png', 1, 'Chinese', 180, 114, NULL, 10, 1, 1, 0, 1, '2023-06-19 07:38:14', '2023-06-23 11:22:07'),
-(26, 'Kacchi', NULL, 'default.png', 1, 'Biryani', 270, 240, 0, 2, 1, 1, 0, 1, '2023-06-23 11:24:58', '2023-06-23 11:24:58');
+(27, 'Kacchi - Basmati', NULL, 'default.png', 1, 'Biryani', 270, 203, NULL, NULL, 0, 1, 0, 1, '2023-06-27 11:17:23', '2023-06-29 16:39:21'),
+(28, 'Kacchi - Chinigura', NULL, 'default.png', 1, 'Biryani', 250, 180, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
+(29, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 15, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:18:56', '2023-06-27 11:18:56'),
+(30, 'Water 0.5L', NULL, 'default.png', 1, 'Water', 15, 10, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:19:30', '2023-06-27 11:19:30');
 
 -- --------------------------------------------------------
 
@@ -308,7 +307,15 @@ INSERT INTO `recipe_inventory` (`id`, `recipe_id`, `inventory_id`, `quantity`, `
 (20, 24, 2, 0.1, '2023-06-21 07:30:29', '2023-06-21 07:30:29'),
 (21, 26, 2, 0.25, '2023-06-23 11:24:58', '2023-06-23 11:24:58'),
 (22, 26, 6, 0.1, '2023-06-23 11:24:58', '2023-06-23 11:24:58'),
-(23, 26, 5, 0.25, '2023-06-23 11:24:58', '2023-06-23 11:24:58');
+(23, 26, 5, 0.25, '2023-06-23 11:24:58', '2023-06-23 11:24:58'),
+(27, 28, 10, 0.2, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
+(28, 28, 8, 0.15, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
+(29, 28, 7, 0.1, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
+(30, 27, 5, 0.2, '2023-06-27 11:18:28', '2023-06-27 11:18:28'),
+(31, 27, 8, 0.15, '2023-06-27 11:18:28', '2023-06-27 11:18:28'),
+(32, 27, 7, 0.1, '2023-06-27 11:18:28', '2023-06-27 11:18:28'),
+(33, 29, 9, 1, '2023-06-27 11:18:56', '2023-06-27 11:18:56'),
+(34, 30, 11, 1, '2023-06-27 11:19:30', '2023-06-27 11:19:30');
 
 -- --------------------------------------------------------
 
@@ -447,7 +454,32 @@ INSERT INTO `sales` (`id`, `invoice_id`, `recipe_id`, `recipe_name`, `price`, `d
 (185, 60, 11, 'Chinese Vegetable', 120, 0, 2, 'Galib Jaman', 3, 80, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
 (186, 60, 12, 'French Fries 1:2', 60, 15, 2, 'Galib Jaman', 3, 45, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
 (187, 60, 4, 'Beef Burger', 145, 0, 1, 'Galib Jaman', 3, 108, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
-(188, 60, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 3, 65, '2023-05-31 13:06:00', '2023-05-31 13:06:00');
+(188, 60, 6, 'Beef Patty', 80, 2, 1, 'Galib Jaman', 3, 65, '2023-05-31 13:06:00', '2023-05-31 13:06:00'),
+(189, 61, 24, 'Khichuri', 180, 10, 2, 'Galib Jaman', 3, 114, '2023-06-27 10:02:26', '2023-06-27 10:02:26'),
+(190, 62, 27, 'Kacchi - Basmati', 270, 0, 3, 'Galib Jaman', 3, 203, '2023-06-28 19:07:01', '2023-06-28 19:07:01'),
+(191, 62, 28, 'Kacchi - Chinigura', 250, 0, 5, 'Galib Jaman', 3, 180, '2023-06-28 19:07:01', '2023-06-28 19:07:01'),
+(192, 62, 29, 'Water 1L', 20, 0, 1, 'Galib Jaman', 3, 15, '2023-06-28 19:07:01', '2023-06-28 19:07:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) NOT NULL,
+  `setting_name` varchar(255) NOT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `setting_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'sidebar_status', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -471,7 +503,7 @@ CREATE TABLE `tables` (
 INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
 (1, 1, 9, 'free', '2023-04-26 11:33:02', '2023-04-13 10:20:43'),
 (2, 2, 9, 'free', '2023-04-23 04:58:47', '2023-04-13 10:22:25'),
-(3, 3, 7, 'occupied', '2023-06-23 14:16:21', '2023-04-13 10:22:32'),
+(3, 3, 7, 'free', '2023-06-28 19:07:01', '2023-04-13 10:22:32'),
 (4, 4, 9, 'free', '2023-04-18 23:19:55', '2023-04-13 10:22:46'),
 (5, 5, 7, 'free', '2023-04-28 09:38:51', '2023-04-13 10:22:50'),
 (6, 6, 7, 'free', '2023-04-24 13:21:52', '2023-04-13 10:22:56'),
@@ -536,7 +568,28 @@ CREATE TABLE `wastes` (
 INSERT INTO `wastes` (`id`, `recipe_name`, `recipe_id`, `production_cost`, `amount`, `created_at`, `updated_at`) VALUES
 (1, 'Khichuri', 24, 114, 8, '2023-06-23 14:39:50', '2023-06-23 14:39:50'),
 (2, 'Khichuri', 24, 114, 5, '2023-06-23 14:49:35', '2023-06-23 14:49:35'),
-(3, 'Kacchi', 26, 240, 10, '2023-06-23 14:49:35', '2023-06-23 14:49:35');
+(3, 'Kacchi', 26, 240, 10, '2023-06-23 14:49:35', '2023-06-23 14:49:35'),
+(4, 'Kacchi - Basmati', 27, 203, 30, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(5, 'Kacchi - Basmati', 27, 203, 30, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(6, 'Kacchi - Chinigura', 28, 180, 30, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(7, 'Kacchi - Chinigura', 28, 180, 30, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(8, 'Water 1L', 29, 15, 50, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(9, 'Water 1L', 29, 15, 50, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(10, 'Water 0.5L', 30, 10, 50, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(11, 'Water 0.5L', 30, 10, 50, '2023-06-27 18:00:05', '2023-06-27 18:00:05'),
+(12, 'Kacchi - Basmati', 27, 203, 30, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(13, 'Kacchi - Basmati', 27, 203, 30, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(14, 'Kacchi - Chinigura', 28, 180, 30, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(15, 'Kacchi - Chinigura', 28, 180, 30, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(16, 'Water 1L', 29, 15, 50, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(17, 'Water 1L', 29, 15, 50, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(18, 'Water 0.5L', 30, 10, 50, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(19, 'Water 0.5L', 30, 10, 50, '2023-06-28 18:00:01', '2023-06-28 18:00:01'),
+(20, 'Kacchi - Basmati', 27, 203, 7, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
+(21, 'Kacchi - Chinigura', 28, 180, 0, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
+(22, 'Water 1L', 29, 15, 9, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
+(23, 'Kacchi - Chinigura', 28, 180, 0, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
+(24, 'Water 1L', 29, 15, 9, '2023-06-29 18:00:18', '2023-06-29 18:00:18');
 
 --
 -- Indexes for dumped tables
@@ -619,6 +672,12 @@ ALTER TABLE `sales`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tables`
 --
 ALTER TABLE `tables`
@@ -657,13 +716,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -675,7 +734,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=491;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=494;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -687,25 +746,31 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `recipe_inventory`
 --
 ALTER TABLE `recipe_inventory`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tables`
@@ -723,7 +788,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wastes`
 --
 ALTER TABLE `wastes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

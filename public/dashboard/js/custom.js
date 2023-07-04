@@ -1,17 +1,5 @@
 (function () {
     $(document).ready(function () {
-      //student data table
-      
-      // THE BARS hamburg's CLASS HERE
-      var forEach = function (t, o, r) { if ("[object Object]" === Object.prototype.toString.call(t)) for (var c in t) Object.prototype.hasOwnProperty.call(t, c) && o.call(r, t[c], c, t); else for (var e = 0, l = t.length; l > e; e++)o.call(r, t[e], e, t) };
-      var hamburgers = document.querySelectorAll(".hamburger");
-      if (hamburgers.length > 0) {
-        forEach(hamburgers, function (hamburger) {
-          hamburger.addEventListener("click", function () {
-            this.classList.toggle("is-active");
-          }, false);
-        });
-      }
   
   
       // TOPHEADER HERE
@@ -19,15 +7,14 @@
         $('.top_head').toggleClass('active_header', $(this).scrollTop() > 60);
       });
   
-      // ACTIVE NAVIGATION HERE
+      // // ACTIVE NAVIGATION HERE
+      // $('.bars').click(function () {
+      //   $('.left_nevbar').toggleClass('active_left_navbar');
+      // });
   
-      $('.bars').click(function () {
-        $('.left_nevbar').toggleClass('active_left_navbar');
-      });
-  
-      $('.menu_bars').click(function () {
-        $('.left_nevbar').removeClass('active_left_navbar');
-      });
+      // $('.menu_bars').click(function () {
+      //   $('.left_nevbar').removeClass('active_left_navbar');
+      // });
   
   
   
@@ -143,7 +130,6 @@
       new SimpleBar(scrollbar);
     });
   }
-  
   function getAvailableSections(section_id) {
     let promoted_section = document.getElementById('promoted_section_id');
     let table_wrapper = document.getElementById('table-wrapper');
@@ -272,7 +258,6 @@
         console.log(error);
       })
   }
-  
   function inputFocusAnimation(input) {
   
     let label = input.parentNode.children[0];
@@ -280,7 +265,6 @@
     label.classList.add('label_active')
     input.classList.add('input_active')
   }
-  
   function inputBlurAnimation(input) {
     let label = input.parentNode.children[0];
   
@@ -290,7 +274,6 @@
     }
     input.classList.remove('input_active')
   }
-  
   function defaultInputAnimation() {
     const inputs = document.querySelectorAll('.animate_input');
   
@@ -298,7 +281,6 @@
       input.value ? inputFocusAnimation(input) : '';
     });
   }
-  
   //image show after upload in input file
   function imageUpload(input, e) {
     const image_div = input.parentNode.children[0].children[0];
@@ -397,14 +379,12 @@
         }
       });
   }
-  
   function hideErrorDivs() {
     document.querySelectorAll('.input_error').forEach(element => {
       element.innerHTML = '';
       element.classList.add('d-none');
     });
   }
-  
   function TogglePasswordView(icon, input_id){
     let input = document.getElementById(input_id);
     if(input.type == 'password'){
@@ -417,3 +397,46 @@
       icon.classList.add('fa-eye');
     }
   }
+
+  function toggleSidebar(sidebarController) {
+    let sidebar = document.getElementById('sidebar');
+    let isActive = sidebar.style.width === '30rem';
+    let hidden_on_collapse = document.querySelectorAll('.hidden-on-collapse');
+  
+    // Toggle the width based on its current state
+    if (isActive) {
+      sidebar.style.width = '7rem';
+      localStorage.setItem('sidebarState', 'inactive'); // Store the state as 'inactive' in Local Storage
+      hidden_on_collapse.forEach(link => {
+        link.classList.add('d-none');
+      });
+    } else {
+      sidebar.style.width = '30rem';
+      localStorage.setItem('sidebarState', 'active'); // Store the state as 'active' in Local Storage
+      hidden_on_collapse.forEach(link => {
+        link.classList.remove('d-none');
+      });
+    }
+  }
+  
+  // Check the stored state when the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    let sidebarState = localStorage.getItem('sidebarState');
+    let sidebar = document.getElementById('sidebar');
+    let hidden_on_collapse = document.querySelectorAll('.hidden-on-collapse');
+  
+    // Check the initial state of the sidebar before setting the width
+    if (sidebarState === 'active') {
+      sidebar.style.width = '30rem';
+      hidden_on_collapse.forEach(link => {
+        link.classList.remove('d-none');
+      });
+    } else if (sidebarState === 'inactive') {
+      sidebar.style.width = '7rem';
+      hidden_on_collapse.forEach(link => {
+        link.classList.add('d-none');
+      });
+    }
+  });
+  
+  

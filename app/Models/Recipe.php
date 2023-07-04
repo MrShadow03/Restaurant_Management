@@ -34,6 +34,16 @@ class Recipe extends Model
         return $this->hasMany(Plan::class);
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function wastes()
+    {
+        return $this->hasMany(Waste::class);
+    }
+
     public function getOrderCountAttribute()
     {
         return $this->orders()->count();

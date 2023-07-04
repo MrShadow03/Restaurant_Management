@@ -9,7 +9,7 @@
 @endphp
 @props(['search'])
 <div class="top_head">
-    <div class="bars sidebar_control_button">
+    <div class="bars sidebar_control_button" id="sidebar_control_button" onclick="toggleSidebar(this)">
         <i class="fa-solid fa-bars fa-beat"></i>
     </div>
     @if (isset($search))

@@ -41,9 +41,6 @@
                                 font-size: 1rem;
                                 padding: 0rem .5rem;
                             }
-                            &:hover {
-                                border-left: .3rem solid $logo;            
-                            } 
                         }
                     }
                 }
@@ -51,7 +48,7 @@
         }
      }
      .active_left_navbar{
-        width: 6rem;
+        width: 6.8rem;
         .header{
             .logo{
                 img{

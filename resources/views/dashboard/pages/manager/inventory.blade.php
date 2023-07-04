@@ -63,10 +63,10 @@
                                     <td class="table-column">
                                         <div class="table-column__wrapper">
                                             <div class="table-column__content">
-                                                <a href="#subtract_product_model" class="btn-sm" onclick="subtractProduct({{ json_encode($product) }})"><i class="fa-regular fa-minus"></i></a>
-                                                <a href="#add_product_modal" class="btn-sm" onclick="addProduct({{ json_encode($product) }})"><i class="fa-regular fa-plus"></i></a>
-                                                <a href="#edit_product_modal" title="Edit product" class="btn-sm" onclick="editProduct({{ json_encode($product) }})">Edit</a>
-                                                <a href="{{ route('manager.inventory.destroy', $product->id) }}" title="Delete product" class="btn-sm" onclick="return confirm('This Will Delete this product')" ><i class="fa-regular fa-trash"></i></a>
+                                                <a href="#subtract_product_model" class="btn-sm" onclick="subtractProduct({{ json_encode($product) }})"><i class="fa-solid fa-minus"></i></a>
+                                                <a href="#add_product_modal" class="btn-sm mr-1" onclick="addProduct({{ json_encode($product) }})"><i class="fa-solid fa-plus"></i></a>
+                                                <a href="#edit_product_modal" title="Edit product" class="btn-sm btn-info" onclick="editProduct({{ json_encode($product) }})"><i class="fs-12 fa-regular fa-edit"></i></a>
+                                                <a href="{{ route('manager.inventory.destroy', $product->id) }}" title="Delete product" class="btn-sm btn-danger" onclick="return confirm('This Will Delete this product')" ><i class="fa-regular fa-trash-can"></i></a>
                                             </div>
                                         </div>
                                     </td>
