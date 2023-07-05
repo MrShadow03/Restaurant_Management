@@ -34,8 +34,8 @@
                                                 <img src="{{ asset('dashboard/img/food/default.png') }}" alt="">
                                             </div>
                                             <div class="table-column__content">
-                                                <h3 class="table-column__title table-column__product">{{ $product->product_name }}</h3>
-                                                <p class="table-column__subtitle">{{ $product->available_units }} {{ $product->measurement_unit }}</p>
+                                                <h3 class="table-column__title table-column__product {{ $product->available_units < $product->warning_unit ? 'text-danger' : '' }}">{{ $product->product_name }}</h3>
+                                                <p class="table-column__subtitle {{ $product->available_units < $product->warning_unit ? 'text-danger' : '' }}">{{ $product->available_units }} {{ $product->measurement_unit }}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -119,6 +119,13 @@
             </div>
             <div class="modal__input__group">
                 <div class="modal__input__field">
+                    <label title="Get a warning when a product reaches this amount." class="modal__input__label" >Get Alert at</label>
+                    <input type="number" step=".01" name="warning_unit" class="input" placeholder="Eg. 10kg">
+                </div>
+                @error('total_cost')
+                    <p class="input-error">{{ $message }}</p>
+                @enderror
+                <div class="modal__input__field">
                     <label class="modal__input__label" >Total Price (BDT)</label>
                     <input type="number" step=".01" name="total_cost" class="input" placeholder="Total Price" required>
                 </div>
@@ -151,6 +158,8 @@
                 @error('product_name')
                     <p class="input-error">{{ $message }}</p>
                 @enderror
+            </div>
+            <div class="modal__input__group">
                 <div class="modal__input__field">
                     <label for="measurement_unit" class="modal__input__label">Unit</label>
                     <select name="measurement_unit" id="measurement_unit" class="input" oninput="updateButton()" required>
@@ -161,6 +170,13 @@
                     </select>
                 </div>
                 @error('measurement_unit')
+                <p class="input-error">{{ $message }}</p>
+                @enderror
+                <div class="modal__input__field">
+                    <label title="Get a warning when a product reaches this amount." class="modal__input__label" >Get Alert at</label>
+                    <input type="number" step=".01" name="warning_unit" id="warning_unit" class="input" placeholder="Eg. 10kg">
+                </div>
+                @error('total_cost')
                     <p class="input-error">{{ $message }}</p>
                 @enderror
             </div>
@@ -246,6 +262,7 @@
         $('#edit_product').text('Edit product details: '+product.product_name);
         $('#product_id').val(product.id);
         $('#product_name').val(product.product_name);
+        $('#warning_unit').val(product.warning_unit);
         $('#quantity').val(product.available_units);
         $('#measurement_unit').val(product.measurement_unit);
         $('#total_cost').val(product.total_cost);

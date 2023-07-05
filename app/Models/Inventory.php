@@ -14,7 +14,8 @@ class Inventory extends Model
         'available_units',
         'unit_cost',
         'measurement_unit',
-        'last_added'
+        'last_added',
+        'warning_unit',
     ];
 
     public function recipes()

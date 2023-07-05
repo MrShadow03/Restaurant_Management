@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2023 at 07:58 AM
+-- Generation Time: Jul 05, 2023 at 07:47 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -70,6 +70,7 @@ CREATE TABLE `inventories` (
   `id` bigint(20) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `available_units` float DEFAULT 0,
+  `warning_unit` float DEFAULT 1,
   `unit_cost` float DEFAULT NULL,
   `total_cost` float DEFAULT NULL,
   `measurement_unit` varchar(10) DEFAULT NULL,
@@ -82,15 +83,15 @@ CREATE TABLE `inventories` (
 -- Dumping data for table `inventories`
 --
 
-INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `unit_cost`, `total_cost`, `measurement_unit`, `last_added`, `created_at`, `updated_at`) VALUES
-(4, 'Chicken', 15, 216, 3240, 'kg', '2023-04-10 01:14:07', '2023-04-08 00:09:40', '2023-04-10 01:14:07'),
-(5, 'বাসমতি চাল', 42.25, 254.453, 14313, 'kg', '2023-06-27 11:06:46', '2023-04-08 01:55:02', '2023-06-28 19:05:18'),
-(6, 'Soyabean Oil', 5.9, 160, 1280, 'ltr', '2023-04-08 01:56:27', '2023-04-08 01:56:27', '2023-06-23 13:27:47'),
-(7, 'Potato', 110, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-06-28 19:05:22'),
-(8, 'Mutton', 29.75, 1000, 50000, 'kg', '2023-06-27 11:00:54', '2023-06-27 11:00:54', '2023-06-28 19:05:22'),
-(9, 'Water 1L', 890, 15, 15000, 'pcs', '2023-06-27 11:02:38', '2023-06-27 11:02:38', '2023-06-28 19:05:27'),
-(10, 'চিনিগুঁড়া চাল', 87, 140, 14000, 'kg', '2023-06-27 11:04:50', '2023-06-27 11:04:50', '2023-06-28 19:05:22'),
-(11, 'Water 0.5L', 0, 10, 1000, 'pcs', '2023-06-27 11:08:06', '2023-06-27 11:08:06', '2023-06-27 11:24:55');
+INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `warning_unit`, `unit_cost`, `total_cost`, `measurement_unit`, `last_added`, `created_at`, `updated_at`) VALUES
+(4, 'Chicken', 12, 10, 305, 3660, 'kg', '2023-07-05 15:56:39', '2023-04-08 00:09:40', '2023-07-05 15:56:39'),
+(5, 'বাসমতি চাল', 40.25, 1, 254.453, 14313, 'kg', '2023-06-27 11:06:46', '2023-04-08 01:55:02', '2023-07-05 15:00:36'),
+(6, 'Soyabean Oil', 5.9, 1, 160, 1280, 'ltr', '2023-04-08 01:56:27', '2023-04-08 01:56:27', '2023-06-23 13:27:47'),
+(7, 'Potato', 109, 1, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-07-05 15:00:36'),
+(8, 'Mutton', 28.25, 1, 1000, 50000, 'kg', '2023-06-27 11:00:54', '2023-06-27 11:00:54', '2023-07-05 15:00:36'),
+(9, 'Water 1L', 890, 20, 15, 15000, 'pcs', '2023-06-27 11:02:38', '2023-06-27 11:02:38', '2023-07-05 14:55:38'),
+(10, 'চিনিগুঁড়া চাল', 87, 1, 140, 14000, 'kg', '2023-06-27 11:04:50', '2023-06-27 11:04:50', '2023-06-28 19:05:22'),
+(12, 'Mustard Oil', 20, 5, 290, 5800, 'ltr', '2023-07-05 14:24:15', '2023-07-05 14:24:15', '2023-07-05 14:24:15');
 
 -- --------------------------------------------------------
 
@@ -197,6 +198,13 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `table_id`, `recipe_id`, `quantity`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(494, 3, 27, 2, 7, 'ready', '2023-07-05 15:01:08', '2023-07-05 15:01:25');
+
 -- --------------------------------------------------------
 
 --
@@ -243,6 +251,13 @@ CREATE TABLE `plans` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `plans`
+--
+
+INSERT INTO `plans` (`id`, `recipe_id`, `quantity`, `date`, `created_at`, `updated_at`) VALUES
+(61, 27, 8, '2023-07-05', '2023-07-05 15:00:36', '2023-07-05 15:01:08');
+
 -- --------------------------------------------------------
 
 --
@@ -273,7 +288,7 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `parent_id`, `quantity_multiplier`, `created_at`, `updated_at`) VALUES
-(27, 'Kacchi - Basmati', NULL, 'default.png', 1, 'Biryani', 270, 203, NULL, NULL, 0, 1, 0, 1, '2023-06-27 11:17:23', '2023-06-29 16:39:21'),
+(27, 'Kacchi - Basmati', NULL, 'default.png', 1, 'Biryani', 270, 203, NULL, NULL, 1, 1, 0, 1, '2023-06-27 11:17:23', '2023-07-05 15:00:44'),
 (28, 'Kacchi - Chinigura', NULL, 'default.png', 1, 'Biryani', 250, 180, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
 (29, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 15, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:18:56', '2023-06-27 11:18:56'),
 (30, 'Water 0.5L', NULL, 'default.png', 1, 'Water', 15, 10, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:19:30', '2023-06-27 11:19:30');
@@ -503,7 +518,7 @@ CREATE TABLE `tables` (
 INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
 (1, 1, 9, 'free', '2023-04-26 11:33:02', '2023-04-13 10:20:43'),
 (2, 2, 9, 'free', '2023-04-23 04:58:47', '2023-04-13 10:22:25'),
-(3, 3, 7, 'free', '2023-06-28 19:07:01', '2023-04-13 10:22:32'),
+(3, 3, 7, 'occupied', '2023-07-05 15:01:08', '2023-04-13 10:22:32'),
 (4, 4, 9, 'free', '2023-04-18 23:19:55', '2023-04-13 10:22:46'),
 (5, 5, 7, 'free', '2023-04-28 09:38:51', '2023-04-13 10:22:50'),
 (6, 6, 7, 'free', '2023-04-24 13:21:52', '2023-04-13 10:22:56'),
@@ -716,7 +731,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `invoices`
@@ -734,7 +749,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=494;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=495;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -746,7 +761,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `recipes`

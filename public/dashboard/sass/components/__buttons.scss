@@ -788,6 +788,19 @@ input.custom_checkbox_input[type="checkbox"] {
     z-index: 1;
   }
 }
+.notification-head-icon{
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 18px;
+    width: 8px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    z-index: 1;
+  }
+}
 
 .notification-head-info{
   &::before{

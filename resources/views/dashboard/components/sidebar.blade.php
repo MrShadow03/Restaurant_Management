@@ -1,7 +1,18 @@
 @php
+    use Illuminate\Support\Facades\DB;
     $business_details = App\Models\BusinessInformation::first();
     //split the business name from the first space
     $business_name = explode(' ', $business_details->name);
+
+    //check for insufficient stock
+    $insufficient_stock = App\Models\Inventory::where('available_units', '<=', DB::raw('warning_unit'))->count();
+
+    //check for today's and tomorrow's planner
+    $today_planner = App\Models\Plan::where('date', date('Y-m-d'))->count();
+    $tomorrow_planner = App\Models\Plan::where('date', date('Y-m-d', strtotime('+1 day')))->count();
+
+    $isAnyPlanEmpty = $today_planner && $tomorrow_planner;
+
 @endphp
 <div class="left_sidebar left_sidebar--expanded" id="sidebar">
     <div class="side_bar">
@@ -16,7 +27,7 @@
                         style="text-transform:uppercase; letter-spacing: 1px;">{{ $business_name[1] ?? '' }}</span>
                 </p>
             </div>
-            <div class="menu_bars">
+            <div class="menu_bars hidden-on-collapse">
                 <i class="menu-cross fa-solid fa-times"></i>
             </div>
         </div>
@@ -47,7 +58,7 @@
                             class="menu_icon fa-duotone fa-user"></i>
                         <p class="sidebar-link-name hidden-on-collapse">Staff</p>
                     </a></li>
-                <li class="{{ 'manager/inventory' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                <li class="{{ 'manager/inventory' == request()->path() ? 'sidebar-link--active' : '' }} {{ $insufficient_stock ? 'notification-head-icon notification-head-danger' : '' }}"><a
                         class="menu__link" href="{{ route('manager.inventory') }}"><i
                             class="menu_icon fa-duotone fa-box-circle-check"></i>
                         <p class="sidebar-link-name hidden-on-collapse">Inventory</p>
@@ -57,7 +68,7 @@
                             class="menu_icon fa-duotone fa-burger-soda"></i>
                         <p class="sidebar-link-name hidden-on-collapse">Food Items</p>
                     </a></li>
-                <li class="{{ 'manager/menu_planner' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                <li class="{{ 'manager/menu_planner' == request()->path() ? 'sidebar-link--active' : '' }} {{ $isAnyPlanEmpty == 0 ? 'notification-head-icon notification-head-danger' : '' }}"><a
                         class="menu__link" href="{{ route('manager.menu_planner') }}"><i
                             class="menu_icon fa-duotone fa-list-dropdown"></i>
                         <p class="sidebar-link-name hidden-on-collapse">Menu Planner</p>

@@ -12,9 +12,9 @@
       //   $('.left_nevbar').toggleClass('active_left_navbar');
       // });
   
-      // $('.menu_bars').click(function () {
-      //   $('.left_nevbar').removeClass('active_left_navbar');
-      // });
+      $('.menu_bars').click(function () {
+        $('.left_sidebar').toggleClass('left_sidebar--collapsed');
+      });
   
   
   

@@ -137,8 +137,11 @@ class PlanController extends Controller
             if($inventory_quantity < $required_quantity){
                 $availability = false;
                 $unavailable_ingredients[$inventory->product_name] = [
+                    'id' => $inventory->id,
+                    'name' => $inventory->product_name,
                     'requiredQuantity' => $required_quantity.' '.$inventory->measurement_unit,
                     'availableQuantity' => $inventory_quantity.' '.$inventory->measurement_unit,
+                    'requiredMore' => $required_quantity - $inventory_quantity.' '.$inventory->measurement_unit,
                 ];
             }
         }

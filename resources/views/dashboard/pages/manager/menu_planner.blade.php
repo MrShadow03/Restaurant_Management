@@ -179,7 +179,6 @@
     function getPlanCount(day){
         axios.get(window.location.origin+`/manager/api/getPlanCount/${day}`).then(function(response){
             let data = response.data;
-            console.log(data);
             if(data.length > 0){
                 data.forEach(function(item){
                     let button = document.getElementById('order_button'+item.recipe_id);
@@ -244,7 +243,6 @@
 
     function changeTextColor(recipeId){
         let input = document.getElementById('menu_quantity_input'+recipeId);
-        console.log(recipeId, input.value);
         let button = document.getElementById('order_button'+recipeId);
         if(input.value > 0){
             input.classList.remove('op-5');
@@ -263,7 +261,6 @@
 
     function placeOrder(recipeId, day){
         let quantity = document.getElementById('menu_quantity_input'+recipeId).value;
-        console.log(quantity, recipeId, day);
 
         // return;
         axios.post(window.location.origin+`/manager/api/storePlan`, {
@@ -272,10 +269,33 @@
             day: day
         }).then(function(response){
             let data = response.data;
-            console.log(data);
             getPlanCount(day);
             //if the order is placed then show toastr success
             data.status == 'success' ? toastr.success(data.message) : toastr.warning(data.message);
+
+            if(data.status == 'error'){
+                let unavailableItems = data.data;
+                console.log(unavailableItems);
+                for (let item in unavailableItems) {
+                        if (unavailableItems.hasOwnProperty(item)) {
+                            const currentItem = unavailableItems[item]; // Get the object associated with the item key
+
+                            // Access the properties of the current item object
+                            const requiredQuantity = currentItem.requiredQuantity;
+                            const availableQuantity = currentItem.availableQuantity;
+                            const requiredMore = currentItem.requiredMore;
+
+                            // Construct the alert message
+                            const alertMessage = `${item} is not available. Available: ${availableQuantity}, Required: ${requiredMore} more.`;
+
+                            //delay the toastr error
+                            toastr.options.timeOut = 20000;
+                            toastr.options.extendedTimeOut = 20000;
+                            // Display the toastr error
+                            toastr.warning(alertMessage);
+                        }
+                    }
+            }
 
             // console.log(response);
             // return;

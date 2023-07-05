@@ -21,11 +21,13 @@ class InventoryController extends Controller
             'quantity' => 'required',
             'total_cost' => 'required',
             'measurement_unit' => 'required | in:kg,pcs,ltr',
+            'warning_unit' => 'nullable | numeric',
         ]);
 
         $product = new Inventory();
         $product->product_name = $request->product_name;
         $product->available_units = $request->quantity;
+        $product->warning_unit = $request->warning_unit;
         $product->unit_cost = $request->total_cost / $request->quantity;
         $product->total_cost = $request->total_cost;
         $product->measurement_unit = $request->measurement_unit;
@@ -39,10 +41,12 @@ class InventoryController extends Controller
         $request->validate([
             'product_name' => 'required',
             'measurement_unit' => 'required | in:kg,pcs,ltr',
+            'warning_unit' => 'nullable | numeric',
         ]);
 
         $product = Inventory::find($request->id);
         $product->product_name = $request->product_name;
+        $product->warning_unit = $request->warning_unit;
         $product->measurement_unit = $request->measurement_unit;
         $product->save();
 
