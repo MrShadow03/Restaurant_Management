@@ -10,6 +10,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\AdminStaffController;
 use App\Http\Controllers\StaffTableController;
 use App\Http\Controllers\API\StaffOrderController;
 use App\Http\Controllers\ManagerProfileController;
@@ -38,11 +39,28 @@ Route::get('/user_panel', function () {
 })->middleware(['auth', 'verified', 'redirect'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    //dashboard
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     //admin Home
     Route::get('/home', function(){ return redirect()->route('admin.inventory'); })->name('home');
     //admin inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory/store', [InventoryController::class, 'store'])->name('inventory.store');
+
+    Route::get('/staff', [AdminStaffController::class, 'index'])->name('staff');
+    Route::post('/staff/store', [StaffController::class, 'store'])->name('staff.store');
+    Route::patch('/staff/update', [StaffController::class, 'update'])->name('staff.update');
+    Route::patch('/staff/toggleStatus', [StaffController::class, 'toggleStatus'])->name('staff.toggle_status');
+    Route::patch('/staff/assignTable', [StaffController::class, 'assignTable'])->name('staff.assign_table');
+    Route::get('/staff/delete/{id}', [StaffController::class, 'destroy'])->name('staff.destroy');
+
+    //manager planning
+    Route::post('/api/storePlan', [PlanController::class, 'store'])->name('api.store_plan');
+    Route::get('/api/getPlanCount/{day}', [PlanController::class, 'getPlanCount'])->name('api.get_plan_count');
+
+    //manager reporting
+    Route::get('/report/sales', [ReportController::class, 'salesReport'])->name('report.sales');
+    Route::get('/report/products', [ReportController::class, 'productsReport'])->name('report.products');
 });
 
 Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', 'as' => 'manager.'], function () {

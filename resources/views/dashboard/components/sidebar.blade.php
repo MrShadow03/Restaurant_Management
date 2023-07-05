@@ -31,17 +31,40 @@
                 <i class="menu-cross fa-solid fa-times"></i>
             </div>
         </div>
+
         {{-- sidebar menu starts here --}}
         <ul class="nav_area mt-2">
             {{-- sidebar for students --}}
             @if (Auth::user()->role == 'admin')
-                <li><a class="menu__link" href="#"><i class="menu_icon fa-light fa-chart-mixed"></i>
+                <li class="{{ 'manager/dashboard' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('admin.dashboard') }}"><i
+                            class="menu_icon fa-regular fa-chart-mixed"></i>
                         <p class="sidebar-link-name hidden-on-collapse">Dashboard</p>
                     </a></li>
-                <li><a class="menu__link" href="{{ route('admin.inventory') }}"><i
-                            class="menu_icon fa-regular fa-box-circle-check"></i>
-                        <p class="sidebar-link-name hidden-on-collapse">Inventory</p>
+                <li class="{{ 'manager/staff' == request()->path() ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link" href="{{ route('admin.staff') }}"><i
+                            class="menu_icon fa-duotone fa-user"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Staff</p>
                     </a></li>
+                <li class="{{ str_contains(request()->path(), 'manager/report') ? 'sidebar-link--active' : '' }}"><a
+                        class="menu__link toggle_btn" href="#"><i class="fa-duotone fa-chart-pie menu_icon"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Reporting</p><i
+                            class="sub_icon fa-regular fa-chevron-down hidden-on-collapse"></i>
+                    </a>
+                    <ul class="sub_menu {{ str_contains(request()->path(), 'manager/report') ? 'active' : '' }}"
+                        style="{{ str_contains(request()->path(), 'manager/report') ? 'display: block;' : 'display: none;' }}">
+                        <li><a class="{{ 'manager/report/products' == request()->path() ? 'submenu__link--active' : '' }}"
+                                href="{{ route('admin.report.products') }}"><i
+                                    class="fa-duotone fa-message-dollar"></i>
+                                <p class="sidebar-link-name hidden-on-collapse">Product Report</p>
+                            </a></li>
+                        <li><a class="{{ 'manager/report/sales' == request()->path() ? 'submenu__link--active' : '' }}"
+                                href="{{ route('admin.report.sales') }}"><i class="fa-duotone fa-graduation-cap"></i>
+                                <p class="sidebar-link-name hidden-on-collapse">Sales</p>
+                            </a></li>
+                        {{-- <li><a class="{{ 'manager/report/activities' == request()->path() ? 'submenu__link--active' : '' }}" href="#"><i class="fa-duotone fa-trash-can-clock"></i></i>Wastes</a></li> --}}
+                    </ul>
+                </li>
             @elseif (Auth::user()->role == 'manager')
                 <li class="{{ 'manager/dashboard' == request()->path() ? 'sidebar-link--active' : '' }}"><a
                         class="menu__link" href="{{ route('manager.dashboard') }}"><i
@@ -75,7 +98,8 @@
                     </a></li>
                 <li class="{{ str_contains(request()->path(), 'manager/report') ? 'sidebar-link--active' : '' }}"><a
                         class="menu__link toggle_btn" href="#"><i class="fa-duotone fa-chart-pie menu_icon"></i>
-                        <p class="sidebar-link-name hidden-on-collapse">Reporting</p><i class="sub_icon fa-regular fa-chevron-down hidden-on-collapse"></i>
+                        <p class="sidebar-link-name hidden-on-collapse">Reporting</p><i
+                            class="sub_icon fa-regular fa-chevron-down hidden-on-collapse"></i>
                     </a>
                     <ul class="sub_menu {{ str_contains(request()->path(), 'manager/report') ? 'active' : '' }}"
                         style="{{ str_contains(request()->path(), 'manager/report') ? 'display: block;' : 'display: none;' }}">
