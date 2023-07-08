@@ -1,3 +1,10 @@
+const cors = require('cors');
+const corsOptions = {
+    origin: 'http://192.168.0.120', // Replace '*' with the specific origin URL of your frontend application
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+};
+
 const express = require('express');
 
 const app = express();
@@ -5,7 +12,7 @@ const app = express();
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server, {
-    cors: {origin: '*'}
+    cors: {origin: 'http://192.168.0.120'}
 });
 
 io.on('connection', (socket) => {
@@ -37,6 +44,6 @@ io.on('connection', (socket) => {
 });
 
 
-server.listen(6001, () => {
-    console.log('listening on *:6001');
+server.listen(6001, '0.0.0.0', () => {
+    console.log('listening on http://0.0.0.0:6001');
 });
