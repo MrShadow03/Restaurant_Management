@@ -19,16 +19,16 @@
         <div class="header">
             <div class="logo">
                 {{-- <img src="{{ asset('dashboard/img/logo.png') }}" alt=""> --}}
-                <p class="ml-2 op-9 text-yellow fw-500 fs-16">
+                <p class="op-9 text-yellow fw-500 fs-16">
                     <i class="fa-duotone fa-fork-knife"></i>
                     <span class="fs-14 fw-600 hidden-on-collapse"
-                        style="text-transform:uppercase; letter-spacing: 1px; margin-left: 1rem;">{{ $business_name[0] }}</span>
+                        style="text-transform:uppercase; letter-spacing: 1px; margin-left: 2rem;">{{ $business_name[0] }}</span>
                     <span class="fs-14 fw-300 text-white hidden-on-collapse"
                         style="text-transform:uppercase; letter-spacing: 1px;">{{ $business_name[1] ?? '' }}</span>
                 </p>
             </div>
             <div class="menu_bars hidden-on-collapse">
-                <i class="menu-cross fa-solid fa-times"></i>
+                <i class="menu-cross fa-regular fa-arrow-left"></i>
             </div>
         </div>
 

@@ -3,14 +3,13 @@
     justify-content: space-between;
     margin: 2rem 3rem;
     gap: 2rem;
-    // flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 .dashboard_card_wrapper--row2{
     .card{
         height: 44rem;
         display: block;
         padding: 0 3rem 2rem;
-        max-width: 51rem;
     }
 }
 .card {
@@ -108,3 +107,4 @@
     background: #8D6E63;
     background: linear-gradient(145deg, #8D6E63 25%, #D7CCC8 100%);
 }
+

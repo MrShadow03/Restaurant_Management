@@ -400,21 +400,23 @@
 
   function toggleSidebar(sidebarController) {
     let sidebar = document.getElementById('sidebar');
-    let isActive = sidebar.style.width === '30rem';
+    let isActive = sidebar.classList.contains('left_sidebar--collapsed');
     let hidden_on_collapse = document.querySelectorAll('.hidden-on-collapse');
   
     // Toggle the width based on its current state
     if (isActive) {
-      sidebar.style.width = '7rem';
+      sidebar.classList.remove('left_sidebar--collapsed');
+      sidebar.classList.add('left_sidebar--expanded');
       localStorage.setItem('sidebarState', 'inactive'); // Store the state as 'inactive' in Local Storage
       hidden_on_collapse.forEach(link => {
-        link.classList.add('d-none');
+        link.classList.remove('d-none');
       });
     } else {
-      sidebar.style.width = '30rem';
+      sidebar.classList.remove('left_sidebar--expanded');
+      sidebar.classList.add('left_sidebar--collapsed');
       localStorage.setItem('sidebarState', 'active'); // Store the state as 'active' in Local Storage
       hidden_on_collapse.forEach(link => {
-        link.classList.remove('d-none');
+        link.classList.add('d-none');
       });
     }
   }
@@ -427,14 +429,16 @@
   
     // Check the initial state of the sidebar before setting the width
     if (sidebarState === 'active') {
-      sidebar.style.width = '30rem';
-      hidden_on_collapse.forEach(link => {
-        link.classList.remove('d-none');
-      });
-    } else if (sidebarState === 'inactive') {
-      sidebar.style.width = '7rem';
+      sidebar.classList.remove('left_sidebar--expanded');
+      sidebar.classList.add('left_sidebar--collapsed');
       hidden_on_collapse.forEach(link => {
         link.classList.add('d-none');
+      });
+    } else if (sidebarState === 'inactive') {
+      sidebar.classList.add('left_sidebar--expanded');
+      sidebar.classList.remove('left_sidebar--collapsed');
+      hidden_on_collapse.forEach(link => {
+        link.classList.remove('d-none');
       });
     }
   });

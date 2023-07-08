@@ -16,8 +16,7 @@
         .menu_bars{                
             display: none; 
             .menu-cross {
-                font-size: 2.5rem;
-                font-weight: 900;
+                font-size: 1.8rem;
                 color: #FFF;
                 cursor: pointer;
             }               
@@ -26,6 +25,7 @@
         .logo{
             display: flex;
             align-items: center;
+            margin-left: 16px;
             img {
                 height: 3rem;
             }
@@ -151,12 +151,16 @@
     }
     .side_bar{
         .header{
-            padding: 0;
             .logo{
                 img {
                     height: 4.5rem;
                     padding-right: 1rem;
                     padding-left: .8rem;
+                }
+                p{
+                    span{
+                        display: none;
+                    }
                 }
             }
         }
@@ -182,6 +186,74 @@
     }
 }
 
-
+// media query for 1024px
+@media (max-width: 1024px) {
+    .left_sidebar {
+        width: 0rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 999;
+        .side_bar {
+            .menu_bars{
+                display: block;
+            }
+            .title{
+                display: none;
+            }
+            .nav_area{
+                li{
+                    .menu__link{
+                        padding-left: 1rem;
+                    }
+                }
+            }
+        }
+    }
+    .left_sidebar--expanded{
+        width: 30rem;
+    }
+    .left_sidebar--collapsed {
+        width: 0;
+        .title{
+            padding: .8rem 1rem !important;
+            h5{
+                
+                font-size: 1.5rem !important;
+            }
+        }
+        .side_bar{
+            .header{
+                .logo{
+                    p{
+                        span{
+                            display: none;
+                        }
+                    }
+                }
+            }
+    
+            .copy_right{
+                p{
+                    display: none
+                }
+                a{
+                    padding-left: .6rem;
+                    font-size: .9rem;               
+                }
+                
+            }
+        }
+        .nav_area{
+            .sub_icon{
+                display: none !important;
+            }
+            .menu_icon{
+                padding-right: 2rem !important;
+            }
+        }
+    }
+}
 
 

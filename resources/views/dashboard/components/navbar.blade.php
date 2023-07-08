@@ -10,7 +10,7 @@
 @props(['search'])
 <div class="top_head">
     <div class="bars sidebar_control_button" id="sidebar_control_button" onclick="toggleSidebar(this)">
-        <i class="fa-solid fa-bars fa-beat"></i>
+        <i class="fa-regular fa-bars fa-beat"></i>
     </div>
     @if (isset($search))
         <div class="search"><input class="search_input" type="text"><i class="las la-search"></i></div>
