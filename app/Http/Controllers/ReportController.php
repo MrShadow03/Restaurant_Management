@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use App\Models\InventoryReport;
 
 class ReportController extends Controller
 {
@@ -160,6 +161,57 @@ class ReportController extends Controller
 
         return view('dashboard.pages.manager.products_report',[
             'products' => $products,
+            'report_type' => $report_type,
+            'date' => $date,
+            'month' => $month,
+            'year' => $year,
+        ]);
+    }
+
+    public function InventoryReport(Request $request){
+        $products = InventoryReport::all();
+
+        //Determining the report type
+        $report_type = isset($request->report_type) ? $request->report_type : 'yearly';
+        $date = date('Y-m-d');
+        $month = date('m');
+        $year = date('Y');
+
+        if($report_type == 'daily'){
+            $report_type = 'daily';
+
+            $reports = InventoryReport::where('created_at', '>=', date('Y-m-d'))->get();
+        }
+        
+        if($report_type == 'monthly'){
+            $report_type = 'monthly';
+
+            $reports = InventoryReport::whereMonth('created_at', date('m'))->get();
+        }
+        
+        if($report_type == 'yearly'){
+            $report_type = 'yearly';
+
+            $reports = InventoryReport::whereYear('created_at', date('Y'))->get();
+        }
+
+        // Check for specific date, month or year
+        if($request->date){
+            $date = $request->date;
+            $reports = InventoryReport::whereDate('created_at', $request->date)->get();
+        }elseif($request->month){
+            $month = $request->month;
+            $reports = InventoryReport::whereMonth('created_at', $request->month)->get();
+        }elseif($request->year){
+            $year = $request->year;
+            $reports = InventoryReport::whereYear('created_at', $request->year)->get();
+        }
+
+        //sort products by total sale
+        $reports = $reports->sortByDesc('created_at');
+
+        return view('dashboard.pages.manager.inventory_report',[
+            'reports' => $reports,
             'report_type' => $report_type,
             'date' => $date,
             'month' => $month,

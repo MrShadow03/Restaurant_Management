@@ -103,6 +103,11 @@
                     </a>
                     <ul class="sub_menu {{ str_contains(request()->path(), 'manager/report') ? 'active' : '' }}"
                         style="{{ str_contains(request()->path(), 'manager/report') ? 'display: block;' : 'display: none;' }}">
+                        <li><a class="{{ 'manager/report/inventory' == request()->path() ? 'submenu__link--active' : '' }}"
+                                href="{{ route('manager.report.inventory') }}"><i
+                                    class="fa-duotone fa-box-circle-check"></i>
+                                <p class="sidebar-link-name hidden-on-collapse">Inventory Report</p>
+                            </a></li>
                         <li><a class="{{ 'manager/report/products' == request()->path() ? 'submenu__link--active' : '' }}"
                                 href="{{ route('manager.report.products') }}"><i
                                     class="fa-duotone fa-message-dollar"></i>

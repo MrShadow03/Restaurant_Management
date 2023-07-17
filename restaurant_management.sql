@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2023 at 07:47 PM
+-- Generation Time: Jul 17, 2023 at 11:38 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -84,14 +84,47 @@ CREATE TABLE `inventories` (
 --
 
 INSERT INTO `inventories` (`id`, `product_name`, `available_units`, `warning_unit`, `unit_cost`, `total_cost`, `measurement_unit`, `last_added`, `created_at`, `updated_at`) VALUES
-(4, 'Chicken', 12, 10, 305, 3660, 'kg', '2023-07-05 15:56:39', '2023-04-08 00:09:40', '2023-07-05 15:56:39'),
-(5, 'বাসমতি চাল', 40.25, 1, 254.453, 14313, 'kg', '2023-06-27 11:06:46', '2023-04-08 01:55:02', '2023-07-05 15:00:36'),
+(4, 'Chicken', 19, 10, 196.989, 3742.8, 'kg', '2023-07-17 20:54:41', '2023-04-08 00:09:40', '2023-07-17 20:54:41'),
+(5, 'বাসমতি চাল', 38.75, 1, 254.453, 14313, 'kg', '2023-06-27 11:06:46', '2023-04-08 01:55:02', '2023-07-17 21:34:13'),
 (6, 'Soyabean Oil', 5.9, 1, 160, 1280, 'ltr', '2023-04-08 01:56:27', '2023-04-08 01:56:27', '2023-06-23 13:27:47'),
-(7, 'Potato', 109, 1, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-07-05 15:00:36'),
-(8, 'Mutton', 28.25, 1, 1000, 50000, 'kg', '2023-06-27 11:00:54', '2023-06-27 11:00:54', '2023-07-05 15:00:36'),
+(7, 'Potato', 106.6, 1, 22, 2750, 'kg', '2023-04-08 02:22:00', '2023-04-08 02:22:00', '2023-07-17 21:34:13'),
+(8, 'Mutton', 24.25, 1, 1000, 50000, 'kg', '2023-06-27 11:00:54', '2023-06-27 11:00:54', '2023-07-17 21:34:13'),
 (9, 'Water 1L', 890, 20, 15, 15000, 'pcs', '2023-06-27 11:02:38', '2023-06-27 11:02:38', '2023-07-05 14:55:38'),
-(10, 'চিনিগুঁড়া চাল', 87, 1, 140, 14000, 'kg', '2023-06-27 11:04:50', '2023-06-27 11:04:50', '2023-06-28 19:05:22'),
-(12, 'Mustard Oil', 20, 5, 290, 5800, 'ltr', '2023-07-05 14:24:15', '2023-07-05 14:24:15', '2023-07-05 14:24:15');
+(10, 'চিনিগুঁড়া চাল', 86.4, 1, 140, 14000, 'kg', '2023-06-27 11:04:50', '2023-06-27 11:04:50', '2023-07-17 21:33:58'),
+(12, 'Mustard Oil', 20, 5, 290, 5800, 'ltr', '2023-07-05 14:24:15', '2023-07-05 14:24:15', '2023-07-05 14:24:15'),
+(14, 'Water 0.5L', 5, 10, 10, 50, 'pcs', '2023-07-17 21:27:12', '2023-07-17 21:27:12', '2023-07-17 21:27:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_reports`
+--
+
+CREATE TABLE `inventory_reports` (
+  `id` bigint(20) NOT NULL,
+  `inventory_id` bigint(20) DEFAULT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `recipe_name` varchar(255) DEFAULT NULL,
+  `quantity` float NOT NULL,
+  `cost` float DEFAULT NULL,
+  `measurement_unit` varchar(10) DEFAULT NULL,
+  `activity` varchar(255) DEFAULT NULL,
+  `done_manually` varchar(255) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_reports`
+--
+
+INSERT INTO `inventory_reports` (`id`, `inventory_id`, `product_name`, `recipe_name`, `quantity`, `cost`, `measurement_unit`, `activity`, `done_manually`, `created_at`, `updated_at`) VALUES
+(43, 10, 'চিনিগুঁড়া চাল', 'Kacchi - Chinigura', 0.6, 84, 'kg', 'subtracted', '0', '2023-07-17 21:33:58', '2023-07-17 21:33:58'),
+(44, 8, 'Mutton', 'Kacchi - Chinigura', 0.45, 450, 'kg', 'subtracted', '0', '2023-07-17 21:33:58', '2023-07-17 21:33:58'),
+(45, 7, 'Potato', 'Kacchi - Chinigura', 0.3, 6.6, 'kg', 'subtracted', '0', '2023-07-17 21:33:58', '2023-07-17 21:33:58'),
+(46, 5, 'বাসমতি চাল', 'Kacchi - Basmati', 0.5, 127.227, 'kg', 'added', '0', '2023-07-17 21:34:13', '2023-07-17 21:34:13'),
+(47, 8, 'Mutton', 'Kacchi - Basmati', 0.2, 200, 'kg', 'added', '0', '2023-07-17 21:34:13', '2023-07-17 21:34:13'),
+(48, 7, 'Potato', 'Kacchi - Basmati', 0.4, 8.8, 'kg', 'added', '0', '2023-07-17 21:34:13', '2023-07-17 21:34:13');
 
 -- --------------------------------------------------------
 
@@ -203,7 +236,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `table_id`, `recipe_id`, `quantity`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-(494, 3, 27, 2, 7, 'ready', '2023-07-05 15:01:08', '2023-07-05 15:01:25');
+(495, 3, 27, 2, 7, 'cooking', '2023-07-08 15:26:51', '2023-07-08 15:36:31'),
+(496, 7, 27, 1, 7, 'cooking', '2023-07-08 16:10:21', '2023-07-08 16:10:21'),
+(497, 5, 27, 1, 7, 'cooking', '2023-07-08 16:11:44', '2023-07-08 16:11:44');
 
 -- --------------------------------------------------------
 
@@ -256,7 +291,9 @@ CREATE TABLE `plans` (
 --
 
 INSERT INTO `plans` (`id`, `recipe_id`, `quantity`, `date`, `created_at`, `updated_at`) VALUES
-(61, 27, 8, '2023-07-05', '2023-07-05 15:00:36', '2023-07-05 15:01:08');
+(66, 27, 3, '2023-07-19', '2023-07-17 20:44:15', '2023-07-17 20:44:15'),
+(67, 27, 1, '2023-07-18', '2023-07-17 21:25:17', '2023-07-17 21:34:13'),
+(69, 28, 3, '2023-07-18', '2023-07-17 21:33:58', '2023-07-17 21:33:58');
 
 -- --------------------------------------------------------
 
@@ -288,7 +325,7 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `recipe_name`, `description`, `image`, `status`, `category`, `price`, `production_cost`, `VAT`, `discount`, `on_menu`, `is_available`, `parent_id`, `quantity_multiplier`, `created_at`, `updated_at`) VALUES
-(27, 'Kacchi - Basmati', NULL, 'default.png', 1, 'Biryani', 270, 203, NULL, NULL, 1, 1, 0, 1, '2023-06-27 11:17:23', '2023-07-05 15:00:44'),
+(27, 'Kacchi - Basmati', NULL, 'default.png', 1, 'Biryani', 270, 168, NULL, NULL, 1, 1, 0, 1, '2023-06-27 11:17:23', '2023-07-17 21:20:53'),
 (28, 'Kacchi - Chinigura', NULL, 'default.png', 1, 'Biryani', 250, 180, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
 (29, 'Water 1L', NULL, 'default.png', 1, 'Water', 20, 15, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:18:56', '2023-06-27 11:18:56'),
 (30, 'Water 0.5L', NULL, 'default.png', 1, 'Water', 15, 10, 0, NULL, 1, 1, 0, 1, '2023-06-27 11:19:30', '2023-06-27 11:19:30');
@@ -326,11 +363,11 @@ INSERT INTO `recipe_inventory` (`id`, `recipe_id`, `inventory_id`, `quantity`, `
 (27, 28, 10, 0.2, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
 (28, 28, 8, 0.15, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
 (29, 28, 7, 0.1, '2023-06-27 11:18:18', '2023-06-27 11:18:18'),
-(30, 27, 5, 0.2, '2023-06-27 11:18:28', '2023-06-27 11:18:28'),
-(31, 27, 8, 0.15, '2023-06-27 11:18:28', '2023-06-27 11:18:28'),
-(32, 27, 7, 0.1, '2023-06-27 11:18:28', '2023-06-27 11:18:28'),
 (33, 29, 9, 1, '2023-06-27 11:18:56', '2023-06-27 11:18:56'),
-(34, 30, 11, 1, '2023-06-27 11:19:30', '2023-06-27 11:19:30');
+(34, 30, 11, 1, '2023-06-27 11:19:30', '2023-06-27 11:19:30'),
+(38, 27, 5, 0.25, '2023-07-17 21:20:53', '2023-07-17 21:20:53'),
+(39, 27, 8, 0.1, '2023-07-17 21:20:53', '2023-07-17 21:20:53'),
+(40, 27, 7, 0.2, '2023-07-17 21:20:53', '2023-07-17 21:20:53');
 
 -- --------------------------------------------------------
 
@@ -518,11 +555,11 @@ CREATE TABLE `tables` (
 INSERT INTO `tables` (`id`, `table_number`, `user_id`, `status`, `updated_at`, `created_at`) VALUES
 (1, 1, 9, 'free', '2023-04-26 11:33:02', '2023-04-13 10:20:43'),
 (2, 2, 9, 'free', '2023-04-23 04:58:47', '2023-04-13 10:22:25'),
-(3, 3, 7, 'occupied', '2023-07-05 15:01:08', '2023-04-13 10:22:32'),
+(3, 3, 7, 'occupied', '2023-07-08 15:26:52', '2023-04-13 10:22:32'),
 (4, 4, 9, 'free', '2023-04-18 23:19:55', '2023-04-13 10:22:46'),
-(5, 5, 7, 'free', '2023-04-28 09:38:51', '2023-04-13 10:22:50'),
+(5, 5, 7, 'occupied', '2023-07-08 16:11:44', '2023-04-13 10:22:50'),
 (6, 6, 7, 'free', '2023-04-24 13:21:52', '2023-04-13 10:22:56'),
-(7, 7, 7, 'free', '2023-04-24 12:30:01', '2023-04-15 07:51:55'),
+(7, 7, 7, 'occupied', '2023-07-08 16:10:22', '2023-04-15 07:51:55'),
 (8, 8, 9, 'free', '2023-04-15 07:53:06', '2023-04-15 07:52:09'),
 (9, 9, 9, 'free', '2023-04-15 07:52:13', '2023-04-15 07:52:13'),
 (10, 10, 7, 'free', '2023-04-19 05:19:30', '2023-04-15 07:52:18'),
@@ -604,7 +641,18 @@ INSERT INTO `wastes` (`id`, `recipe_name`, `recipe_id`, `production_cost`, `amou
 (21, 'Kacchi - Chinigura', 28, 180, 0, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
 (22, 'Water 1L', 29, 15, 9, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
 (23, 'Kacchi - Chinigura', 28, 180, 0, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
-(24, 'Water 1L', 29, 15, 9, '2023-06-29 18:00:18', '2023-06-29 18:00:18');
+(24, 'Water 1L', 29, 15, 9, '2023-06-29 18:00:18', '2023-06-29 18:00:18'),
+(25, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(26, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(27, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(28, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(29, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(30, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(31, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(32, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(33, 'Kacchi - Basmati', 27, 203, 8, '2023-07-06 08:42:27', '2023-07-06 08:42:27'),
+(34, 'Kacchi - Basmati', 27, 203, 3, '2023-07-08 18:00:26', '2023-07-08 18:00:26'),
+(35, 'Kacchi - Basmati', 27, 203, 3, '2023-07-08 18:00:26', '2023-07-08 18:00:26');
 
 --
 -- Indexes for dumped tables
@@ -627,6 +675,12 @@ ALTER TABLE `failed_jobs`
 -- Indexes for table `inventories`
 --
 ALTER TABLE `inventories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inventory_reports`
+--
+ALTER TABLE `inventory_reports`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -731,7 +785,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `inventory_reports`
+--
+ALTER TABLE `inventory_reports`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `invoices`
@@ -749,7 +809,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=495;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -761,7 +821,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `recipes`
@@ -773,7 +833,7 @@ ALTER TABLE `recipes`
 -- AUTO_INCREMENT for table `recipe_inventory`
 --
 ALTER TABLE `recipe_inventory`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -803,7 +863,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wastes`
 --
 ALTER TABLE `wastes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

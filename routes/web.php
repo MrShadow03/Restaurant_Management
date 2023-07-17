@@ -127,6 +127,10 @@ Route::group(['middleware' => ['auth', 'auth.manager'], 'prefix' => 'manager', '
     //manager reporting
     Route::get('/report/sales', [ReportController::class, 'salesReport'])->name('report.sales');
     Route::get('/report/products', [ReportController::class, 'productsReport'])->name('report.products');
+    Route::get('/report/inventory', [ReportController::class, 'inventoryReport'])->name('report.inventory');
+
+    //manager shopping list
+    Route::get('/shopping_list', [InventoryController::class, 'shoppingList'])->name('shopping_list');
 });
 
 Route::group(['middleware' => ['auth', 'auth.staff'], 'prefix' => 'staff', 'as' => 'staff.'], function () {

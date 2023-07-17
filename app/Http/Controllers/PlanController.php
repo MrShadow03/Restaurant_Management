@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Recipe;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use App\Models\InventoryReport;
 
 class PlanController extends Controller
 {
@@ -172,10 +173,34 @@ class PlanController extends Controller
             $inventory_quantity = $inventory->available_units;
             $required_quantity = $ingredient->pivot->quantity * $recipe_quantity;
 
-            if($subtract)
+            if($subtract){
                 $inventory->available_units = $inventory_quantity - $required_quantity;
-            else
+
+                //create inventory report
+                $report = new InventoryReport();
+                $report->inventory_id = $inventory->id;
+                $report->quantity = $required_quantity;
+                $report->product_name = $inventory->product_name;
+                $report->recipe_name = $recipe->recipe_name;
+                $report->cost = $inventory->unit_cost * $required_quantity;
+                $report->measurement_unit = $inventory->measurement_unit;
+                $report->activity = 'subtracted';
+                $report->save();
+
+            }else{
                 $inventory->available_units = $inventory_quantity + $required_quantity;
+
+                //create inventory report
+                $report = new InventoryReport();
+                $report->inventory_id = $inventory->id;
+                $report->quantity = $required_quantity;
+                $report->product_name = $inventory->product_name;
+                $report->recipe_name = $recipe->recipe_name;
+                $report->cost = $inventory->unit_cost * $required_quantity;
+                $report->measurement_unit = $inventory->measurement_unit;
+                $report->activity = 'added';
+                $report->save();
+            }
             
             $inventory->save();
         }

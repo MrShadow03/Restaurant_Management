@@ -9,6 +9,9 @@
         <div class="heading">
             <h2 class="heading__title text-title">Products</h2>
             <div class="heading__left">
+                @if ($products->where('is_sufficient', false)->count())
+                <a href="#" class="btn btn-primary" onclick="openShoppingList()">Shopping List <i class="fa-regular fa-shopping-cart"></i></a>    
+                @endif
                 <a href="#add_product" class="btn btn-primary">Add New <i class="fa-regular fa-square-plus"></i></a>
             </div>
         </div>
@@ -255,6 +258,14 @@
             });
         });
     })(jQuery);
+
+    function openShoppingList(){
+        let base_url = window.location.origin;
+        //open invoice in a new window popup
+        var popup = window.open(base_url + '/manager/shopping_list/', '_blank', 'width=400, height=800, top=100, left=100, resizable=yes, scrollbars=yes');
+        popup.focus();
+    }
+
     function editProduct(product){
         //modal.open();
         //remove btn-primary class from update button
