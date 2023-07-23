@@ -1,4 +1,4 @@
-let ip_address = '192.168.0.120';
+let ip_address = 'localhost';
 let socket_port = '6001';
 let socket = io(ip_address + ':' + socket_port);
 

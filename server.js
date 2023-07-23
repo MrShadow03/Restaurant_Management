@@ -1,6 +1,6 @@
 const cors = require('cors');
 const corsOptions = {
-    origin: 'http://192.168.0.120', // Replace '*' with the specific origin URL of your frontend application
+    origin: '*', // Replace '*' with the specific origin URL of your frontend application
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 };
@@ -12,7 +12,7 @@ const app = express();
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server, {
-    cors: {origin: 'http://192.168.0.120'}
+    cors: {origin: '*'}
 });
 
 io.on('connection', (socket) => {
